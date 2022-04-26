@@ -1,0 +1,14 @@
+D:\DOAN\Project\SoTiemChungDienTu\SoTiemChungDienTu\SoTiemChungDienTu.Common\bin\Debug\net5.0\SoTiemChungDienTu.Common.deps.json
+D:\DOAN\Project\SoTiemChungDienTu\SoTiemChungDienTu\SoTiemChungDienTu.Common\bin\Debug\net5.0\SoTiemChungDienTu.Common.dll
+D:\DOAN\Project\SoTiemChungDienTu\SoTiemChungDienTu\SoTiemChungDienTu.Common\bin\Debug\net5.0\ref\SoTiemChungDienTu.Common.dll
+D:\DOAN\Project\SoTiemChungDienTu\SoTiemChungDienTu\SoTiemChungDienTu.Common\bin\Debug\net5.0\SoTiemChungDienTu.Common.pdb
+D:\DOAN\Project\SoTiemChungDienTu\SoTiemChungDienTu\SoTiemChungDienTu.Common\obj\Debug\net5.0\SoTiemChungDienTu.Common.csproj.AssemblyReference.cache
+D:\DOAN\Project\SoTiemChungDienTu\SoTiemChungDienTu\SoTiemChungDienTu.Common\obj\Debug\net5.0\SoTiemChungDienTu.Common.GeneratedMSBuildEditorConfig.editorconfig
+D:\DOAN\Project\SoTiemChungDienTu\SoTiemChungDienTu\SoTiemChungDienTu.Common\obj\Debug\net5.0\SoTiemChungDienTu.Common.AssemblyInfoInputs.cache
+D:\DOAN\Project\SoTiemChungDienTu\SoTiemChungDienTu\SoTiemChungDienTu.Common\obj\Debug\net5.0\SoTiemChungDienTu.Common.AssemblyInfo.cs
+D:\DOAN\Project\SoTiemChungDienTu\SoTiemChungDienTu\SoTiemChungDienTu.Common\obj\Debug\net5.0\SoTiemChungDienTu.Common.csproj.CoreCompileInputs.cache
+D:\DOAN\Project\SoTiemChungDienTu\SoTiemChungDienTu\SoTiemChungDienTu.Common\obj\Debug\net5.0\SoTiemChungDienTu.Common.dll
+D:\DOAN\Project\SoTiemChungDienTu\SoTiemChungDienTu\SoTiemChungDienTu.Common\obj\Debug\net5.0\ref\SoTiemChungDienTu.Common.dll
+D:\DOAN\Project\SoTiemChungDienTu\SoTiemChungDienTu\SoTiemChungDienTu.Common\obj\Debug\net5.0\SoTiemChungDienTu.Common.pdb
+D:\DOAN\Project\SoTiemChungDienTu\SoTiemChungDienTu\SoTiemChungDienTu.Common\obj\Debug\net5.0\SoTiemChungDienTu.Common.Resources.Messages.resources
+D:\DOAN\Project\SoTiemChungDienTu\SoTiemChungDienTu\SoTiemChungDienTu.Common\obj\Debug\net5.0\SoTiemChungDienTu.Common.csproj.GenerateResource.cache
