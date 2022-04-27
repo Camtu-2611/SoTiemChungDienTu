@@ -1,0 +1,14 @@
+D:\DOAN\Project\SoTiemChungDienTu\vaccine_managerment_api\vaccine_managerment.common\bin\Debug\net5.0\vaccine_managerment.common.deps.json
+D:\DOAN\Project\SoTiemChungDienTu\vaccine_managerment_api\vaccine_managerment.common\bin\Debug\net5.0\vaccine_managerment.common.dll
+D:\DOAN\Project\SoTiemChungDienTu\vaccine_managerment_api\vaccine_managerment.common\bin\Debug\net5.0\ref\vaccine_managerment.common.dll
+D:\DOAN\Project\SoTiemChungDienTu\vaccine_managerment_api\vaccine_managerment.common\bin\Debug\net5.0\vaccine_managerment.common.pdb
+D:\DOAN\Project\SoTiemChungDienTu\vaccine_managerment_api\vaccine_managerment.common\obj\Debug\net5.0\vaccine_managerment.common.csproj.AssemblyReference.cache
+D:\DOAN\Project\SoTiemChungDienTu\vaccine_managerment_api\vaccine_managerment.common\obj\Debug\net5.0\vaccine_managerment.common.Resources.Messages.resources
+D:\DOAN\Project\SoTiemChungDienTu\vaccine_managerment_api\vaccine_managerment.common\obj\Debug\net5.0\vaccine_managerment.common.csproj.GenerateResource.cache
+D:\DOAN\Project\SoTiemChungDienTu\vaccine_managerment_api\vaccine_managerment.common\obj\Debug\net5.0\vaccine_managerment.common.GeneratedMSBuildEditorConfig.editorconfig
+D:\DOAN\Project\SoTiemChungDienTu\vaccine_managerment_api\vaccine_managerment.common\obj\Debug\net5.0\vaccine_managerment.common.AssemblyInfoInputs.cache
+D:\DOAN\Project\SoTiemChungDienTu\vaccine_managerment_api\vaccine_managerment.common\obj\Debug\net5.0\vaccine_managerment.common.AssemblyInfo.cs
+D:\DOAN\Project\SoTiemChungDienTu\vaccine_managerment_api\vaccine_managerment.common\obj\Debug\net5.0\vaccine_managerment.common.csproj.CoreCompileInputs.cache
+D:\DOAN\Project\SoTiemChungDienTu\vaccine_managerment_api\vaccine_managerment.common\obj\Debug\net5.0\vaccine_managerment.common.dll
+D:\DOAN\Project\SoTiemChungDienTu\vaccine_managerment_api\vaccine_managerment.common\obj\Debug\net5.0\ref\vaccine_managerment.common.dll
+D:\DOAN\Project\SoTiemChungDienTu\vaccine_managerment_api\vaccine_managerment.common\obj\Debug\net5.0\vaccine_managerment.common.pdb
