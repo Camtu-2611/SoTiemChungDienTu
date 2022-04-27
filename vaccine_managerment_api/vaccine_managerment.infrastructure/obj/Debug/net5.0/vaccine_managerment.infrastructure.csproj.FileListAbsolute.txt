@@ -1,0 +1,15 @@
+D:\DOAN\Project\SoTiemChungDienTu\vaccine_managerment_api\vaccine_managerment.infrastructure\bin\Debug\net5.0\vaccine_managerment.infrastructure.deps.json
+D:\DOAN\Project\SoTiemChungDienTu\vaccine_managerment_api\vaccine_managerment.infrastructure\bin\Debug\net5.0\vaccine_managerment.infrastructure.dll
+D:\DOAN\Project\SoTiemChungDienTu\vaccine_managerment_api\vaccine_managerment.infrastructure\bin\Debug\net5.0\ref\vaccine_managerment.infrastructure.dll
+D:\DOAN\Project\SoTiemChungDienTu\vaccine_managerment_api\vaccine_managerment.infrastructure\bin\Debug\net5.0\vaccine_managerment.infrastructure.pdb
+D:\DOAN\Project\SoTiemChungDienTu\vaccine_managerment_api\vaccine_managerment.infrastructure\bin\Debug\net5.0\vaccine_managerment.common.dll
+D:\DOAN\Project\SoTiemChungDienTu\vaccine_managerment_api\vaccine_managerment.infrastructure\bin\Debug\net5.0\vaccine_managerment.common.pdb
+D:\DOAN\Project\SoTiemChungDienTu\vaccine_managerment_api\vaccine_managerment.infrastructure\obj\Debug\net5.0\vaccine_managerment.infrastructure.csproj.AssemblyReference.cache
+D:\DOAN\Project\SoTiemChungDienTu\vaccine_managerment_api\vaccine_managerment.infrastructure\obj\Debug\net5.0\vaccine_managerment.infrastructure.GeneratedMSBuildEditorConfig.editorconfig
+D:\DOAN\Project\SoTiemChungDienTu\vaccine_managerment_api\vaccine_managerment.infrastructure\obj\Debug\net5.0\vaccine_managerment.infrastructure.AssemblyInfoInputs.cache
+D:\DOAN\Project\SoTiemChungDienTu\vaccine_managerment_api\vaccine_managerment.infrastructure\obj\Debug\net5.0\vaccine_managerment.infrastructure.AssemblyInfo.cs
+D:\DOAN\Project\SoTiemChungDienTu\vaccine_managerment_api\vaccine_managerment.infrastructure\obj\Debug\net5.0\vaccine_managerment.infrastructure.csproj.CoreCompileInputs.cache
+D:\DOAN\Project\SoTiemChungDienTu\vaccine_managerment_api\vaccine_managerment.infrastructure\obj\Debug\net5.0\vaccine_managerment.infrastructure.csproj.CopyComplete
+D:\DOAN\Project\SoTiemChungDienTu\vaccine_managerment_api\vaccine_managerment.infrastructure\obj\Debug\net5.0\vaccine_managerment.infrastructure.dll
+D:\DOAN\Project\SoTiemChungDienTu\vaccine_managerment_api\vaccine_managerment.infrastructure\obj\Debug\net5.0\ref\vaccine_managerment.infrastructure.dll
+D:\DOAN\Project\SoTiemChungDienTu\vaccine_managerment_api\vaccine_managerment.infrastructure\obj\Debug\net5.0\vaccine_managerment.infrastructure.pdb
