@@ -15,21 +15,21 @@ namespace vaccine_managerment.common
         /// <summary>
         /// Ngày tạo thực thể
         /// </summary>
-        public DateTime? CreatedDate { get; set; }
+        public DateTime? ngaytao { get; set; }
 
         /// <summary>
         /// Người tạo thực thể
         /// </summary>
-        public string CreatedBy { get; set; }
+        public string nguoitao { get; set; }
 
         /// <summary>
         /// Ngày chỉnh sửa thực thể
         /// </summary>
-        public DateTime? ModifiedDate { get; set; }
+        public DateTime? ngaychinhsua { get; set; }
 
         /// <summary>
         /// Người chỉnh sửa đối tượng
         /// </summary>
-        public string ModifiedBy { get; set; }
+        public string nguoichinhsua { get; set; }
     }
 }

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using vaccine_managerment.common;
-using vaccine_managerment.Core;
+using vaccine_managerment.core;
 
 namespace vaccine_managerment.WebAPI.Controllers
 {
@@ -13,12 +13,12 @@ namespace vaccine_managerment.WebAPI.Controllers
     [ApiController]
     public class BaseEntityController<T> : ControllerBase
     {
-        private IBaseService<T> _baseService;
+        private IBaseBL<T> _baseBL;
 
         #region Khởi tạo
-        public BaseEntityController(IBaseService<T> baseService)
+        public BaseEntityController(IBaseBL<T> baseService)
         {
-            _baseService = baseService;
+            _baseBL = baseService;
         }
         #endregion
 
@@ -32,7 +32,7 @@ namespace vaccine_managerment.WebAPI.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            var responseResult = _baseService.GetEntities();
+            var responseResult = _baseBL.GetEntities();
             return StatusCode(StatusCodes.Status200OK, responseResult);
 
         }
@@ -50,7 +50,7 @@ namespace vaccine_managerment.WebAPI.Controllers
             var responseResult = new ServiceResult();
             try
             {
-                responseResult = _baseService.GetById(entityId);
+                responseResult = _baseBL.GetById(entityId);
 
             }
             catch (Exception)
@@ -76,7 +76,7 @@ namespace vaccine_managerment.WebAPI.Controllers
             var responseResult = new ServiceResult();
             try
             {
-                responseResult = _baseService.Insert(entity);
+                responseResult = _baseBL.Insert(entity);
             }
             catch (Exception)
             {
@@ -101,7 +101,7 @@ namespace vaccine_managerment.WebAPI.Controllers
             var responseResult = new ServiceResult();
             try
             {
-                responseResult = _baseService.Update(entity, entityId);
+                responseResult = _baseBL.Update(entity, entityId);
 
             }
             catch (Exception)
@@ -126,7 +126,7 @@ namespace vaccine_managerment.WebAPI.Controllers
             var responseResult = new ServiceResult();
             try
             {
-                responseResult = _baseService.Delete(entityId);
+                responseResult = _baseBL.Delete(entityId);
 
             }
             catch (Exception)

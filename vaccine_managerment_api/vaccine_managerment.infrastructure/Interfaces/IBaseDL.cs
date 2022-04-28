@@ -10,7 +10,7 @@ namespace vaccine_managerment.infrastructure
     /// Base Repos
     /// CreatedBy: nctu 12.05.2021
     /// </summary>
-    public interface IBaseRepository<T>
+    public interface IBaseDL<T>
     {
         // <summary>
         /// Lấy toàn bộ dữ liệu của bảng trong database

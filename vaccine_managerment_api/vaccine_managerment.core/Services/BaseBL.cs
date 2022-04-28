@@ -6,20 +6,20 @@ using System.Threading.Tasks;
 using vaccine_managerment.common;
 using vaccine_managerment.infrastructure;
 
-namespace vaccine_managerment.Core
+namespace vaccine_managerment.core
 {
     /// <summary>
     /// Lớp lưu trữ các service xử lý nghiệp vụ chung
     /// </summary>
     /// <typeparam name="T">Thực thể cần xử lý</typeparam>
     /// CreatedBy: nctu 12.05.2021
-    public class BaseService<T> : IBaseService<T>
+    public class BaseBL<T> : IBaseBL<T>
     {
-        protected IBaseRepository<T> _baseRespository;
+        protected IBaseDL<T> _baseBL;
 
-        public BaseService(IBaseRepository<T> baseRespository)
+        public BaseBL(IBaseDL<T> baseBL)
         {
-            _baseRespository = baseRespository;
+            _baseBL = baseBL;
         }
 
         /// <summary>
@@ -31,7 +31,7 @@ namespace vaccine_managerment.Core
         public ServiceResult GetById(Guid entityId)
         {
             var result = new ServiceResult();
-            var entity = _baseRespository.GetById(entityId);
+            var entity = _baseBL.GetById(entityId);
             if (entity != null)
             {
                 result.Data = entity;
@@ -56,7 +56,7 @@ namespace vaccine_managerment.Core
         /// CreatedBy: nctu 12.05.2021
         public ServiceResult GetEntities()
         {
-            var entities = _baseRespository.GetEntities();
+            var entities = _baseBL.GetEntities();
 
             var result = new ServiceResult();
             if (entities != null)
@@ -93,7 +93,7 @@ namespace vaccine_managerment.Core
             if (result.IsSuccess == true)
             {
                 // Thực hiện thêm mới
-                var rowAffects = _baseRespository.Insert(entity);
+                var rowAffects = _baseBL.Insert(entity);
 
                 if (rowAffects == 1)
                 {
@@ -132,7 +132,7 @@ namespace vaccine_managerment.Core
             if (result.IsSuccess == true)
             {
                 // thực hiện cập nhật
-                var rowAffects = _baseRespository.Update(entity, entityId);
+                var rowAffects = _baseBL.Update(entity, entityId);
 
                 if (rowAffects == 1)
                 {
@@ -164,7 +164,7 @@ namespace vaccine_managerment.Core
             var result = new ServiceResult();
 
             // thực hiện cập nhật
-            var rowAffects = _baseRespository.Delete(entityId);
+            var rowAffects = _baseBL.Delete(entityId);
 
             if (rowAffects == 1)
             {
