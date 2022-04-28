@@ -5,13 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 using vaccine_managerment.common;
 
-namespace vaccine_managerment.Core
+namespace vaccine_managerment.core
 {
     /// <summary>
     /// Base Service
     /// CreatedBy: nctu 12.05.2021
     /// </summary>
-    public interface IBaseService<T>
+    public interface IBaseBL<T>
     {
         /// <summary>
         /// Lấy toàn bộ dữ liệu của bảng trong database

@@ -11,24 +11,18 @@ using Dapper;
 
 namespace vaccine_managerment.infrastructure
 {
-    public class BaseRepository<T> : IBaseRepository<T>
+    public class BaseDL<T> : IBaseDL<T>
     {
         //Tên của đối tượng
         protected string _tableName = string.Empty;
 
         //Chuỗi kết nối đến CSDL
-        protected string _connectionString = "" +
-               "Server=NCTU2;" +
-               "Database=vaccine_managerment" +
-               "Trusted_Connection=True;";
-               //"Password=12345678;" +
-               //"Database= MF768_NCTu_MISA.CukCuk; " +
-                //"convert zero datetime=True;";
+        protected string _connectionString = "Data Source=NCTU2;Initial Catalog=Vaccine_management;Integrated Security=True";
 
         //Khai báo kết nối
         protected IDbConnection _dbConnection;
 
-        public BaseRepository()
+        public BaseDL()
         {
             _tableName = typeof(T).Name;
             _dbConnection = new SqlConnection(_connectionString);

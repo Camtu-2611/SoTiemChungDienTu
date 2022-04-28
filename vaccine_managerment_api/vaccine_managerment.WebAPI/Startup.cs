@@ -10,7 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using vaccine_managerment.Core;
+using vaccine_managerment.core;
 using vaccine_managerment.infrastructure;
 
 namespace vaccine_managerment.WebAPI
@@ -34,8 +34,32 @@ namespace vaccine_managerment.WebAPI
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "vaccine_managerment.WebAPI", Version = "v1" });
             });
             //Dependency Injection
-            services.AddScoped(typeof(IBaseService<>), typeof(BaseService<>));
-            services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
+            services.AddScoped(typeof(IBaseBL<>), typeof(BaseBL<>));
+            services.AddScoped(typeof(IBaseDL<>), typeof(BaseDL<>));
+
+            // Loai vacxin
+            services.AddScoped<ILoaiVacxinDL, LoaiVacxinDL>();
+            services.AddScoped<ILoaiVacxinBL, LoaiVacxinBL>();
+
+            // vacxin
+            services.AddScoped<IVacxinDL, VacxinDL>();
+            services.AddScoped<IVacxinBL, VacxinBL>();
+
+            // sotiem
+            services.AddScoped<ISoTiemDL, SoTiemDL>();
+            services.AddScoped<ISoTiemBL, SoTiemBL>();
+
+            // ct sotiem
+            services.AddScoped<ICTSoTiemDL, CTSoTiemDL>();
+            services.AddScoped<ICTSoTiemBL, CTSoTiemBL>();
+
+            // lichtiem
+            services.AddScoped<ILichTiemDL, LichTiemDL>();
+            services.AddScoped<ILichTiemBL, LichTiemBL>();
+
+            // nhanvienyte
+            services.AddScoped<INhanVienYTeDL, NhanVienYTeDL>();
+            services.AddScoped<INhanVienYTeBL, NhanVienYTeBL>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
