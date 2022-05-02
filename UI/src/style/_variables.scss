@@ -1,0 +1,17 @@
+/* $primary: purple; */
+$header-height: 60px;
+$navbar-width-max: 210px;
+$navbar-width-min: 60px;
+$footer-height: 80px;
+$border-button-basic: #e9e9e9;
+:export {
+    navbarWidthMax: $navbar-width-max;
+    navbarWidthMin: $navbar-width-min;
+}
+
+/* evaluate */
+$background-footer: #4f502a;
+$background-evalutate: #f5f6fa;
+$primary: #29b8ff;
+$sub-primary: #1ba3c9;
+$table-header: #253b6a;
