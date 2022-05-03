@@ -28,7 +28,7 @@ namespace vaccine_managerment.WebAPI.Controllers
         /// API lấy toàn bộ danh sách thực thể
         /// </summary>
         /// <returns>Danh sách thực thể</returns>
-        /// CreatedBy: nctu 13.05.2021
+        /// CreatedBy: nctu 30.04.2022
         [HttpGet]
         public IActionResult Get()
         {
@@ -43,7 +43,7 @@ namespace vaccine_managerment.WebAPI.Controllers
         /// </summary>
         /// <param name="entityId">Khóa chính của thực thể</param>
         /// <returns></returns>
-        /// CreatedBy: nctu 13.05.2021
+        /// CreatedBy: nctu 30.04.2022
         [HttpGet("{entityId}")]
         public IActionResult Get(Guid entityId)
         {
@@ -69,7 +69,7 @@ namespace vaccine_managerment.WebAPI.Controllers
         /// </summary>
         /// <param name="entity">Thông tin thực thể cần thêm</param>
         /// <returns></returns>
-        /// CreatedBy: nctu 13.05.2021
+        /// CreatedBy: nctu 30.04.2022
         [HttpPost]
         public IActionResult Post([FromBody] T entity)
         {

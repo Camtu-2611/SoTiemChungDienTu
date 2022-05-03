@@ -32,7 +32,7 @@ namespace vaccine_managerment.infrastructure
         {
             // Thực hiện lấy dữ liệu từ Database
             var entities = _dbConnection.Query<T>(
-                $"Proc_Get{_tableName}s",
+                $"Proc_Get{_tableName}",
                 commandType: CommandType.StoredProcedure);
             return entities;
         }
@@ -42,8 +42,24 @@ namespace vaccine_managerment.infrastructure
             var storeName = $"Proc_Get{_tableName}ById";
 
             DynamicParameters dynamicParameters = new DynamicParameters();
-            var storeGetByIdParamName = $"@{_tableName}Id";
+            var storeGetByIdParamName = $"@id{_tableName.ToLower()}";
             dynamicParameters.Add(storeGetByIdParamName, entityId);
+
+            var entity = _dbConnection.Query<T>(
+                storeName,
+                dynamicParameters,
+                commandType: CommandType.StoredProcedure)
+                .FirstOrDefault();
+            return entity;
+        }
+        public T GetByCode(string entityCode)
+        {
+            // Thực hiện lấy thông tin một đối tượng
+            var storeName = $"Proc_Get{_tableName}ByCode";
+
+            DynamicParameters dynamicParameters = new DynamicParameters();
+            var storeGetByCodeParamName = $"@ma{_tableName.ToLower()}";
+            dynamicParameters.Add(storeGetByCodeParamName, entityCode);
 
             var entity = _dbConnection.Query<T>(
                 storeName,

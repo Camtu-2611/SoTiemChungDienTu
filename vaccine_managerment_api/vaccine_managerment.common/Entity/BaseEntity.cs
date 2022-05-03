@@ -8,7 +8,7 @@ namespace vaccine_managerment.common
 {
     /// <summary>
     /// Lớp lưu trữ thông tin chung của các thực thể
-    /// CreatedBy: nctu(12/05/2021)
+    /// CreatedBy: nctu(29.04.2022)
     /// </summary>
     public class BaseEntity
     {

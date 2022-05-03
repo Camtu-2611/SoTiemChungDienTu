@@ -9,7 +9,7 @@ namespace vaccine_managerment.core
 {
     /// <summary>
     /// Base Service
-    /// CreatedBy: nctu 12.05.2021
+    /// CreatedBy: nctu 30.04.2022
     /// </summary>
     public interface IBaseBL<T>
     {
@@ -17,7 +17,7 @@ namespace vaccine_managerment.core
         /// Lấy toàn bộ dữ liệu của bảng trong database
         /// </summary>
         /// <returns>Danh sách các đối tượng</returns>
-        /// CreatedBy: nctu 12.05.2021
+        /// CreatedBy: nctu 30.04.2022
         ServiceResult GetEntities();
 
         /// <summary>
@@ -25,7 +25,7 @@ namespace vaccine_managerment.core
         /// </summary>
         /// <param name="entityId">ID của đối tượng</param>
         /// <returns>1 thực thể duy nhất có ID tương ứng truyền vào</returns>
-        /// CreatedBy: nctu 12.05.2021
+        /// CreatedBy: nctu 30.04.2022
         ServiceResult GetById(Guid entityId);
 
         /// <summary>
@@ -42,7 +42,7 @@ namespace vaccine_managerment.core
         /// <param name="entity">Thực thể cần thêm mới</param>
         /// <param name="entityId">ID của thực thể</param>
         /// <returns>Số bản ghi đã được cập nhật nội dụng trong DB</returns>
-        /// CreatedBy: nctu 12.05.2021
+        /// CreatedBy: nctu 30.04.2022
         ServiceResult Update(T entity, Guid entityId);
 
         /// <summary>
@@ -50,7 +50,7 @@ namespace vaccine_managerment.core
         /// </summary>
         /// <param name="entityId">ID của đối tượng cần xóa</param>
         /// <returns>Số bản ghi đã xóa trong DB</returns>
-        /// CreatedBy: nctu 12.05.2021
+        /// CreatedBy: nctu 30.04.2022
         ServiceResult Delete(Guid entityId);
     }
 }

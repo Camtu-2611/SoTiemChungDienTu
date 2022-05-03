@@ -12,7 +12,7 @@ namespace vaccine_managerment.core
     /// Lớp lưu trữ các service xử lý nghiệp vụ chung
     /// </summary>
     /// <typeparam name="T">Thực thể cần xử lý</typeparam>
-    /// CreatedBy: nctu 12.05.2021
+    /// CreatedBy: nctu 30.04.2022
     public class BaseBL<T> : IBaseBL<T>
     {
         protected IBaseDL<T> _baseBL;
@@ -27,7 +27,7 @@ namespace vaccine_managerment.core
         /// </summary>
         /// <param name="entityId">Khóa chính của thực thể</param>
         /// <returns>ServiceResult</returns>
-        /// CreatedBy: nctu 12.05.2021
+        /// CreatedBy: nctu 30.04.2022
         public ServiceResult GetById(Guid entityId)
         {
             var result = new ServiceResult();
@@ -53,7 +53,7 @@ namespace vaccine_managerment.core
         /// Service lấy danh sách thực thể
         /// </summary>
         /// <returns>ServiceResult</returns>
-        /// CreatedBy: nctu 12.05.2021
+        /// CreatedBy: nctu 30.04.2022
         public ServiceResult GetEntities()
         {
             var entities = _baseBL.GetEntities();
@@ -81,7 +81,7 @@ namespace vaccine_managerment.core
         /// </summary>
         /// <param name="entity">Thực thể cần thêm</param>
         /// <returns>ServiceResult</returns>
-        /// CreatedBy: nctu 12.05.2021
+        /// CreatedBy: nctu 30.04.2022
         public ServiceResult Insert(T entity)
         {
             var result = new ServiceResult();
@@ -119,7 +119,7 @@ namespace vaccine_managerment.core
         /// <param name="entity">Thông tin cần cập nhật</param>
         /// <param name="entityId">Khóa chính của thực thể</param>
         /// <returns>ServiceResult</returns>
-        /// CreatedBy: nctu 12.05.2021
+        /// CreatedBy: nctu 30.04.2022
         public ServiceResult Update(T entity, Guid entityId)
         {
             var result = new ServiceResult();
@@ -158,7 +158,7 @@ namespace vaccine_managerment.core
         /// </summary>
         /// <param name="entityId">Khóa chính của thực thể cần xóa</param>
         /// <returns>ServiceResult</returns>
-        /// CreatedBy: nctu 12.05.2021
+        /// CreatedBy: nctu 30.04.2022
         public ServiceResult Delete(Guid entityId)
         {
             var result = new ServiceResult();
