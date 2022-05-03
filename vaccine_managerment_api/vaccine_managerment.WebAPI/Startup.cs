@@ -60,6 +60,10 @@ namespace vaccine_managerment.WebAPI
             // nhanvienyte
             services.AddScoped<INhanVienYTeDL, NhanVienYTeDL>();
             services.AddScoped<INhanVienYTeBL, NhanVienYTeBL>();
+
+            // thongtindangkytiem
+            services.AddScoped<IThongTinDangKyTiemDL, ThongTinDangKyTiemDL>();
+            services.AddScoped<IThongTinDangKyTiemBL, ThongTinDangKyTiemBL>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

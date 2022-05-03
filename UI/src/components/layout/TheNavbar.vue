@@ -1,17 +1,22 @@
 <template>
-  <div class="div-container nav" id="navbar">
+  <div class=" blue darken-3 div-container nav" id="navbar">
     <div class="nav-item header">
       <div class="icon-nav logo-page" @click="toggleNavbar('icon')"></div>
-      <div class="nav-item-text">QL TIÊM CHỦNG</div>
+      <div class="nav-item-text">SỔ TIÊM CHỦNG</div>
       <div class="icon-hamburger-menu" @click="toggleNavbar('no')"></div>
     </div>
     <div
       id="navItem1"
       class="nav-item option nav-item-icon"
-      @click="$router.push({ name: 'home' })"
+      
     >
       <div class="icon-nav icon-computer-line"></div>
-      <div class="nav-item-text">Tổng quan</div>
+      <div
+        class="nav-item-text"
+        @click="$router.push({ name: 'injection-register' })"
+      >
+        Đăng ký tiêm
+      </div>
     </div>
     <div id="navItem2" class="nav-item option nav-item-icon">
       <div
@@ -23,7 +28,7 @@
         @click="$router.push({ name: 'asset' })"
         :class="{ 'option-focus': currentRouteName == 'asset' }"
       >
-        Tài sản
+        Sổ tiêm
       </div>
       <div class="icon-submenu" @click="$router.push({ name: 'asset' })"></div>
       <div class="sub-navbar">
@@ -32,19 +37,15 @@
           class="sub-navbar-item"
           @click="$router.push({ name: 'dang-ky-tiem' })"
         >
-          Ghi tăng
+          Thêm sổ tiêm
         </div>
-        <div class="sub-navbar-item">Điều chuyển</div>
         <div class="sub-navbar-item" @click="$router.push({ name: 'khauhao' })">
           Tính khấu hao
         </div>
-            <div
-          class="sub-navbar-item"
-          @click="$router.push({ name: 'ghigiam' })"
-        >
-         Ghi giảm
+        <div class="sub-navbar-item" @click="$router.push({ name: 'ghigiam' })">
+          Ghi giảm
         </div>
-      
+
         <div
           class="sub-navbar-item"
           @click="$router.push({ name: 'evaluate' })"
@@ -71,7 +72,7 @@
     </div>
     <div id="navItem3" class="nav-item option nav-item-icon">
       <div class="icon-nav icon-paint-brush-line"></div>
-      <div class="nav-item-text">Công cụ dụng cụ</div>
+      <div class="nav-item-text">Lịch tiêm</div>
       <div class="icon-submenu"></div>
       <div class="sub-navbar">
         <div class="sub-navbar-item">Sản phẩm sản xuất</div>
@@ -80,11 +81,16 @@
     </div>
     <div id="navItem4" class="nav-item option nav-item-icon">
       <div class="icon-nav icon-common"></div>
-      <div class="nav-item-text">Danh mục</div>
+      <div class="nav-item-text">Vắc xin</div>
       <div class="icon-submenu"></div>
       <div class="sub-navbar">
         <!-- <router-link class="sub-navbar-item" to="/asset" tag="div"> Tài sản</router-link>  -->
-        <div class="sub-navbar-item" @click="$router.push({ name: 'assetCategory' })">Loại tài sản</div>
+        <div
+          class="sub-navbar-item"
+          @click="$router.push({ name: 'assetCategory' })"
+        >
+          Loại tài sản
+        </div>
         <div class="sub-navbar-item">Tài sản</div>
         <div class="sub-navbar-item">Vật liệu</div>
         <div class="sub-navbar-item">Nguyên liệu</div>
@@ -180,37 +186,29 @@ export default {
 };
 </script>
 
-
 <style lang="scss" scoped>
 @import url("../../style/scss/icon.scss");
 
 .nav {
-  // float: left;
-  background-color: #011239;
-  color: rgb(5, 12, 75);
+  // background-color: #0673c7;
+  // color: rgb(5, 12, 75);
   font-size: 14px;
   width: 210px;
   height: 100vh;
   box-sizing: border-box;
-  border-right: #e2e1e6 1px solid;
+  //border-right: #e2e1e6 1px solid;
   position: fixed;
 
   top: 0;
   left: 0;
   transition: width 0.5s;
   color: white;
+  display: block;
 
   .nav-item {
-    height: 60px;
-    display: flex;
-    box-sizing: border-box;
-    align-items: center;
-    padding-left: 13px;
-    position: relative;
-
     &.option-focus {
       border-left: 4px solid #00abfe;
-      background-color: #273557;
+      background-color: #035797;
       outline: none;
       padding-left: 9px !important;
       transition: 0.2s;
@@ -231,7 +229,7 @@ export default {
     }
 
     &.nav-item-icon:hover {
-      background-color: #273557;
+      background-color: #035797;
       cursor: pointer;
       transition: 0.2s;
 
@@ -244,6 +242,7 @@ export default {
       padding-left: 0;
       transition: all 0.5s ease;
       padding: 0 9px;
+      width: 100%;
     }
 
     .nav-title {
