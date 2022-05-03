@@ -143,17 +143,14 @@ export default {
 <style lang="scss" scoped>
 @import url("../../style/_variables.scss");
 .header {
-  height: 60px;
-  // height: $header-height;
   width: calc(100% - 200px);
   margin-left: 200px;
   box-sizing: border-box;
   border-bottom: #e2e1e6 1px solid;
   overflow: visible;
-  // margin-left: $navbar-width-max;
   margin-left: 210px;
   transition: all 0.5s;
-
+  z-index: 1;
   .header-left {
     height: 60px;
     line-height: 60px;
@@ -284,7 +281,7 @@ export default {
   display: flex;
   margin-left: 0px;
   box-sizing: border-box;
-  border-bottom: #e2e1e6 1px solid;
+  //border-bottom: #e2e1e6 1px solid;
   transition: all 0.5s;
 }
 .header .header-right .header-right-user .avatar {
