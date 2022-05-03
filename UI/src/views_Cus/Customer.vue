@@ -34,3 +34,12 @@ export default {
     }
 }
 </script>
+<style lang="css" >
+@import "../../public/assets/css/maicons.css";
+@import "../../public/assets/css/bootstrap.css";
+@import "../../public/assets/vendor/owl-carousel/css/owl.carousel.css";
+@import "../../public/assets/vendor/animate/animate.css";
+@import "../../public/assets/css/theme.css";
+
+@import "~bootstrap/dist/css/bootstrap.css";
+</style>

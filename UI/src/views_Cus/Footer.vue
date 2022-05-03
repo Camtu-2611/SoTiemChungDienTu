@@ -3,51 +3,33 @@
     <div class="container">
       <div class="row px-md-3">
         <div class="col-sm-6 col-lg-3 py-3">
-          <h5>Company</h5>
+          <h5>Hệ thống One-health</h5>
           <ul class="footer-menu">
-            <li><a href="#">About Us</a></li>
-            <li><a href="#">Career</a></li>
-            <li><a href="#">Editorial Team</a></li>
-            <li><a href="#">Protection</a></li>
+            <li><a @click="$router.push({ name: 'STC-dien-tu' })">Trang chủ</a></li>
           </ul>
         </div>
         <div class="col-sm-6 col-lg-3 py-3">
-          <h5>More</h5>
+          <h5>Đăng ký tiêm chủng</h5>
           <ul class="footer-menu">
-            <li><a href="#">Terms & Condition</a></li>
-            <li><a href="#">Privacy</a></li>
-            <li><a href="#">Advertise</a></li>
-            <li><a href="#">Join as Doctors</a></li>
+            <li><a  @click="$router.push({ name: 'dang-ky-tiem' })">Đăng ký ngay</a></li>
           </ul>
         </div>
         <div class="col-sm-6 col-lg-3 py-3">
-          <h5>Our partner</h5>
+          <h5>Tư vấn tiêm chủng</h5>
           <ul class="footer-menu">
-            <li><a href="#">One-Fitness</a></li>
-            <li><a href="#">One-Drugs</a></li>
-            <li><a href="#">One-Live</a></li>
+            <li><a @click="$router.push({ name: 'dang-ky-tiem' })">Tư vấn ngay</a></li>
           </ul>
         </div>
         <div class="col-sm-6 col-lg-3 py-3">
-          <h5>Contact</h5>
-          <p class="footer-link mt-2">351 Willow Street Franklin, MA 02038</p>
-          <a href="#" class="footer-link">701-573-7582</a>
-          <a href="#" class="footer-link">healthcare@temporary.net</a>
-
-          <h5 class="mt-3">Social Media</h5>
-          <div class="footer-sosmed mt-3">
-            <a href="#" target="_blank"><span class="mai-logo-facebook-f"></span></a>
-            <a href="#" target="_blank"><span class="mai-logo-twitter"></span></a>
-            <a href="#" target="_blank"><span class="mai-logo-google-plus-g"></span></a>
-            <a href="#" target="_blank"><span class="mai-logo-instagram"></span></a>
-            <a href="#" target="_blank"><span class="mai-logo-linkedin"></span></a>
-          </div>
+          <h5>Liên hệ hỗ trợ</h5>
+          <a href="#" class="footer-link">+00 123 44556666</a>
+          <a href="#" class="footer-link">SoTiemChung@gmail.com</a>
         </div>
       </div>
 
       <hr>
 
-      <p id="copyright">Copyright &copy; 2020 <a href="https://macodeid.com/" target="_blank">MACode ID</a>. All right reserved</p>
+      <p id="copyright"> <a @click="$router.push({ name: 'STC-dien-tu' })">One-health</a>. Sổ tiêm chủng điện tử</p>
     </div>
   </footer>
 </template>

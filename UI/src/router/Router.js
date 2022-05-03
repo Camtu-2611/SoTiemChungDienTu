@@ -17,6 +17,7 @@ import CTBaoDuong from '@/views/baoduong/CTBaoDuong'
 import Admin from '@/views/Admin'
 import Home from '@/views_Cus/Home'
 import DKTiem from '@/views_Cus/DKTiem'
+import TrangCaNhan from '@/views_Cus/TrangCaNhan'
 import Customer from '@/views_Cus/Customer'
 import Signin from "@/signin/Signin";
 import InjectionRegister from "@/views/injection-register/InjectionRegister";
@@ -43,6 +44,7 @@ export const router = new VueRouter({
         //{ path: '/admin', component: Admin, name: "admin" },      
         { path: '/dang-ky-tiem', component: DKTiem, name: "dang-ky-tiem" },      
         { path: '/', component: Signin, name: "dang-nhap" },      
-        { path: '/customer', component: Home, name: "STC-dien-tu" },      
+        { path: '/customer', component: Home, name: "STC-dien-tu" },   
+        { path: '/trangcanhan', component: TrangCaNhan, name: "trang-ca-nhan" },        
     ]
 })

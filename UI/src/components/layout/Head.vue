@@ -18,10 +18,9 @@
           </div>
           <div class="col-sm-4 text-right text-sm">
             <div class="social-mini-button">
-              <a href="#"><span class="mai-logo-facebook-f"></span></a>
-              <a href="#"><span class="mai-logo-twitter"></span></a>
-              <a href="#"><span class="mai-logo-dribbble"></span></a>
-              <a href="#"><span class="mai-logo-instagram"></span></a>
+              <a class="btn"  @click="$router.push({ name: 'trang-ca-nhan' })">Trang cá nhân</a>
+              <div class="btn btn-primary"  @click="$router.push({ name: 'dang-nhap' })">Đăng xuất</div>
+             
             </div>
           </div>
         </div>
@@ -74,14 +73,13 @@
             >
               <a class="nav-link">Trang chủ</a>
             </li>
-            <div
-              class="nav-item-text"
-              @click="$router.push({ name: 'dang-ky-tiem' })"
-              :class="{ 'option-focus': currentRouteName == '/dang-ky-tiem' }"
+            <li 
+            class="nav-item"
+             @click="$router.push({ name: 'dang-ky-tiem' })"
+             :class="{ 'option-focus': currentRouteName == '/dang-ky-tiem' }"
             >
-              Đăng ký tiêm
-            </div>
-
+              <a class="nav-link">Đăng ký tiêm</a>
+            </li>
             <li class="nav-item">
               <a class="nav-link" href="doctors.html">vắc xin</a>
             </li>
@@ -91,10 +89,9 @@
             <li class="nav-item">
               <a class="nav-link" href="contact.html">Tư vấn</a>
             </li>
-            <li class="nav-item">
-              <a class="btn btn-primary" href="signup.html">Đăng xuất</a>
-            </li>
+           
           </ul>
+           
         </div>
         <!-- .navbar-collapse -->
       </div>

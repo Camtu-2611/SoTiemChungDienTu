@@ -7,7 +7,7 @@
         <span class="subhead">Bảo vệ chính mình, người thân và cộng đồng</span> <br><br>
  
          <div class="btn btn-primary" 
-             @click="$router.push({ name: 'khauhao' })"
+             @click="$router.push({ name: 'dang-ky-tiem' })"
             >
            Tư vấn ngay
             </div>

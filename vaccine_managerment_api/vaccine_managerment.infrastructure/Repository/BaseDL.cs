@@ -17,7 +17,7 @@ namespace vaccine_managerment.infrastructure
         protected string _tableName = string.Empty;
 
         //Chuỗi kết nối đến CSDL
-        protected string _connectionString = "Data Source=NCTU2;Initial Catalog=Vaccine_management;Integrated Security=True";
+        protected string _connectionString = "Data Source=DESKTOP-9D0EPU6\\SQLEXPRESS;Initial Catalog=Vaccine_management;Integrated Security=True";
 
         //Khai báo kết nối
         protected IDbConnection _dbConnection;
@@ -71,13 +71,13 @@ namespace vaccine_managerment.infrastructure
 
         public int Insert(T entity)
         {
-            var keyprop = GetKeyProperty();
-            var keyValue = keyprop.GetValue(entity);
-            if (keyValue == null || keyValue.ToString() == "")
-            {
-                var newValue = new Guid();
-                keyprop.SetValue(keyprop.Name, newValue);
-            }
+            //var keyprop = GetKeyProperty();
+            //var keyValue = keyprop.GetValue(entity);
+            //if (keyValue == null || keyValue.ToString() == "" || keyValue.ToString() == Guid.Empty.ToString())
+            //{
+            //    var newValue = Guid.NewGuid();
+            //    keyprop.SetValue(keyprop.Name, newValue);
+            //}
             var storeName = $"Proc_Insert{_tableName}";
             var storeParam = entity;
             var rowAffects = _dbConnection.Execute(storeName,

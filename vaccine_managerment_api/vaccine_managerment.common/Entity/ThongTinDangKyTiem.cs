@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,6 +12,7 @@ namespace vaccine_managerment.common
         /// <summary>
         /// khóa chính
         /// </summary>
+        [Key]
         public Guid iddangky { get; set; }
 
         public string hoten { get; set; }
