@@ -18,6 +18,10 @@ namespace vaccine_managerment.common
         /// <summary>
         /// mã vắc xin
         /// </summary>
+        public string tenvacxin { get; set; }
+        /// <summary>
+        /// tên vắc xin
+        /// </summary>
         public string mavacxin { get; set; }
 
         /// <summary>

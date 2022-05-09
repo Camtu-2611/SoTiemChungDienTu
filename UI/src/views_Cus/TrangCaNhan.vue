@@ -92,6 +92,14 @@
         </template>
       </v-data-table>
     </div>
+     <div class="container">
+      <h5>DANH SÁCH VACXIN ĐÃ ĐĂNG KÝ TIÊM</h5>
+      <v-data-table :headers="headers" :items="desserts" class="elevation-1">
+        <template v-slot:header.name="{ header }">
+          {{ header.text.toUpperCase() }}
+        </template>
+      </v-data-table>
+    </div>
   </div>
 </template>
 

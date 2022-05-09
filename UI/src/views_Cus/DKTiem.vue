@@ -39,8 +39,6 @@
         <v-stepper-step :complete="e1 > 2" step="2"> Bước 2 </v-stepper-step>
 
         <v-divider></v-divider>
-
-        <v-stepper-step step="3"> Bước 3 </v-stepper-step>
       </v-stepper-header>
 
       <v-stepper-items>
@@ -168,21 +166,25 @@
                         >Loại vắc xin muốn tiêm</label
                       >
                       <v-container fluid>
-                        <p>{{ thongtinDK.danhsachvacxin }}</p>
+                      
                         <v-row>
-                          <v-col cols="12" sm="6" md="6">
+                          <v-col 
+                          cols="12" sm="6" md="6"
+                          v-for="(record, index) in listRecord"
+                          :key="index"
+                          >
                             <v-checkbox
                               v-model="thongtinDK.danhsachvacxin"
-                              label="Vacxin 6 trong 1 Hexaxim(6in1)"
-                              value="VX01"
+                              :label="record.tenvacxin"
+                              :value="record.mavacxin"
                             ></v-checkbox>
-                             <v-checkbox
+                             <!-- <v-checkbox
                               v-model="thongtinDK.danhsachvacxin"
                               label="Vacxin 6 trong 1"
                               value="VX02"
-                            ></v-checkbox>
+                            ></v-checkbox> -->
                           </v-col>
-                          <v-col cols="12" sm="6" md="6">
+                          <!-- <v-col cols="12" sm="6" md="6">
                             <v-checkbox
                               v-model="thongtinDK.danhsachvacxin"
                               label="Vacxin viêm gan B"
@@ -193,35 +195,23 @@
                               label="Vacxin B"
                               value="VX04"
                             ></v-checkbox>
-                          </v-col>
+                          </v-col> -->
                           
                         </v-row>
                       </v-container>
+                      
                     </div>
+                
                   </div>
                 </form>
               </div>
           </v-card>
 
-          <v-btn color="primary" @click="e1 = 3"> Tiếp tục </v-btn>
+           <v-btn color="primary" @click="insertRecord()"> Đăng ký </v-btn>
 
-          <v-btn text> Hủy </v-btn>
+          <v-btn text @click="e1 = 1"> Quay lại </v-btn>
         </v-stepper-content>
 
-        <v-stepper-content step="3">
-          <v-card class="mb-12" color="#FFFFFF" height="350px">
-            <v-container fluid>
-              <v-checkbox
-                v-model="checkbox1"
-                :label="`Tôi xác nhận đã điền đúng các thông tin: ${checkbox1.toString()}`"
-              ></v-checkbox>
-            </v-container>
-          </v-card>
-
-          <v-btn color="primary" @click="insertRecord()"> Đăng ký </v-btn>
-
-          <v-btn text> Hủy </v-btn>
-        </v-stepper-content>
       </v-stepper-items>
     </v-stepper>
   </div>
@@ -235,7 +225,6 @@ export default {
     return {
       e1: 1,
       selected: [""],
-      checkbox1: false,
       thongtinDK: {},
       defaultthongtinDK: {
         hoten:"",
@@ -252,12 +241,20 @@ export default {
         nguoichinhsua:"",
         ngaychinhsua:new Date().toISOString()
 
-      }
+      },
+      listRecord: [],
+      vacxins:[]
+
     };
   },
   created(){
   this.thongtinDK=this.defaultthongtinDK
+  this.getAllRecord()
   },
+  //  created:function(){
+  //       this.danhsach_vacxin();
+  //     },
+
   methods: {
     /**
      * Thực hiện thêm mới bản ghi
@@ -273,12 +270,40 @@ export default {
           .then(() => {
             // me.$refs.loading.hideLoading();
             console.log("106")
+           this.$router.push({ name: 'STC-dien-tu' })
           })
           .catch(() => {});
       } catch (error) {
         console.log(error);
       }
     },
+
+  /**
+     * Thực hiện lấy toàn bộ bản ghi của Vacxin
+     * */
+    async getAllRecord() {
+      try {
+        var me = this;
+        await axios
+          .get("http://localhost:64016/api/Vacxin")
+          .then((response) => {
+            me.listRecord = response.data.data;
+            me.totalRecord = response.data.length;
+          })
+          .catch(() => {});
+      } catch (error) {
+        console.log(error);
+      }
+    },
+     /**
+     * Thực hiện lấy toàn bộ bản ghi của Vacxin
+     * */
+  danhsach_vacxin(){
+           this.axios.get("http://localhost:64016/api/Vacxin").then((response)=>{
+             this.vacxins=response.data;
+            });
+          }
+
   },
   
 }
