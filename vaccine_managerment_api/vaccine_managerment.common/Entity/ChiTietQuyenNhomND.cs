@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace vaccine_managerment.common
 {
-    public class ChiTietQuyenNhomND:BaseEntity
+    public class ChiTietQuyenNhomND
     {
         public string manhomnd { get; set; }
 

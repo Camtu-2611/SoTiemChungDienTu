@@ -21,12 +21,15 @@ import TrangCaNhan from '@/views_Cus/TrangCaNhan'
 import Customer from '@/views_Cus/Customer'
 import Signin from "@/signin/Signin";
 import InjectionRegister from "@/views/injection-register/InjectionRegister";
+import InjectionBooks from "@/views/injection_books/InjectionBooks";
+
 Vue.use(VueRouter)
 
 export const router = new VueRouter({
     routes: [
        // { path: '/', component: Home, name: "home" },
-        { path: '/asset', component: Asset, name: "asset" },
+        { path: '/admin', component: InjectionBooks, name: "admin" },
+        { path: '/admin/injection-books', component: InjectionBooks, name: "injection-books" },
         { path: '/asset/increase', component: IncreaseAsset, name: "increase" },
         { path: '/asset/evaluate', component: EvaluateAsset, name: "evaluate" },
         { path: '/search', component: SearchAsset, name: "search" },
