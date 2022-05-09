@@ -54,7 +54,7 @@ export default {
       this.redirectString = redirectString;
       this.isShow = showLogin;
       if (this.redirectString === 'admin') {
-        this.$router.push({ name: "asset" });
+        this.$router.push({ name: "admin" });
       } else if (this.redirectString === 'customer') {
         this.$router.push({ name: "STC-dien-tu" });
       }

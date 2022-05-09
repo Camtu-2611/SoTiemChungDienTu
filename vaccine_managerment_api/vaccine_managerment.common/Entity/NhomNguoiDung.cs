@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace vaccine_managerment.common
 {
-    public class NhomNguoiDung:BaseEntity
+    public class NhomNguoiDung
     {
         /// <summary>
         /// id nhóm người dùng - khóa chính
