@@ -30,6 +30,8 @@ import Head from "./components/layout/Head.vue";
 import Home from "./views_Cus/Home.vue";
 import Footer from "./views_Cus/Footer.vue";
 
+
+
 export default {
   name: "App",
 
@@ -80,6 +82,7 @@ export default {
 @import "../public/assets/vendor/owl-carousel/css/owl.carousel.css";
 @import "../public/assets/vendor/animate/animate.css";
 @import "../public/assets/css/theme.css";
+
 
 @import "~bootstrap/dist/css/bootstrap.css";
 

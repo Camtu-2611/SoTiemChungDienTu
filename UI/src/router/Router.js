@@ -17,6 +17,9 @@ import CTBaoDuong from '@/views/baoduong/CTBaoDuong'
 import Admin from '@/views/Admin'
 import Home from '@/views_Cus/Home'
 import DKTiem from '@/views_Cus/DKTiem'
+import Vacxin from '@/views_Cus/Vacxin'
+import Camnang from '@/views_Cus/Camnang'
+import Tuvan from '@/views_Cus/Tuvan'
 import TrangCaNhan from '@/views_Cus/TrangCaNhan'
 import Customer from '@/views_Cus/Customer'
 import Signin from "@/signin/Signin";
@@ -48,6 +51,9 @@ export const router = new VueRouter({
         { path: '/dang-ky-tiem', component: DKTiem, name: "dang-ky-tiem" },      
         { path: '/', component: Signin, name: "dang-nhap" },      
         { path: '/customer', component: Home, name: "STC-dien-tu" },   
-        { path: '/trangcanhan', component: TrangCaNhan, name: "trang-ca-nhan" },        
+        { path: '/trangcanhan', component: TrangCaNhan, name: "trang-ca-nhan" },  
+        { path: '/vac-xin', component: Vacxin, name: "vac-xin" },       
+        { path: '/cam-nang', component: Camnang, name: "cam-nang" },   
+        { path: '/tu-van', component: Tuvan, name: "tu-van" },   
     ]
 })

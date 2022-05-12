@@ -4,6 +4,7 @@
       <div class="container">
         <div class="row">
           <div class="col-sm-8 text-sm">
+            
             <div class="site-info">
               <a href="#"
                 ><span class="mai-call text-primary"></span> +00 123 4455
@@ -36,7 +37,7 @@
           ><span class="text-primary">One</span>-Health</a
         >
 
-        <form action="#">
+        <!-- <form action="#">
           <div class="input-group input-navbar">
             <div class="input-group-prepend">
               <span class="input-group-text" id="icon-addon1"
@@ -51,7 +52,7 @@
               aria-describedby="icon-addon1"
             />
           </div>
-        </form>
+        </form> -->
 
         <button
           class="navbar-toggler"
@@ -80,14 +81,26 @@
             >
               <a class="nav-link">Đăng ký tiêm</a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="doctors.html">vắc xin</a>
+             <li 
+            class="nav-item"
+             @click="$router.push({ name: 'vac-xin' })"
+             :class="{ 'option-focus': currentRouteName == '/vac-xin' }"
+            >
+              <a class="nav-link">Vắc xin</a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="blog.html">Cẩm nang tiêm chủng</a>
+             <li 
+            class="nav-item"
+             @click="$router.push({ name: 'cam-nang' })"
+             :class="{ 'option-focus': currentRouteName == '/cam-nang' }"
+            >
+              <a class="nav-link">Cẩm nang tiêm chủng</a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="contact.html">Tư vấn</a>
+             <li 
+            class="nav-item"
+             @click="$router.push({ name: 'tu-van' })"
+             :class="{ 'option-focus': currentRouteName == '/tu-van' }"
+            >
+              <a class="nav-link">Tư vấn</a>
             </li>
            
           </ul>
@@ -125,5 +138,5 @@ export default {
 };
 </script>
 
-<style>
+<style >
 </style>

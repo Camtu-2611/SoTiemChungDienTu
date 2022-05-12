@@ -7,7 +7,7 @@
         <span class="subhead">Bảo vệ chính mình, người thân và cộng đồng</span> <br><br>
  
          <div class="btn btn-primary" 
-             @click="$router.push({ name: 'dang-ky-tiem' })"
+             @click="$router.push({ name: 'tu-van' })"
             >
            Tư vấn ngay
             </div>
@@ -26,7 +26,7 @@
               <div class="circle-shape bg-secondary text-white">
                 <span class="mai-chatbubbles-outline"></span>
               </div>
-              <p><span>Chat</span> với Bác sĩ</p>
+              <p><span>Tư vấn ngay</span> </p>
             </div>
           </div>
           <div class="col-md-4 py-3 py-md-0">
@@ -34,7 +34,7 @@
               <div class="circle-shape bg-primary text-white">
                 <span class="mai-shield-checkmark"></span>
               </div>
-              <p><span>Đăng ký</span>tiêm</p>
+              <p><span>Đăng ký tiêm</span></p>
             </div>
           </div>
           <div class="col-md-4 py-3 py-md-0">
@@ -42,7 +42,7 @@
               <div class="circle-shape bg-accent text-white">
                 <span class="mai-basket"></span>
               </div>
-              <p><span>Vắc</span>xin</p>
+              <p><span>Vắc xin</span></p>
             </div>
           </div>
         </div>
@@ -53,7 +53,7 @@
       <div class="container">
         <div class="row align-items-center">
           <div class="col-lg-6 py-3 wow fadeInUp">
-            <h1>NHỮNG ĐIỀU CẦN BIẾT TRƯỚC<br>KHI TIÊM CHỦNG</h1>
+            <h2>NHỮNG ĐIỀU CẦN BIẾT TRƯỚC<br>KHI TIÊM CHỦNG</h2>
             <p class="text-grey mb-4">Khám sàng lọc trước tiêm chủng <br>
 
               1. Tại sao cần khám sàng lọc trước khi tiêm chủng <br>
@@ -63,7 +63,12 @@
               Vì vậy, người nhà của trẻ hay người đi tiêm chủng và bác sĩ cần hợp tác với nhau để đảm bảo việc tiêm chủng là đúng thời điểm, hiệu quả và an toàn.
               
               Kết quả khám sàng lọc trước tiêm chủng được căn cứ trên những thông tin người nhà hay người đi tiêm chủng cung cấp cho bác sĩ và những thông tin bác sĩ phát hiện sau khi thăm khám.</p>
-            <a href="about.html" class="btn btn-primary">Xem thêm</a>
+              <div class="btn btn-primary" 
+             @click="$router.push({ name: 'cam-nang' })"
+            >
+           Xem thêm
+            </div>
+           
           </div>
           <div class="col-lg-6 wow fadeInRight" data-wow-delay="400ms">
             <div class="img-place custom-img-1">
@@ -79,7 +84,7 @@
     <div class="container">
       <h1 class="text-center mb-5 wow fadeInUp">Dịch vụ tiêm chủng</h1>
 
-      <div class="owl-carousel wow fadeInUp" id="doctorSlideshow">
+        <div class="owl-carousel wow fadeInUp" id="doctorSlideshow">
         <div class="item">
           <div class="card-doctor">
             <div class="header">
@@ -161,7 +166,7 @@
 
   <div class="page-section bg-light">
     <div class="container">
-      <h1 class="text-center wow fadeInUp">Tin tức</h1>
+      <h1 class="text-center wow fadeInUp">Cẩm nang tiêm chủng</h1>
       <div class="row mt-5">
         <div class="col-lg-4 py-2 wow zoomIn">
           <div class="card-blog">
@@ -236,8 +241,13 @@
           </div>
         </div>
 
-        <div class="col-12 text-center mt-4 wow zoomIn">
-          <a href="blog.html" class="btn btn-primary">Xem thêm</a>
+        <div class="col-12 text-center mt-4 wow zoomIn"
+            
+             @click="$router.push({ name: 'cam-nang' })"
+            >
+           Tư vấn ngay
+         
+           
         </div>
 
       </div>
@@ -280,8 +290,9 @@
       </form>
     </div>
   </div> <!-- .page-section -->
-
-
+<script type="application/javascript" defer src="../public/assets/js/theme.js"></script>
+<script type="application/javascript" defer src="../public/assets/js/jquery-3.5.1.min.js"></script>
+<script type="application/javascript" defer src="../public/assets/js/bootstrap.bundle.min.js"></script>
    </div>
 </template>
 
@@ -290,9 +301,31 @@ export default {
     name: 'Home',
     data() {
         return {
+           e1: 1,
+      selected: [""],
+      thongtinDK: {},
+      defaultthongtinDK: {
+        hoten:"",
+        ngaysinh:"",
+        gioitinh:"",
+        sodienthoai:"",
+        email:"",
+        diachi:"",
+        tentrungtam:"",
+        ngaydangkytiem:"",
+        danhsachvacxin:[],
+        nguoitao:"",
+        ngaytao:new Date().toISOString(),
+        nguoichinhsua:"",
+        ngaychinhsua:new Date().toISOString()
+
+      },
+      listRecord: [],
+      listTrungTam:[],
             
         }
-    }
+    },
+    
 }
 </script>
 

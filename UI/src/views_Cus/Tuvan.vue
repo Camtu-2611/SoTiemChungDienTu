@@ -6,7 +6,7 @@
     >
       <div class="banner-section">
         <div class="container text-center wow fadeInUp">
-          <h3 class="font-weight-normal">ĐĂNG KÝ TIÊM CHỦNG</h3>
+          <h3 class="font-weight-normal">TƯ VẤN</h3>
           <nav aria-label="Breadcrumb">
             <ol
               class="

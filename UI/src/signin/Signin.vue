@@ -33,7 +33,7 @@
             </div>
             <div class="col-12 py-2 wow fadeInUp" data-wow-delay="300ms">
               <input
-                type="text"
+                type="password"
                 class="form-control"
                 placeholder="Mật khẩu.."
               />

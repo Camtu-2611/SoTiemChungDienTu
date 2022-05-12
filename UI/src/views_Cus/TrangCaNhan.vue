@@ -30,10 +30,20 @@
       </div>
       <!-- .banner-section -->
     </div>
-
+     <v-tabs v-model="tab">
+  <v-tab>
+     <h10>THÔNG TIN CÁ NHÂN</h10>
+</v-tab>
+<v-tab>
+      <h10>LỊCH SỬ TIÊM CHỦNG</h10>
+</v-tab>
+<v-tab>
+      <h10>DANH SÁCH VACXIN ĐÃ ĐĂNG KÝ TIÊM</h10>
+</v-tab>
+</v-tabs>
+    <v-tabs-items v-model="tab">
+      <v-tab-item>
     <div class="container">
-      <h5>THÔNG TIN CÁ NHÂN</h5>
-
       <form class="contact-form mt-5">
         <div class="row mb-3">
           <div class="col-sm-6 py-2 wow fadeInLeft">
@@ -84,22 +94,29 @@
         </div>
       </form>
     </div>
+    </v-tab-item>
+    
+    <v-tab-item>
     <div class="container">
-      <h5>LỊCH SỬ TIÊM CHỦNG</h5>
+    
       <v-data-table :headers="headers" :items="desserts" class="elevation-1">
         <template v-slot:header.name="{ header }">
           {{ header.text.toUpperCase() }}
         </template>
       </v-data-table>
     </div>
+    </v-tab-item>
+    <v-tab-item>
      <div class="container">
-      <h5>DANH SÁCH VACXIN ĐÃ ĐĂNG KÝ TIÊM</h5>
+     
       <v-data-table :headers="headers" :items="desserts" class="elevation-1">
         <template v-slot:header.name="{ header }">
           {{ header.text.toUpperCase() }}
         </template>
       </v-data-table>
     </div>
+    </v-tab-item>
+     </v-tabs-items>
   </div>
 </template>
 
@@ -137,6 +154,7 @@ export default {
         iron: "One-health, 16 Cau Giay",
       },
     ],
+    tab: null,
   }),
 };
 </script>
