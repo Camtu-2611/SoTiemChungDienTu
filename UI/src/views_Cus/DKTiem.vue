@@ -342,7 +342,7 @@ export default {
         console.log(error);
       }
     },
-
+  
   /**
      * Thực hiện lấy toàn bộ bản ghi của Vacxin
      * */
