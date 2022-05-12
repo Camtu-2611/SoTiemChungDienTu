@@ -41,12 +41,12 @@
               class="btn icon-refresh features-pane-item"
               title="Tải lại"
             ></div>
-            <div
+            <!-- <div
               id="preventLeftClick"
               class="btn icon-trash features-pane-item"
               @click="showDeleteDialog()"
               title="Xóa nhiều bản ghi"
-            ></div>
+            ></div> -->
           </div>
         </div>
 
@@ -193,12 +193,12 @@
                     @click="showDialog('update', TTDangKy.iddangky)"
                     title="Sửa"
                   ></div>
-                  <div
+                  <!-- <div
                     id="preventLeftClick"
                     class="table-icon icon-trash-table"
                     @click="showDeleteDialog('inRow')"
                     title="Xóa"
-                  ></div>
+                  ></div> -->
                   <div
                     class="table-icon icon-refresh-time"
                     title="Chức năng chưa phát triển"
@@ -219,13 +219,13 @@
           >
             Sửa
           </div>
-          <div
+          <!-- <div
             id="preventLeftClick"
             class="ctx-menu-item"
             @click="showDeleteDialog(listSelectRow[0])"
           >
             Xóa
-          </div>
+          </div> -->
         </div>
       </div>
 
@@ -292,16 +292,25 @@
 
       <div id="assetPopup"></div>
     </div>
+    <InjectionRegisterDetail
+      ref="ModalCreateInjectionRegister_ref"
+      :formMode="formMode"
+      :idDangKyUpdate="idDangKyUpdate"
+      @reload="reload"
+      @msgAlert="msgAlert"
+    />
   </div>
 </template>
 <script>
 import axios from "axios";
 import BaseLoading from "../../components/common/BaseLoading.vue";
+import InjectionRegisterDetail from "./InjectionRegisterDetail.vue"
 
 export default {
   name: "InjectionRegister",
   components: {
     BaseLoading,
+    InjectionRegisterDetail
   },
   data() {
     return {
@@ -379,6 +388,7 @@ export default {
         res.showWarning = false;
       }, 3000);
     },
+
     async getInjectionRegister(text) {
       if (text == "filter") {
         this.paging.pageNumber = 1;
@@ -420,8 +430,8 @@ export default {
     },
     /// todo hiển thị dialog thêm
     showDialog(text, Id) {
-      if (document.getElementById("ctxMenu") != null)
-        document.getElementById("ctxMenu").style.display = "none";
+      // if (document.getElementById("ctxMenu") != null)
+      //   document.getElementById("ctxMenu").style.display = "none";
       if (text == "insert") {
         this.formMode = "insert";
         this.alerMsg = "Thêm mới thành công";
@@ -430,11 +440,15 @@ export default {
         this.alerMsg = "Cập nhật thành công";
         this.idDangKyUpdate = Id;
       }
+      console.log("showw")
       setTimeout(() => {
-        this.$refs.ModalCreateAsset_ref.show();
+        this.$refs.ModalCreateInjectionRegister_ref.show();
+        console.log("showwư")
+
       }, 300);
       // debugger; // eslint-disable-line no-debugger
     },
+
     // todo tải lại dữ liệu
     reload(value) {
       if (value == true) {
