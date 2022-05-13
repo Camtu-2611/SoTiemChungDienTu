@@ -1,6 +1,6 @@
 <template>
-  <div v-show="isActive" class="modal-register">
-    <div class="modal-background"></div>
+  <div class="modal-register">
+    <!-- <div class="modal-background"></div> -->
     <div class="modal-content">
       <div class="header">
         <div v-if="formMode == 'insert'" class="title">Đăng ký tiêm</div>
@@ -16,7 +16,7 @@
         </div>
       </div>
 
-      <div class="content ">
+      <div class="content">
         <v-stepper v-model="e1" class="step-content">
           <v-stepper-header class="col-12">
             <v-stepper-step :complete="e1 > 1" step="1">
@@ -33,8 +33,8 @@
           </v-stepper-header>
 
           <v-stepper-items class="col-12">
-            <v-stepper-content step="1">
-              <v-card class="mb-6" color="#FFFFFF" height="100%">
+            <v-stepper-content step="1" style="height: 100% !important">
+              <v-card class="mb-6" color="#FFFFFF">
                 <div class="container">
                   <form class="contact-form mt-5">
                     <div class="row mb-3">
@@ -80,6 +80,7 @@
                         <input
                           type="email"
                           id="emailAddress"
+                          ref="emailAddress"
                           class="form-control"
                           placeholder="Email address.."
                           v-model="thongtinDK.email"
@@ -125,13 +126,15 @@
                 </div>
               </v-card>
 
-              <v-btn color="primary" @click="e1 = 2"> Tiếp tục </v-btn>
+              <div class="footer">
+                <v-btn color="primary" @click="e1 = 2"> Tiếp tục </v-btn>
 
-              <v-btn text> Hủy </v-btn>
+                <v-btn text class="ml-2"> Hủy </v-btn>
+              </div>
             </v-stepper-content>
 
-            <v-stepper-content step="2">
-              <v-card class="mb-6" color="#FFFFFF" height="100%">
+            <v-stepper-content step="2" style="height: 100% !important">
+              <v-card class="mb-6" color="#FFFFFF">
                 <div class="container">
                   <!-- <h4>THÔNG TIN DỊCH VỤ</h4> -->
 
@@ -284,18 +287,15 @@
                 </div>
               </v-card>
 
-              <v-btn color="primary" @click="insertRecord()"> Đăng ký </v-btn>
+              <div class="footer">
+                <v-btn color="primary" @click="insertRecord()"> Đăng ký </v-btn>
 
-              <v-btn text @click="e1 = 1"> Quay lại </v-btn>
+                <v-btn text class="ml-2" @click="e1 = 1"> Quay lại </v-btn>
+              </div>
             </v-stepper-content>
           </v-stepper-items>
         </v-stepper>
       </div>
-      <!-- <div class="footer">
-        <div class="btn btn-cancel" tabindex="0" @click="hide()">Hủy</div>
-
-        <div class="btn btn-save" tabindex="0" @click="save()">Lưu</div>
-      </div> -->
     </div>
     <BaseConfirm ref="baseConfirm" />
   </div>
@@ -307,12 +307,12 @@
 import axios from "axios";
 import DatePicker from "vue2-datepicker";
 //  import 'vue2-datepicker/locale/vi';
-import BaseConfirm from '@/components/common/baseControlAcounting/BaseConfirm'
+import BaseConfirm from "@/components/common/baseControlAcounting/BaseConfirm";
 
 export default {
   components: {
     DatePicker,
-    BaseConfirm
+    BaseConfirm,
   },
   props: {
     // listAssetType: Array,
@@ -399,6 +399,10 @@ export default {
       stateValidate: true,
     };
   },
+  created() {
+    this.getAllRecord(); // lấy thông tin vắc xin
+    this.show();
+  },
   methods: {
     /**
      * Thực hiện validate input bị trống
@@ -425,12 +429,21 @@ export default {
           1,
           "Email không được để trống"
         );
+        // var input = this.$refs
+        this.$nextTick(() => {
+          console.log(this.$refs.emailAddress)
+          this.$refs.emailAddress.focus();
+        });
         this.stateValidate = false;
         return false;
+      } else {
+        this.stateValidate = true;
+        return true;
       }
     },
-    validateData(){
-      this.validateEmail()
+    validateData() {
+      this.validateEmail();
+      return this.stateValidate;
     },
 
     // todo reset lại các input
@@ -451,22 +464,28 @@ export default {
     },
     // todo hiện dialog
     async show() {
-      console.log("show detail");
-      console.log(this.isActive);
       var res = this;
       this.isActive = true;
       this.dup = false;
-      console.log(this.isActive);
-
+      console.log(this.idDangKyUpdate);
+      console.log(this.formMode);
       if (this.formMode == "update") {
         await axios
           .get(
-            "http://localhost:64016/api/ThongTinDangKyTiem" +
+            "http://localhost:64016/api/ThongTinDangKyTiem/" +
               this.idDangKyUpdate
           )
           .then((Response) => {
-            res.asset.departmentId = "";
-            res.asset = Response.data.data;
+            res.thongtinDK = Response.data.data;
+            if (res.thongtinDK) {
+              res.thongtinDK.ngaysinh = this.formatDate(
+                res.thongtinDK.ngaysinh
+              );
+              res.thongtinDK.ngaydangkytiem = this.formatDate(
+                res.thongtinDK.ngaydangkytiem
+              );
+              console.log(res.thongtinDK.ngaysinh);
+            }
           })
           .catch((error) => {
             this.errorMessage = error.message;
@@ -480,7 +499,8 @@ export default {
     // todo ẩn dialog
     hide() {
       this.isActive = false;
-      document.getElementsByClassName("body-right")[0].style.zIndex = "0";
+      this.$router.push({ name: "injection-register" });
+      //document.getElementsByClassName("body-right")[0].style.zIndex = "0";
     },
 
     // todo select tất cả nội dung ô input khi click
@@ -492,59 +512,27 @@ export default {
       });
     },
 
-    // todo lấy dữ liệu tên phòng ban
-    getDepartmentName() {
-      var res = this;
-      this.listDepartment.forEach((element) => {
-        if (element.departmentId == res.asset.departmentId) {
-          res.asset.departmentName = element.departmentName;
-        }
-      });
-    },
-
-    //todo lấy dữ liệu tên loại tài sản
-    getAssetTypeName() {
-      var res = this;
-      this.listAssetType.forEach((element) => {
-        if (element.assetTypeId == res.asset.assetTypeId) {
-          res.asset.assetTypeName = element.assetTypeName;
-        }
-      });
-    },
-
     // todo chỉ cho phép nhập số
     formatNumber(e) {
       var key = e.key;
       if (!/^\d+/g.test(key)) {
         e.preventDefault();
       }
-
-      // if((this.asset.originalPrice == null ) && this.asset.wearValue == null)
-      // {
-      //   this.asset.originalPrice = "0";
-      //   this.asset.wearValue  = "0"
-      // }
-      // if( this.asset.originalPrice == '')
-      // {
-      //   this.asset.originalPrice = "0";
-      // }
-      // if(this.asset.wearValue == '')
-      // {
-      //   this.asset.wearValue  = "0"
-      // }
-
-      // setTimeout(() => {
-      //   if (
-      //     parseInt(this.asset.originalPrice) <= parseInt(this.asset.wearValue)
-      //   ) {
-      //     this.asset.wearValue = null;
-      //   }
-      // }, 200);
     },
 
     //todo định dạng kiểu tiền tệ
     formatMoney(money) {
       return money.replace(/\B(?=(\d{3})+(?!\d))/g, `.`);
+    },
+    // định dạng ngày
+    formatDate(inputDate) {
+      var a = new Date(inputDate);
+      var month = a.getMonth();
+      var day = a.getDate();
+      if (month < 10) month = "0" + month.toString();
+      if (day < 10) day = "0" + day.toString();
+      var date = a.getFullYear().toString() + "-" + month + "-" + day;
+      return date;
     },
     /**
      * ẩn hết những ngày sau ngày hiện tại
@@ -706,21 +694,41 @@ export default {
         if (this.validateData()) {
           let dsdangky = this.thongtinDK.danhsachvacxin.toString();
           this.thongtinDK.danhsachvacxin = dsdangky;
-          await axios
-            .post(
-              "http://localhost:64016/api/ThongTinDangKyTiem",
-              this.thongtinDK
-            )
-            .then(() => {
-              console.log("106");
-              alert("Đăng ký tiêm thành công !");
-              this.$router.push({ name: "STC-dien-tu" });
-            })
-            .catch(() => {});
-        }
-        else{
-          console.log("email empty")
-          return
+          if (this.formMode == "insert") {
+            await axios
+              .post(
+                "http://localhost:64016/api/ThongTinDangKyTiem",
+                this.thongtinDK
+              )
+              .then(() => {
+                // alert("Đăng ký tiêm thành công !");
+                this.$refs.baseConfirm.showForm(
+                  "sucess",
+                  1,
+                  "Đăng ký tiêm thành công !"
+                );
+                this.$router.push({ name: "injection-register" });
+              })
+              .catch(() => {});
+          } else if (this.formMode == "update") {
+            await axios
+              .put(
+                `http://localhost:64016/api/ThongTinDangKyTiem/${this.idDangKyUpdate}`,
+                this.thongtinDK
+              )
+              .then(() => {
+                // alert("Đăng ký tiêm thành công !");
+                this.$refs.baseConfirm.showForm(
+                  "sucess",
+                  1,
+                  "Sửa thông tin thành công !"
+                );
+                this.$router.push({ name: "injection-register" });
+              })
+              .catch(() => {});
+          }
+        } else {
+          return;
         }
       } catch (error) {
         console.log(error);
@@ -784,7 +792,21 @@ export default {
       return this.formatMoney(this.numberToString(this.asset.wearValue));
     },
   },
-  filters: {},
+  filters: {
+    // định dạng ngày
+    formatDate(inputDate) {
+      var a = new Date(inputDate);
+      var month = a.getMonth();
+      var day = a.getDate();
+      if (month < 10) month = "0" + month.toString();
+      if (day < 10) day = "0" + day.toString();
+      var date = day + "-" + month + "-" + a.getFullYear().toString();
+      return date;
+    },
+    // moment: function (date) {
+    // return moment(date).format('dd-MM-yyyy');
+    // }
+  },
   mounted() {
     this.selectAll();
   },
@@ -793,12 +815,8 @@ export default {
 
 <style lang="scss" scoped>
 .modal-register {
-  position: fixed;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  z-index: 1000;
+  width: 100%;
+  height: 100%;
   font-size: 14px;
 }
 .class-error {
@@ -880,18 +898,13 @@ input.required {
 }
 
 .modal-content {
-  position: absolute;
-  top: calc(50% - 300px);
-  left: calc(50% - 380px);
-  width: 705px;
-  height: 530px;
+  width: 100%;
+  height: 100%;
   background-color: white;
   resize: both;
   overflow: auto;
   min-height: 530px;
   min-width: 705px;
-  height: 600px;
-  width: 760px;
 
   .header {
     width: 100%;
@@ -925,7 +938,7 @@ input.required {
   .content {
     width: 100%;
     height: 100%;
-    padding: 6px 6px 6px 6px;
+    // padding: 6px 6px 6px 6px;
     box-sizing: border-box;
     overflow-y: auto;
     overflow-x: hidden;
@@ -933,6 +946,29 @@ input.required {
       width: 100%;
       height: 100%;
       box-sizing: border-box;
+
+      .v-stepper__step {
+        padding: 12px !important;
+      }
+      .v-stepper__items {
+        height: calc(100% - 70px) !important;
+        .v-stepper__content {
+          padding: 0 !important;
+          .v-stepper__wrapper {
+            height: 100% !important;
+          }
+          .v-sheet.v-card {
+            height: calc(100% - 75px);
+          }
+          .v-sheet.v-card:not(.v-sheet--outlined) {
+            box-shadow: none;
+          }
+        }
+      }
+      .contact-form {
+        width: 100%;
+        // height: calc(100% - 100px)
+      }
     }
     .input-field {
       float: left;
@@ -950,7 +986,7 @@ input.required {
         box-sizing: border-box;
         border: #e4e4e4 1px solid;
         // outline-color: lightgreen;
-        padding: 10px;
+        padding: 4px;
       }
     }
   }
@@ -958,11 +994,13 @@ input.required {
   .footer {
     width: 100%;
     height: 50px;
-    background-color: #f5f5f5;
     display: flex;
     align-items: center;
-    position: relative;
-    padding: 0 16px;
+    position: absolute;
+    padding: 10px;
+    bottom: 30px;
+    right: 20px;
+    justify-content: end;
   }
 }
 
@@ -989,16 +1027,16 @@ input.required {
   text-align: right;
 }
 
-input[type="date"] {
-  opacity: 1;
-  display: block;
-  background: url(../../assets/icon/calendar.svg) no-repeat;
-  width: 30px;
-  height: 30px;
-  border-width: thin;
-  margin-top: 20px;
-  transform: translateX(5px);
-}
+// input[type="date"] {
+//   opacity: 1;
+//   display: block;
+//   background: url(../../assets/icon/calendar.svg) no-repeat;
+//   width: 30px;
+//   height: 30px;
+//   border-width: thin;
+//   margin-top: 20px;
+//   transform: translateX(5px);
+// }
 // @import url("../../style/scss/common.scss");
 // @import url("../../style/scss/icon.scss");
 // @import url("../../style/scss/button.scss");

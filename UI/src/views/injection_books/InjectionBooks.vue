@@ -14,7 +14,7 @@
         <v-alert v-if="showWarning" id="required-choose" type="warning">{{
           alerMsg
         }}</v-alert>
-
+        <h5>Danh sách sổ tiêm</h5>
         <div class="features-pane">
           <div class="features-pane-left">
             <input
@@ -649,18 +649,14 @@ export default {
 .content {
   height: calc(100vh - 60px);
   width: calc(100% - 200px);
-//   margin-left: 8px;
-//   margin-right: 4px;
-//   margin-bottom: 4px;
-//   margin-top: 4px;
   transition: all 0.25s;
   background-color: white;
   user-select: none;
 }
 
 .content-nav {
-  height: 70px;
-  padding: 16px;
+  height: 80px;
+  margin: 8px;
   box-sizing: border-box;
 
   .features-pane {
@@ -753,7 +749,7 @@ export default {
 }
 
 .content-grid {
-  margin: 16px 16px 16px 16px;
+  margin: 8px;
   height: calc(100% - 149px);
   position: relative;
   overflow: auto;
@@ -793,9 +789,8 @@ export default {
   }
 }
 
-
 .content-nav {
-  padding-top: 26px;
+  // padding-top: 26px;
   padding-bottom: 6px;
 }
 .content-nav .features-pane {
@@ -816,7 +811,7 @@ export default {
 }
 
 .content-grid {
-  margin: 16px 16px 16px 16px;
+  // margin: 16px 16px 16px 16px;
   height: calc(100% - 165px);
   /* height: 100%; */
   position: relative;
@@ -851,9 +846,8 @@ export default {
 .content {
   position: relative;
   box-sizing: border-box;
-  margin-top: 6px;
   width: 100%;
-  height: calc(100% - 48px);
+  height: 100%;
 }
 
 table tr th {

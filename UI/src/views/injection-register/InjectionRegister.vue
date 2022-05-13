@@ -14,7 +14,7 @@
         <v-alert v-if="showWarning" id="required-choose" type="warning">{{
           alerMsg
         }}</v-alert>
-
+        <h5 class="mb-4">Danh sách đăng ký tiêm</h5>
         <div class="features-pane">
           <div class="features-pane-left">
             <input
@@ -31,7 +31,7 @@
           <div class="features-pane-right">
             <div
               class="btn-add-asset btn features-pane-item"
-              @click="showDialog('insert', 0)"
+              @click="showDetail('insert', 0)"
             >
               Thêm
             </div>
@@ -69,15 +69,6 @@
           <thead>
             <tr>
               <th style="text-align: center">STT</th>
-              <!-- <th
-                sortProp="code"
-                sortOrder="asc"
-                id="columnAssetCode"
-                class="hover-pointer"
-                style="text-align: center"
-              >
-                Mã đăng ký
-              </th> -->
               <th
                 sortProp="name"
                 sortOrder="asc"
@@ -159,7 +150,6 @@
               >
                 Danh sách vắc xin đã tiêm
               </th>
-              <th style="text-align: left">chức năng</th>
             </tr>
           </thead>
 
@@ -170,41 +160,19 @@
               v-bind:class="selectedRow(TTDangKy.iddangky) ? 'selected-row' : ''"
               @click="selectRow(TTDangKy.iddangky, $event)"
               @click.right="showContexMenu(TTDangKy.iddangky, $event)"
-              @dblclick="showDialog('update', TTDangKy.iddangky)"
+              @dblclick="showDetail('update', TTDangKy.iddangky)"
             >
               <td class="no-border-left">{{ index + 1 }}</td>
               <td>{{ TTDangKy.hoten }}</td>
-              <td>{{ TTDangKy.ngaysinh }}</td>
+              <td>{{ TTDangKy.ngaysinh | formatDate(TTDangKy.ngaysinh) }}</td>
               <td>{{ TTDangKy.gioitinh }}</td>
               <td>{{ TTDangKy.sodienthoai }}</td>
               <td>{{ TTDangKy.email }}</td>
               <td>{{ TTDangKy.diachi }}</td>
-              <td>{{ TTDangKy.ngaydangkytiem }}</td>
+              <td>{{ TTDangKy.ngaydangkytiem | formatDate(TTDangKy.ngaydangkytiem) }}</td>
               <td>{{ TTDangKy.tentrungtam }}</td>
               <td>{{ TTDangKy.danhsachvacxin }}</td>
-              <!-- <td style="text-align: right">
-                {{ asset.originalPrice | formatMoney(asset.originalPrice) }}
-              </td> -->
-              <td class="no-border-right">
-                <div class="features-box">
-                  <div
-                    :id="'tableRow' + index + '_edit'"
-                    class="table-icon icon-edit-pen"
-                    @click="showDialog('update', TTDangKy.iddangky)"
-                    title="Sửa"
-                  ></div>
-                  <!-- <div
-                    id="preventLeftClick"
-                    class="table-icon icon-trash-table"
-                    @click="showDeleteDialog('inRow')"
-                    title="Xóa"
-                  ></div> -->
-                  <div
-                    class="table-icon icon-refresh-time"
-                    title="Chức năng chưa phát triển"
-                  ></div>
-                </div>
-              </td>
+              
             </tr>
           </tbody>
           <BaseLoading ref="loadingTTDKT_reft" />
@@ -212,10 +180,10 @@
           <div v-show="getEmty" class="loading-emty">Không có dữ liệu</div>
         </table>
         <div class="ctx-menu" id="ctxMenu">
-          <div class="ctx-menu-item" @click="showDialog('insert', 0)">Thêm</div>
+          <div class="ctx-menu-item" @click="showDetail('insert', 0)">Thêm</div>
           <div
             class="ctx-menu-item"
-            @click="showDialog('update', listSelectRow[0])"
+            @click="showDetail('update', listSelectRow[0])"
           >
             Sửa
           </div>
@@ -429,9 +397,7 @@ export default {
         });
     },
     /// todo hiển thị dialog thêm
-    showDialog(text, Id) {
-      // if (document.getElementById("ctxMenu") != null)
-      //   document.getElementById("ctxMenu").style.display = "none";
+    showDetail(text, Id) {
       if (text == "insert") {
         this.formMode = "insert";
         this.alerMsg = "Thêm mới thành công";
@@ -440,13 +406,13 @@ export default {
         this.alerMsg = "Cập nhật thành công";
         this.idDangKyUpdate = Id;
       }
-      console.log("showw")
+      console.log(this.idDangKyUpdate)
       setTimeout(() => {
-        this.$refs.ModalCreateInjectionRegister_ref.show();
-        console.log("showwư")
+         this.$router.push({ name: "injection-register-detail" , params: {formMode:this.formMode, idDangKyUpdate: this.idDangKyUpdate}});
+        // this.$refs.ModalCreateInjectionRegister_ref.show();
+        // console.log("showwư")
 
       }, 300);
-      // debugger; // eslint-disable-line no-debugger
     },
 
     // todo tải lại dữ liệu
@@ -628,6 +594,19 @@ export default {
       } else alert("Trang không hợp lệ");
     },
   },
+
+  filters:{
+    // định dạng ngày
+    formatDate(inputDate) {
+      var a = new Date(inputDate);
+      var month = a.getMonth();
+      var day = a.getDate();
+      if (month < 10) month = "0" + month.toString();
+      if (day < 10) day = "0" + day.toString();
+      var date = day + "/" + month + "/" + a.getFullYear().toString();
+      return date;
+    },
+  }
 };
 </script>
 
@@ -687,18 +666,14 @@ export default {
 .content {
   height: calc(100vh - 60px);
   width: calc(100% - 200px);
-  //   margin-left: 8px;
-  //   margin-right: 4px;
-  //   margin-bottom: 4px;
-  //   margin-top: 4px;
   transition: all 0.25s;
   background-color: white;
   user-select: none;
 }
 
 .content-nav {
-  height: 70px;
-  padding: 16px;
+  height: 80px;
+  margin: 8px;
   box-sizing: border-box;
 
   .features-pane {
@@ -791,7 +766,7 @@ export default {
 }
 
 .content-grid {
-  margin: 16px 16px 16px 16px;
+  margin: 8px;
   height: calc(100% - 149px);
   position: relative;
   overflow: auto;
@@ -832,7 +807,7 @@ export default {
 }
 
 .content-nav {
-  padding-top: 26px;
+  // padding-top: 26px;
   padding-bottom: 6px;
 }
 .content-nav .features-pane {
@@ -853,7 +828,7 @@ export default {
 }
 
 .content-grid {
-  margin: 16px 16px 16px 16px;
+  // margin: 16px 16px 16px 16px;
   height: calc(100% - 165px);
   /* height: 100%; */
   position: relative;
@@ -888,9 +863,8 @@ export default {
 .content {
   position: relative;
   box-sizing: border-box;
-  margin-top: 6px;
   width: 100%;
-  height: calc(100% - 48px);
+  height: 100%;
 }
 
 table tr th {

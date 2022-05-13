@@ -3,10 +3,10 @@
     <div class="body-container">
       <Navbar />
       <div class="body-right">
-        <Header
+        <!-- <Header
           @activeFilterMenu="activeFilterMenu"
           :optionFilter="optionFilter"
-        />
+        /> -->
         <router-view
           tag="div"
           :isFilterMenu="isFilterMenu"
@@ -18,13 +18,13 @@
 </template>
 
 <script>
-import Header from "../components/layout/TheHeader.vue";
+// import Header from "../components/layout/TheHeader.vue";
 import Navbar from "../components/layout/TheNavbar.vue";
 
 export default {
     name: 'Admin',
     components: {
-    Header,
+    // Header,
     Navbar
   },
 //   props:{
