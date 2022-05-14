@@ -24,6 +24,7 @@ import TrangCaNhan from '@/views_Cus/TrangCaNhan'
 import Customer from '@/views_Cus/Customer'
 import Signin from "@/signin/Signin";
 import InjectionRegister from "@/views/injection-register/InjectionRegister";
+import InjectionRegisterDetail from "@/views/injection-register/InjectionRegisterDetail";
 import InjectionBooks from "@/views/injection_books/InjectionBooks";
 
 Vue.use(VueRouter)
@@ -46,6 +47,7 @@ export const router = new VueRouter({
         { path: '/asset/ctbaoduong/:state/:id', component: CTBaoDuong, name: "ctbaoduong" },
         { path: '/asset/owner-transfer-detail/:state/:id', component: OwnerTransferDetail, name: "owner-transfer-detail" }, 
         { path: '/injection-register', component: InjectionRegister, name: "injection-register" },      
+        { path: '/injection-register-detail', component: InjectionRegisterDetail, name: "injection-register-detail", props: true},      
 
         //{ path: '/admin', component: Admin, name: "admin" },      
         { path: '/dang-ky-tiem', component: DKTiem, name: "dang-ky-tiem" },      

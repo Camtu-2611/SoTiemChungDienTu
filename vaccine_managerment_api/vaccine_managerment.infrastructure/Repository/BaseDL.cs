@@ -17,7 +17,7 @@ namespace vaccine_managerment.infrastructure
         protected string _tableName = string.Empty;
 
         //Chuỗi kết nối đến CSDL
-        protected string _connectionString = "Data Source=DESKTOP-9D0EPU6\\SQLEXPRESS;Initial Catalog=Vaccine_management;Integrated Security=True";
+        protected string _connectionString = "Data Source=NCTU2;Initial Catalog=Vaccine_management;Integrated Security=True";
 
         //Khai báo kết nối
         protected IDbConnection _dbConnection;
@@ -40,9 +40,20 @@ namespace vaccine_managerment.infrastructure
         {
             // Thực hiện lấy thông tin một đối tượng
             var storeName = $"Proc_Get{_tableName}ById";
-
+            var storeGetByIdParamName = "";
             DynamicParameters dynamicParameters = new DynamicParameters();
-            var storeGetByIdParamName = $"@id{_tableName.ToLower()}";
+            if (_tableName == "ThongTinDangKyTiem")
+            {
+                storeGetByIdParamName = $"@iddangky";
+            }
+            else if( _tableName == "NhanVien")
+            {
+                storeGetByIdParamName = $"@idnhanvien";
+            }
+            else
+            {
+                storeGetByIdParamName = $"@id{_tableName.ToLower()}";
+            }
             dynamicParameters.Add(storeGetByIdParamName, entityId);
 
             var entity = _dbConnection.Query<T>(
@@ -71,13 +82,13 @@ namespace vaccine_managerment.infrastructure
 
         public int Insert(T entity)
         {
-            //var keyprop = GetKeyProperty();
-            //var keyValue = keyprop.GetValue(entity);
-            //if (keyValue == null || keyValue.ToString() == "" || keyValue.ToString() == Guid.Empty.ToString())
-            //{
-            //    var newValue = Guid.NewGuid();
-            //    keyprop.SetValue(keyprop.Name, newValue);
-            //}
+            var keyprop = GetKeyProperty();
+            var keyValue = keyprop.GetValue(entity);
+            if (keyValue == null || keyValue.ToString() == "" || keyValue.ToString() == Guid.Empty.ToString())
+            {
+                var newValue = Guid.NewGuid();
+                keyprop.SetValue(entity, newValue);
+            }
             var storeName = $"Proc_Insert{_tableName}";
             var storeParam = entity;
             var rowAffects = _dbConnection.Execute(storeName,
