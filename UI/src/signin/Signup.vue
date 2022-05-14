@@ -15,36 +15,31 @@
               mb-2
             "
           >
+            
           </ol>
         </nav>
-        <h1 class="font-weight-normal">Đăng nhập ngay</h1>
+        <h1 class="font-weight-normal">Đăng ký tài khoản</h1>
         <form class="main-form">
-          <div class="row mt-5">
+         <div class="row mt-5 ">
+            <div class="col-12 py-2 wow fadeInUp">
+              <input type="text" class="form-control" placeholder="Họ tên">
+            </div>
+
             <div class="col-12 py-2 wow fadeInUp" data-wow-delay="300ms">
-              <input
-                type="text"
-                class="form-control"
-                placeholder="Số điện thoại.."
-              />
+              <input type="text" class="form-control" placeholder="Số điện thoại..">
             </div>
             <div class="col-12 py-2 wow fadeInUp" data-wow-delay="300ms">
-              <input
-                type="password"
-                class="form-control"
-                placeholder="Mật khẩu.."
-              />
+              <input type="text" class="form-control" placeholder="Mật khẩu..">
             </div>
           </div>
           <div
             class="btn btn-primary mt-3 wow zoomIn"
             @click="btnSigninClick()"
           >
-            Đăng nhập
+            Đăng ký
           </div>
           <div class="col-12 py-2 wow fadeInUp" data-wow-delay="300ms">
-            <li class="breadcrumb-item" @click="$router.push({ name: 'dang-ky' })">
-              <a >Chưa có tài khoản? Đăng ký ngay</a>
-            </li>
+
           </div>
         </form>
       </div>
@@ -65,7 +60,7 @@ export default {
   methods: {
     btnSigninClick() {
       console.log(this.redirectString)
-      this.redirectString = 'admin'
+      this.redirectString = 'customer'
       this.isShow = false
       console.log(this.redirectString, this.isShow)
       this.$emit('redirect', this.redirectString, this.isShow)

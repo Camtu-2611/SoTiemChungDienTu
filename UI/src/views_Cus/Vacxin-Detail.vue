@@ -30,7 +30,6 @@
       </div>
       <!-- .banner-section -->
     </div>
-    
              <div class="container">
               <form action="#">
           <div class="input-group input-navbar">
@@ -48,7 +47,6 @@
             />
           </div>
         </form>
-
                 <form class="contact-form mt-5">
                   <div class="row mb-3">
                   

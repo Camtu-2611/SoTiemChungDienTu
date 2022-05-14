@@ -21,7 +21,7 @@
                 <a @click="$router.push({ name: 'STC-dien-tu' })">Trang chủ</a>
               </li>
               <li class="breadcrumb-item active" aria-current="page">
-                Vắc xin
+                Cẩm nang tiêm chủng
               </li>
             </ol>
           </nav>

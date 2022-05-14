@@ -51,8 +51,6 @@
 
                 <form class="contact-form mt-5">
                   <div class="row mb-3">
-                  
-                 
                     <div
                       class="col-12 py-2 wow fadeInUp"
                       data-wow-delay="300ms"
@@ -105,6 +103,7 @@
                 
                   </div>
                 </form>
+                
               </div>
         
   </div>

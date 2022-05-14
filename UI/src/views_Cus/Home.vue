@@ -6,7 +6,8 @@
         <h1 >TIÊM VẮC XIN</h1>
         <span class="subhead">Bảo vệ chính mình, người thân và cộng đồng</span> <br><br>
  
-         <div class="btn btn-primary" 
+         <div class="py-2 wow btn btn-primary" 
+         style="height : 45px"
              @click="$router.push({ name: 'tu-van' })"
             >
            Tư vấn ngay
@@ -63,7 +64,8 @@
               Vì vậy, người nhà của trẻ hay người đi tiêm chủng và bác sĩ cần hợp tác với nhau để đảm bảo việc tiêm chủng là đúng thời điểm, hiệu quả và an toàn.
               
               Kết quả khám sàng lọc trước tiêm chủng được căn cứ trên những thông tin người nhà hay người đi tiêm chủng cung cấp cho bác sĩ và những thông tin bác sĩ phát hiện sau khi thăm khám.</p>
-              <div class="btn btn-primary" 
+              <div class="py-2 wow btn btn-primary" 
+              style="height : 45px"
              @click="$router.push({ name: 'cam-nang' })"
             >
            Xem thêm

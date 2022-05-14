@@ -18,9 +18,9 @@
             </div>
           </div>
           <div class="col-sm-4 text-right text-sm">
-            <div class="social-mini-button">
+            <div class="social-mini-button py-2 wow">
               <a class="btn"  @click="$router.push({ name: 'trang-ca-nhan' })">Trang cá nhân</a>
-              <div class="btn btn-primary"  @click="$router.push({ name: 'dang-nhap' })">Đăng xuất</div>
+              <div class="py-2 wow btn btn-primary" style="height : 45px" @click="$router.push({ name: 'dang-nhap' })">Đăng xuất</div>
              
             </div>
           </div>
@@ -33,10 +33,13 @@
 
     <nav class="navbar navbar-expand-lg navbar-light shadow-sm">
       <div class="container">
-        <a class="navbar-brand" href="#"
-          ><span class="text-primary">One</span>-Health</a
-        >
-
+         <div
+              class="nav-item active"
+              @click="$router.push({ name: 'STC-dien-tu' })"
+            >
+        <a class="navbar-brand" href="#" 
+          ><span class="text-primary">One</span>-Health</a>
+        </div>
         <!-- <form action="#">
           <div class="input-group input-navbar">
             <div class="input-group-prepend">
