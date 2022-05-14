@@ -9,5 +9,12 @@ namespace vaccine_managerment.infrastructure
 {
     public interface ISoTiemDL:IBaseDL<SoTiem>
     {
+        /// <summary>
+        /// Lấy thông tin sổ tiêm theo mã sổ tiêm
+        /// </summary>
+        /// <param name="masotiem">mã sổ tiêm</param>
+        /// <returns></returns>
+        /// CreatedBy: nctu 1.05.2022
+        public SoTiem GetSoTiemByCode(string masotiem);
     }
 }

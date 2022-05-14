@@ -41,12 +41,12 @@
               class="btn icon-refresh features-pane-item"
               title="Tải lại"
             ></div>
-            <!-- <div
+            <div
               id="preventLeftClick"
-              class="btn icon-trash features-pane-item"
-              @click="showDeleteDialog()"
-              title="Xóa nhiều bản ghi"
-            ></div> -->
+              class="btn icon-edit-pen features-pane-item"
+              @click="showDetail()"
+              title="Sửa thông tin sổ tiêm"
+            ></div>
           </div>
         </div>
 
@@ -105,7 +105,7 @@
               >
                 Số điện thoại
               </th>
-              <th
+              <!-- <th
                 sortProp="department"
                 sortOrder="asc"
                 id="columnDepartment"
@@ -113,7 +113,7 @@
                 style="text-align: center"
               >
                 Email
-              </th>
+              </th> -->
               <th
                 sortProp="department"
                 sortOrder="asc"
@@ -130,7 +130,7 @@
                 class="hover-pointer"
                 style="text-align: center"
               >
-                Ngày đăng ký tiêm
+                Ngày đăng ký
               </th>
               <th
                 sortProp="department"
@@ -148,7 +148,16 @@
                 class="hover-pointer"
                 style="text-align: center"
               >
-                Danh sách vắc xin đã tiêm
+                Danh sách vắc xin
+              </th>
+              <th
+                sortProp="price"
+                sortOrder="asc"
+                id="columnPrice"
+                class="hover-pointer"
+                style="text-align: center"
+              >
+                Trạng thái
               </th>
             </tr>
           </thead>
@@ -167,11 +176,12 @@
               <td>{{ TTDangKy.ngaysinh | formatDate(TTDangKy.ngaysinh) }}</td>
               <td>{{ TTDangKy.gioitinh }}</td>
               <td>{{ TTDangKy.sodienthoai }}</td>
-              <td>{{ TTDangKy.email }}</td>
+              <!-- <td>{{ TTDangKy.email }}</td> -->
               <td>{{ TTDangKy.diachi }}</td>
               <td>{{ TTDangKy.ngaydangkytiem | formatDate(TTDangKy.ngaydangkytiem) }}</td>
               <td>{{ TTDangKy.tentrungtam }}</td>
               <td>{{ TTDangKy.danhsachvacxin }}</td>
+              <td>{{ TTDangKy.trangthai | formatStatus(TTDangKy.trangthai) }}</td>
               
             </tr>
           </tbody>
@@ -606,6 +616,9 @@ export default {
       var date = day + "/" + month + "/" + a.getFullYear().toString();
       return date;
     },
+    formatStatus(status){
+      
+    }
   }
 };
 </script>
@@ -733,16 +746,14 @@ export default {
         height: 40px;
       }
 
-      .icon-trash {
+      .icon-edit-pen {
         background-repeat: no-repeat;
         background-size: 20px 20px;
         background-position: center;
         width: 40px;
         height: 40px;
         padding: 6px;
-        background: url(/img/qlts-icon.d656886f.svg) no-repeat -454px -104px;
       }
-      // background-color:lightsalmon;
       display: flex;
       .features-pane-item {
         margin: 0px 5px;

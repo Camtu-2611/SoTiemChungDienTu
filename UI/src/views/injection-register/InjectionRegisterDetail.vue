@@ -26,6 +26,11 @@
             <v-divider></v-divider>
 
             <v-stepper-step :complete="e1 > 2" step="2">
+              Sàng lọc trước khi tiêm</v-stepper-step
+            >
+            <v-divider></v-divider>
+
+            <v-stepper-step :complete="e1 > 3" step="3">
               Thông tin dịch vụ</v-stepper-step
             >
 
@@ -38,6 +43,27 @@
                 <div class="container">
                   <form class="contact-form mt-5">
                     <div class="row mb-3">
+                      <div
+                        class="col-12 col-sm-6 py-2 wow fadeInRight"
+                        data-wow-delay="300ms"
+                      >
+                        <label for="subject">Chọn mã sổ tiêm</label>
+                        <select
+                          name="masotiem"
+                          id="masotiem"
+                          class="custom-select"
+                          v-model="thongtinDK.masotiem"
+                          :disabled="disableMasotiem"
+                        >
+                          <option
+                            v-for="(record, index) in lstMaSoTiem"
+                            :key="index"
+                            :value="record.masotiem"
+                            >{{ record.masotiem }}</option
+                          >
+                        </select>
+                      </div>
+                      <div class="col-12 col-sm-6 py-2 wow"></div>
                       <div class="col-sm-6 py-2 wow fadeInLeft">
                         <label for="fullName">Họ tên </label>
                         <input
@@ -46,6 +72,8 @@
                           class="form-control"
                           placeholder="Họ tên..."
                           v-model="thongtinDK.hoten"
+                          readonly
+                          disabled
                         />
                       </div>
                       <div
@@ -57,6 +85,8 @@
                           type="date"
                           class="form-control"
                           v-model="thongtinDK.ngaysinh"
+                          readonly
+                          disabled
                         />
                       </div>
                       <div
@@ -69,6 +99,7 @@
                           id="departement"
                           class="custom-select"
                           v-model="thongtinDK.gioitinh"
+                          disabled
                         >
                           <option value="1">Nam</option>
                           <option value="2">Nữ</option>
@@ -83,6 +114,8 @@
                           ref="emailAddress"
                           class="form-control"
                           placeholder="Email address.."
+                          readonly
+                          disabled
                           v-model="thongtinDK.email"
                           :class="{ 'class-error': validation.emailVal }"
                           :title="validation.emailValMsg"
@@ -109,6 +142,8 @@
                           type="text"
                           class="form-control"
                           v-model="thongtinDK.sodienthoai"
+                          readonly
+                          disabled
                         />
                       </div>
                       <div class="col-sm-6 py-2 wow fadeInRight">
@@ -119,6 +154,8 @@
                           class="form-control"
                           placeholder="Địa chỉ.."
                           v-model="thongtinDK.diachi"
+                          readonly
+                          disabled
                         />
                       </div>
                     </div>
@@ -132,8 +169,145 @@
                 <v-btn text class="ml-2"> Hủy </v-btn>
               </div>
             </v-stepper-content>
-
-            <v-stepper-content step="2" style="height: 100% !important">
+            <v-stepper-content step="2">
+              <v-card class="mb-4" color="#FFFFFF">
+                <div class="container-fluid px-0 mx-0">
+                  <v-simple-table fixed-header height="400px">
+                    <template v-slot:default>
+                      <thead>
+                        <tr>
+                          <th class="text-left col-sm-10"><h7>Câu hỏi</h7></th>
+                          <th class="text-center"><h7></h7></th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td class="text-left col-sm-10">
+                            1. Tiền sử phản vệ, sốc mạnh sau lần tiêm chủng
+                            trước
+                          </td>
+                          <td class="text-center">
+                            <v-checkbox
+                              class="text-center"
+                              v-model="thongtinDK.cauhoi1"
+                            ></v-checkbox>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="text-left col-sm-10">
+                            2. Tiền sử mắc COVID-19 trong 6 tháng qua
+                          </td>
+                          <td class="text-center">
+                            <v-checkbox
+                              class="text-center"
+                              v-model="thongtinDK.cauhoi2"
+                            ></v-checkbox>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="text-left col-sm-10">
+                            3. Đang bị suy giảm miễn dịch nặng, ung thư giai
+                            đoạn cuối đang điều trị, xạ trị, hóa trị
+                          </td>
+                          <td class="text-center">
+                            <v-checkbox
+                              class="text-center"
+                              v-model="thongtinDK.cauhoi3"
+                            ></v-checkbox>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="text-left col-sm-10">
+                            4. Mắc các bệnh bẩm sinh, bệnh mạn tính ở tim, phổi,
+                            hệ tiêu hóa, máu,...
+                          </td>
+                          <td class="text-center">
+                            <v-checkbox
+                              class="text-center"
+                              v-model="thongtinDK.cauhoi4"
+                            ></v-checkbox>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="text-left col-sm-10">
+                            5. Phụ nữ mang thai, phụ nữ đang nuôi con bằng sữa
+                            mẹ
+                          </td>
+                          <td class="text-center">
+                            <v-checkbox
+                              class="text-center"
+                              v-model="thongtinDK.cauhoi5"
+                            ></v-checkbox>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="text-left col-sm-10">
+                            6. Tiêm vắc xin khác trong vòng 14 ngày trước
+                          </td>
+                          <td class="text-center">
+                            <v-checkbox
+                              class="text-center"
+                              v-model="thongtinDK.cauhoi6"
+                            ></v-checkbox>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="text-left col-sm-10">
+                            7. Trong vòng 14 ngày trước có điều trị corticoid
+                            liều cao (tương đương prednisolon ≥ 2 mg/kg/ngày
+                            trong ≥ 7 ngày)
+                          </td>
+                          <td class="text-center">
+                            <v-checkbox
+                              class="text-center"
+                              v-model="thongtinDK.cauhoi7"
+                            ></v-checkbox>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="text-left col-sm-10">
+                            8. Giảm tiểu cầu và/hoặc rối loạn đông máu.
+                          </td>
+                          <td class="text-center">
+                            <v-checkbox
+                              class="text-center"
+                              v-model="thongtinDK.cauhoi8"
+                            ></v-checkbox>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="text-left col-sm-10">
+                            9. Rối loại tri giác, rối loạn hành vi
+                          </td>
+                          <td class="text-center">
+                            <v-checkbox
+                              class="text-right"
+                              v-model="thongtinDK.cauhoi9"
+                            ></v-checkbox>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="text-left col-sm-10">
+                            10. Tiền sử dị ứng với bất kì dị nguyên nào
+                          </td>
+                          <td class="text-center">
+                            <v-checkbox
+                              class="text-right"
+                              v-model="thongtinDK.cauhoi10"
+                            ></v-checkbox>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </template>
+                  </v-simple-table>
+                </div>
+              </v-card>
+              <div class="footer">
+                <v-btn color="primary" @click="e1 = 3"> Tiếp tục </v-btn>
+                <v-btn text @click="e1 = 1"> Quay lại </v-btn>
+              </div>
+            </v-stepper-content>
+            <v-stepper-content step="3" style="height: 100% !important">
               <v-card class="mb-6" color="#FFFFFF">
                 <div class="container">
                   <!-- <h4>THÔNG TIN DỊCH VỤ</h4> -->
@@ -151,12 +325,12 @@
                           name="tttiemchung"
                           id="tttiemchung"
                           class="custom-select"
-                          v-model="thongtinDK.tentrungtam"
+                          v-model="thongtinDK.idtrungtam"
                         >
                           <option
                             v-for="(record, index) in listTrungTam"
                             :key="index"
-                            :value="record.matrungtam"
+                            :value="record.idtrungtam"
                             >{{ record.tentrungtam }}</option
                           >
                         </select>
@@ -213,7 +387,7 @@
                                           <v-list-item-title
                                             class="text-h5 mb-1"
                                           >
-                                            106.000 VNĐ
+                                            {{ record.giavacxin }}
                                           </v-list-item-title>
                                           <v-list-item-subtitle>
                                             {{
@@ -391,16 +565,20 @@ export default {
       },
       listRecord: [],
       listTrungTam: [],
+      lstMaSoTiem: [],
       validation: {
         emailVal: false,
         emailValMsg: "",
         sdtVal: true,
       },
       stateValidate: true,
+      disableMasotiem: false
     };
   },
   created() {
-    this.getAllRecord(); // lấy thông tin vắc xin
+    this.getAllVacxin(); // lấy thông tin vắc xin
+    this.getAllTrungTam(); // lấy thông tin trung tâm
+    this.getAllSoTiem(); // lấy danh sách sổ tiêm
     this.show();
   },
   methods: {
@@ -431,7 +609,7 @@ export default {
         );
         // var input = this.$refs
         this.$nextTick(() => {
-          console.log(this.$refs.emailAddress)
+          console.log(this.$refs.emailAddress);
           this.$refs.emailAddress.focus();
         });
         this.stateValidate = false;
@@ -454,6 +632,18 @@ export default {
         (this.thongtinDK.sodienthoai = ""),
         (this.thongtinDK.email = ""),
         (this.thongtinDK.diachi = ""),
+        (this.thongtinDK.cauhoi1 = false),
+        (this.thongtinDK.cauhoi2 = false),
+        (this.thongtinDK.cauhoi3 = false),
+        (this.thongtinDK.cauhoi4 = false),
+        (this.thongtinDK.cauhoi5 = false),
+        (this.thongtinDK.cauhoi6 = false),
+        (this.thongtinDK.cauhoi7 = false),
+        (this.thongtinDK.cauhoi8 = false),
+        (this.thongtinDK.cauhoi9 = false),
+        (this.thongtinDK.cauhoi10 = false),
+        (this.thongtinDK.trangthai = 1),
+        (this.thongtinDK.tentrungtam = ""),
         (this.thongtinDK.idtrungtam = "00000000-0000-0000-0000-000000000000"),
         (this.thongtinDK.ngaydangkytiem = new Date().toISOString()),
         (this.thongtinDK.danhsachvacxin = []),
@@ -461,30 +651,33 @@ export default {
         (this.thongtinDK.ngaytao = new Date().toISOString()),
         (this.thongtinDK.nguoichinhsua = ""),
         (this.thongtinDK.ngaychinhsua = new Date().toISOString());
+        console.log(this.thongtinDK.hoten + "1")
     },
     // todo hiện dialog
     async show() {
-      var res = this;
+      var me = this;
       this.isActive = true;
       this.dup = false;
-      console.log(this.idDangKyUpdate);
-      console.log(this.formMode);
       if (this.formMode == "update") {
         await axios
           .get(
             "http://localhost:64016/api/ThongTinDangKyTiem/" +
               this.idDangKyUpdate
           )
-          .then((Response) => {
-            res.thongtinDK = Response.data.data;
-            if (res.thongtinDK) {
-              res.thongtinDK.ngaysinh = this.formatDate(
-                res.thongtinDK.ngaysinh
-              );
-              res.thongtinDK.ngaydangkytiem = this.formatDate(
-                res.thongtinDK.ngaydangkytiem
-              );
-              console.log(res.thongtinDK.ngaysinh);
+          .then((response) => {
+            if (response.data) {
+              var res = response.data.data;
+              if (res) {
+                this.disableMasotiem = true
+                me.thongtinDK = res;
+                me.thongtinDK.ngaysinh = this.formatDate(
+                  me.thongtinDK.ngaysinh
+                );
+                me.thongtinDK.ngaydangkytiem = this.formatDate(
+                  me.thongtinDK.ngaydangkytiem
+                );
+                console.log(me.thongtinDK);
+              }
             }
           })
           .catch((error) => {
@@ -738,14 +931,15 @@ export default {
     /**
      * Thực hiện lấy toàn bộ bản ghi của Vacxin
      * */
-    async getAllRecord() {
+    async getAllVacxin() {
       try {
         var me = this;
         await axios
           .get("http://localhost:64016/api/Vacxin")
           .then((response) => {
-            me.listRecord = response.data.data;
-            me.totalRecord = response.data.length;
+            if (response.data) {
+              me.listRecord = response.data.data;
+            }
           })
           .catch(() => {});
       } catch (error) {
@@ -755,14 +949,66 @@ export default {
     /**
      * Thực hiện lấy toàn bộ bản ghi của Trung tâm tiêm chủng
      * */
-    async getAllRecordTrungTam() {
+    async getAllTrungTam() {
       try {
         var me = this;
         await axios
           .get("http://localhost:64016/api/TrungTamTiemChung")
           .then((response) => {
-            me.listTrungTam = response.data.data;
-            me.totalRecord = response.data.length;
+            if (response.data) {
+              me.listTrungTam = response.data.data;
+            }
+          })
+          .catch(() => {});
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    /**
+     * Thực hiện lấy toàn bộ bản ghi của sổ tiêm
+     * */
+    async getAllSoTiem() {
+      try {
+        var me = this;
+        await axios
+          .get("http://localhost:64016/api/SoTiem")
+          .then((response) => {
+            if (response.data) {
+              me.lstMaSoTiem = response.data.data;
+            }
+          })
+          .catch(() => {});
+      } catch (error) {
+        console.log(error);
+      }
+    },
+
+    /**
+     * Thực hiện lấy toàn bộ bản ghi của sổ tiêm
+     * */
+    async getSoTiemByCode() {
+      try {
+        await axios
+          .get(
+            `http://localhost:64016/api/SoTiem/bycode/${this.thongtinDK.masotiem}`
+          )
+          .then((response) => {
+            if (response.data) {
+              var res = response.data.data;
+              if (res) {
+                console.log(res)
+                this.thongtinDK.hoten = res.hoten;
+                this.thongtinDK.ngaysinh = res.ngaysinh
+                this.thongtinDK.ngaysinh = this.formatDate(
+                  this.thongtinDK.ngaysinh
+                );
+                this.thongtinDK.gioitinh = res.gioitinh;
+                this.thongtinDK.email = res.email;
+                this.thongtinDK.sodienthoai = res.sodienthoai;
+                this.thongtinDK.diachi = res.diachi;
+                console.log(this.thongtinDK.hoten+"3")
+              }
+            }
           })
           .catch(() => {});
       } catch (error) {
@@ -781,6 +1027,11 @@ export default {
     "asset.assetTypeId": function() {
       if (this.asset.assetTypeId == null) this.asset.assetTypeId = null;
       else this.getAssetTypeName();
+    },
+    "thongtinDK.masotiem": async function() {
+      console.log(this.thongtinDK.masotiem)
+      this.getSoTiemByCode();
+      console.log(this.thongtinDK.hoten+"2")
     },
   },
   computed: {
@@ -803,9 +1054,6 @@ export default {
       var date = day + "-" + month + "-" + a.getFullYear().toString();
       return date;
     },
-    // moment: function (date) {
-    // return moment(date).format('dd-MM-yyyy');
-    // }
   },
   mounted() {
     this.selectAll();
@@ -963,6 +1211,11 @@ input.required {
           .v-sheet.v-card:not(.v-sheet--outlined) {
             box-shadow: none;
           }
+        }
+        ::v-deep .v-input__slot {
+          justify-content: center !important;
+          margin-top: 4px;
+          top: 10px;
         }
       }
       .contact-form {

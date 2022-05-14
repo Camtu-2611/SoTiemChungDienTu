@@ -15,5 +15,32 @@ namespace vaccine_managerment.core
         {
             _sotiemDL = sotiemDL;
         }
+
+        /// <summary>
+        /// Lấy thông tin sổ tiêm theo mã sổ tiêm
+        /// </summary>
+        /// <param name="masotiem">mã sổ tiêm</param>
+        /// <returns></returns>
+        /// CreatedBy: nctu 1.05.2022
+        public ServiceResult GetSoTiemByCode(string masotiem) { 
+            var entity = _sotiemDL.GetSoTiemByCode(masotiem);
+
+            var result = new ServiceResult();
+            if (entity != null)
+            {
+                result.Data = entity;
+                result.ErrorCode = ErrorCode.NONE;
+                result.UserMsg = common.Resources.Messages.Success;
+            }
+            else
+            {
+                result.IsSuccess = false;
+                result.UserMsg = common.Resources.Messages.NoContent;
+                result.DevMsg = common.Resources.Messages.NoContent;
+                result.ErrorCode = ErrorCode.NOCONTENT;
+            }
+
+            return result;
+        }
     }
 }

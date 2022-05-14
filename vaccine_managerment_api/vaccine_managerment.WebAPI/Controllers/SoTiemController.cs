@@ -19,5 +19,30 @@ namespace vaccine_managerment.WebAPI.Controllers
         {
             _sotiemBL = sotiemBL;
         }
+
+        /// <summary>
+        /// API lấy thông tin sổ tiêm theo mã sổ tiêm
+        /// </summary>
+        /// <param name="masotiem">mã sổ tiêm </param>
+        /// <returns></returns>
+        /// CreatedBy: nctu 05.05.2022
+        [HttpGet("bycode/{masotiem}")]
+        public IActionResult GetSoTiemByCode(string masotiem)
+        {
+            var responseResult = new ServiceResult();
+            try
+            {
+                responseResult = _sotiemBL.GetSoTiemByCode(masotiem);
+
+            }
+            catch (Exception)
+            {
+                responseResult.OnBadRequest(responseResult);
+                return StatusCode(StatusCodes.Status400BadRequest, responseResult);
+                throw;
+            }
+
+            return StatusCode(StatusCodes.Status200OK, responseResult);
+        }
     }
 }

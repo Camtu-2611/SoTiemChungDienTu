@@ -53,5 +53,9 @@ namespace vaccine_managerment.common
         /// lưu thông tin mã loại vắc xin
         /// </summary>
         public string maloai { get; set; }
+        /// <summary>
+        /// giá vắc xin
+        /// </summary>
+        public long giavacxin { get; set; }
     }
 }

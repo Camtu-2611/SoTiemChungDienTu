@@ -35,17 +35,17 @@
             >
               Thêm
             </div>
+            <div
+              id="preventLeftClick"
+              class="btn icon-edit-pen features-pane-item"
+              @click="showDetail()"
+              title="Sửa thông tin sổ tiêm"
+            ></div>
 
             <div
               @click="getInjectionBook('')"
               class="btn icon-refresh features-pane-item"
               title="Tải lại"
-            ></div>
-            <div
-              id="preventLeftClick"
-              class="btn icon-trash features-pane-item"
-              @click="showDeleteDialog()"
-              title="Xóa nhiều bản ghi"
             ></div>
           </div>
         </div>
@@ -63,8 +63,9 @@
             <col min-width="400" />
             <col min-width="200" />
             <col min-width="100" />
-            <col width="450" />
             <col width="100" />
+            <col width="100" />
+            <!-- <col width="100" /> -->
           </colgroup>
           <thead>
             <tr>
@@ -112,31 +113,41 @@
                 class="hover-pointer"
                 style="text-align: center"
               >
-                Danh sách vắc xin đã tiêm
+                Số điện thoại
               </th>
-              <th style="text-align: left">chức năng</th>
+              <th
+                sortProp="price"
+                sortOrder="asc"
+                id="columnPrice"
+                class="hover-pointer"
+                style="text-align: center"
+              >
+                CMND/CCCD
+              </th>
+              <!-- <th style="text-align: left">chức năng</th> -->
             </tr>
           </thead>
 
           <tbody>
             <tr
               v-for="(sotiem, index) in listSoTiem"
-              :key="sotiem.idSoTiem"
-              v-bind:class="selectedRow(sotiem.idSoTiem) ? 'selected-row' : ''"
-              @click="selectRow(sotiem.idSoTiem, $event)"
-              @click.right="showContexMenu(sotiem.idSoTiem, $event)"
-              @dblclick="showDialog('update', sotiem.idSoTiem)"
+              :key="sotiem.idsotiem"
+              v-bind:class="selectedRow(sotiem.idsotiem) ? 'selected-row' : ''"
+              @click="selectRow(sotiem.idsotiem, $event)"
+              @click.right="showContexMenu(sotiem.idsotiem, $event)"
+              @dblclick="showDialog('update', sotiem.idsotiem)"
             >
               <td class="no-border-left">{{ index + 1 }}</td>
-              <td>{{ sotiem.maSoTiem }}</td>
-              <td>{{ sotiem.hoTen }}</td>
-              <td>{{ sotiem.ngaySinh }}</td>
-              <td>{{ sotiem.gioiTinh }}</td>
-              <td>{{ sotiem.danhSachVacxin }}</td>
+              <td>{{ sotiem.masotiem }}</td>
+              <td>{{ sotiem.hoten }}</td>
+              <td>{{ sotiem.ngaysinh | formatDate(sotiem.ngaysinh) }}</td>
+              <td>{{ sotiem.gioitinh }}</td>
+              <td>{{ sotiem.sodienthoai }}</td>
+              <td>{{ sotiem.cmnd }}</td>
               <!-- <td style="text-align: right">
                 {{ asset.originalPrice | formatMoney(asset.originalPrice) }}
               </td> -->
-              <td class="no-border-right">
+              <!-- <td class="no-border-right">
                 <div class="features-box">
                   <div
                     :id="'tableRow' + index + '_edit'"
@@ -147,7 +158,7 @@
                   <div
                     id="preventLeftClick"
                     class="table-icon icon-trash-table"
-                    @click="showDeleteDialog('inRow')"
+                    @click="showDetail('inRow')"
                     title="Xóa"
                   ></div>
                   <div
@@ -155,7 +166,7 @@
                     title="Chức năng chưa phát triển"
                   ></div>
                 </div>
-              </td>
+              </td> -->
             </tr>
           </tbody>
           <BaseLoading ref="BaseLoading_ref" />
@@ -173,7 +184,7 @@
           <div
             id="preventLeftClick"
             class="ctx-menu-item"
-            @click="showDeleteDialog(listSelectRow[0])"
+            @click="showDetail(listSelectRow[0])"
           >
             Xóa
           </div>
@@ -266,10 +277,9 @@ export default {
         hoTen: null,
         ngaySinh: null,
         gioiTinh: null,
-        danhsachVacxin: null,
+        sodienthoai: null,
+        cmnd: null
       },
-      //   listDepartment: [],
-      //   listSoTiemType: [],
       formMode: "",
       alerMsg: "",
       idSoTiemUpdate: null,
@@ -280,7 +290,6 @@ export default {
       isError: false,
       getSuccess: true,
       getEmty: false,
-      //   totalPrice: 0,
       amountSoTiem: 0,
       showWarning: false,
       paging: {
@@ -306,15 +315,6 @@ export default {
         res.showWarning = false;
       }, 3000);
     },
-    // //todo gửi option tìm kiếm lên combobox tại header
-    // sendOption(text) {
-    //   if (text == "Tất cả") {
-    //     this.getInjectionBook("filter");
-    //     this.comboxFilter.idDepartment = "";
-    //     this.comboxFilter.idType = "";
-    //   }
-    //   this.$emit("allAsset", text);
-    // },
     /**
      * Gửi request GET tới API
      * Author: TVThinh (12/5/2021)
@@ -336,12 +336,6 @@ export default {
         .get(
           "http://localhost:64016/api/SoTiem"
         )
-        // "https://localhost:64016/api/SoTiem?input=" +
-        //     res.inputSearch +
-        //     "&recordAmount=" +
-        //     this.paging.recordNumber +
-        //     "&pageNumber=" +
-        //     this.paging.pageNumber
         .then((response) => {
           res.listSoTiem = response.data.data;
 
@@ -364,7 +358,7 @@ export default {
           setTimeout(() => {
             res.$refs.BaseLoading_ref.hide(); // tắt dialog loading
             res.getEmty = true; // b
-          }, 4000);
+          }, 300);
         });
 
       //select bản ghi đầu tiên
@@ -403,7 +397,7 @@ export default {
     },
 
     //todo hiển thị form xác nhận xóa
-    showDeleteDialog(text) {
+    showDetail(text) {
       // var res = this
       this.alerMsg = "Xóa thành công!";
       if (text != "inRow" && this.listSelectRow.length == 0) {
@@ -578,6 +572,18 @@ export default {
       else return "0";
       return num;
     },
+    filters:{
+    // định dạng ngày
+    formatDate(inputDate) {
+      var a = new Date(inputDate);
+      var month = a.getMonth();
+      var day = a.getDate();
+      if (month < 10) month = "0" + month.toString();
+      if (day < 10) day = "0" + day.toString();
+      var date = day + "/" + month + "/" + a.getFullYear().toString();
+      return date;
+    },
+  }
   },
   watch: {},
   created() {
@@ -716,14 +722,14 @@ export default {
         height: 40px;
       }
 
-      .icon-trash {
+      .icon-edit-pen {
         background-repeat: no-repeat;
         background-size: 20px 20px;
         background-position: center;
         width: 40px;
         height: 40px;
         padding: 6px;
-        background: url(/img/qlts-icon.d656886f.svg) no-repeat -454px -104px;
+        // background: url(/img/qlts-icon.d656886f.svg) no-repeat -454px -104px;
       }
       // background-color:lightsalmon;
       display: flex;

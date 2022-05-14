@@ -5,15 +5,12 @@
       <div class="nav-item-text">SỔ TIÊM CHỦNG</div>
       <div class="icon-hamburger-menu" @click="toggleNavbar('no')"></div>
     </div>
-    <div
-      id="navItem1"
-      class="nav-item option nav-item-icon"
-      
-    >
+    <div id="navItem1" class="nav-item option nav-item-icon">
       <div class="icon-nav icon-computer-line"></div>
       <div
         class="nav-item-text"
         @click="$router.push({ name: 'injection-register' })"
+        :class="{ 'option-focus': currentRouteName == 'injection-register' }"
       >
         Đăng ký tiêm
       </div>
@@ -21,18 +18,17 @@
     <div id="navItem2" class="nav-item option nav-item-icon">
       <div
         class="icon-nav icon-community-line"
-        @click="$router.push({ name: 'asset' })"
+        @click="$router.push({ name: 'injection-books' })"
       ></div>
       <div
         class="nav-item-text"
-        @click="$router.push({ name: 'asset' })"
-        :class="{ 'option-focus': currentRouteName == 'asset' }"
+        @click="$router.push({ name: 'injection-books' })"
+        :class="{ 'option-focus': currentRouteName == 'injection-books' }"
       >
         Sổ tiêm
       </div>
-      <div class="icon-submenu" @click="$router.push({ name: 'asset' })"></div>
+      <!-- <div class="icon-submenu" @click="$router.push({ name: 'asset' })"></div>
       <div class="sub-navbar">
-        <!-- <router-link class="sub-navbar-item" to="/asset/increase" tag="div"> Ghi tăng</router-link>  -->
         <div
           class="sub-navbar-item"
           @click="$router.push({ name: 'dang-ky-tiem' })"
@@ -68,23 +64,34 @@
         >
           Bảo dưỡng tài sản
         </div>
-      </div>
+      </div> -->
     </div>
     <div id="navItem3" class="nav-item option nav-item-icon">
       <div class="icon-nav icon-paint-brush-line"></div>
-      <div class="nav-item-text">Lịch tiêm</div>
-      <div class="icon-submenu"></div>
-      <div class="sub-navbar">
+      <div
+        class="nav-item-text"
+        @click="$router.push({ name: 'injection-schedules' })"
+        :class="{ 'option-focus': currentRouteName == 'injection-schedules' }"
+      >
+        Lịch tiêm
+      </div>
+      <!-- <div class="icon-submenu"></div> -->
+      <!-- <div class="sub-navbar">
         <div class="sub-navbar-item">Sản phẩm sản xuất</div>
         <div class="sub-navbar-item">Dụng cụ</div>
-      </div>
+      </div> -->
     </div>
     <div id="navItem4" class="nav-item option nav-item-icon">
       <div class="icon-nav icon-common"></div>
-      <div class="nav-item-text">Vắc xin</div>
-      <div class="icon-submenu"></div>
-      <div class="sub-navbar">
-        <!-- <router-link class="sub-navbar-item" to="/asset" tag="div"> Tài sản</router-link>  -->
+      <div
+        class="nav-item-text"
+        @click="$router.push({ name: 'vaccine' })"
+        :class="{ 'option-focus': currentRouteName == 'vaccine' }"
+      >
+        Vắc xin
+      </div>
+      <!-- <div class="icon-submenu"></div> -->
+      <!-- <div class="sub-navbar">
         <div
           class="sub-navbar-item"
           @click="$router.push({ name: 'assetCategory' })"
@@ -94,16 +101,16 @@
         <div class="sub-navbar-item">Tài sản</div>
         <div class="sub-navbar-item">Vật liệu</div>
         <div class="sub-navbar-item">Nguyên liệu</div>
-      </div>
+      </div> -->
     </div>
-    <div
+    <!-- <div
       id="navItem5"
       @click="$router.push({ name: 'search' })"
       class="nav-item option nav-item-icon"
     >
       <div class="icon-nav icon-search-eye"></div>
       <div class="nav-item-text">Tra cứu</div>
-    </div>
+    </div> -->
     <div id="navItem6" class="nav-item option nav-item-icon">
       <div class="icon-nav icon-setting"></div>
       <div class="nav-item-text">Hệ thống</div>
