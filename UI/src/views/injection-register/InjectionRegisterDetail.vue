@@ -1,6 +1,5 @@
 <template>
   <div class="modal-register">
-    <!-- <div class="modal-background"></div> -->
     <div class="modal-content">
       <div class="header">
         <div v-if="formMode == 'insert'" class="title">Đăng ký tiêm</div>
@@ -500,69 +499,8 @@ export default {
       isActive: false,
       showSuccess: true,
       dup: false,
-      lang: {
-        formatLocale: {
-          firstDayOfWeek: 1,
-        },
-        days: ["CN", "Thứ 2", "Thứ 3", "Thứ 4", "Thứ 5", "Thứ 6", "Thứ 7"],
-        months: [
-          "Tháng 1",
-          "Tháng 2",
-          "Tháng 3",
-          "Tháng 4",
-          "Tháng 5",
-          "Tháng 6",
-          "Tháng 7",
-          "Tháng 8",
-          "Tháng 9",
-          "Tháng 10",
-          "Tháng 11",
-          "Tháng 12",
-        ],
-        weekdays: [
-          "Chủ nhật",
-          "thứ hai",
-          "thứ ba",
-          "thứ tư",
-          "thứ năm",
-          "thứ sáu",
-          "Thứ Bảy",
-        ],
-        weekdaysMin: ["CN", "T2", "T3", "T4", "T5", "T6", "T7"],
-        yearFormat: "YYYY",
-        monthsShort: [
-          "T01",
-          "T02",
-          "T03",
-          "T04",
-          "T05",
-          "T06",
-          "T07",
-          "T08",
-          "T09",
-          "T10",
-          "T11",
-          "T12",
-        ],
-        monthFormat: "TMM",
-      },
       selected: [""],
       thongtinDK: {},
-      defaultthongtinDK: {
-        hoten: "",
-        ngaysinh: "",
-        gioitinh: "",
-        sodienthoai: "",
-        email: "",
-        diachi: "",
-        idtrungtam: "",
-        ngaydangkytiem: "",
-        danhsachvacxin: [],
-        nguoitao: "",
-        ngaytao: new Date().toISOString(),
-        nguoichinhsua: "",
-        ngaychinhsua: new Date().toISOString(),
-      },
       listRecord: [],
       listTrungTam: [],
       lstMaSoTiem: [],
@@ -572,7 +510,7 @@ export default {
         sdtVal: true,
       },
       stateValidate: true,
-      disableMasotiem: false
+      disableMasotiem: false,
     };
   },
   created() {
@@ -607,11 +545,6 @@ export default {
           1,
           "Email không được để trống"
         );
-        // var input = this.$refs
-        this.$nextTick(() => {
-          console.log(this.$refs.emailAddress);
-          this.$refs.emailAddress.focus();
-        });
         this.stateValidate = false;
         return false;
       } else {
@@ -620,8 +553,9 @@ export default {
       }
     },
     validateData() {
-      this.validateEmail();
-      return this.stateValidate;
+      if (this.validateEmail()) {
+        return true;
+      } else return false;
     },
 
     // todo reset lại các input
@@ -651,7 +585,7 @@ export default {
         (this.thongtinDK.ngaytao = new Date().toISOString()),
         (this.thongtinDK.nguoichinhsua = ""),
         (this.thongtinDK.ngaychinhsua = new Date().toISOString());
-        console.log(this.thongtinDK.hoten + "1")
+      console.log(this.thongtinDK.hoten + "1");
     },
     // todo hiện dialog
     async show() {
@@ -668,7 +602,7 @@ export default {
             if (response.data) {
               var res = response.data.data;
               if (res) {
-                this.disableMasotiem = true
+                this.disableMasotiem = true;
                 me.thongtinDK = res;
                 me.thongtinDK.ngaysinh = this.formatDate(
                   me.thongtinDK.ngaysinh
@@ -996,9 +930,8 @@ export default {
             if (response.data) {
               var res = response.data.data;
               if (res) {
-                console.log(res)
                 this.thongtinDK.hoten = res.hoten;
-                this.thongtinDK.ngaysinh = res.ngaysinh
+                this.thongtinDK.ngaysinh = res.ngaysinh;
                 this.thongtinDK.ngaysinh = this.formatDate(
                   this.thongtinDK.ngaysinh
                 );
@@ -1006,7 +939,7 @@ export default {
                 this.thongtinDK.email = res.email;
                 this.thongtinDK.sodienthoai = res.sodienthoai;
                 this.thongtinDK.diachi = res.diachi;
-                console.log(this.thongtinDK.hoten+"3")
+                console.log(this.thongtinDK.hoten + "3");
               }
             }
           })
@@ -1029,9 +962,9 @@ export default {
       else this.getAssetTypeName();
     },
     "thongtinDK.masotiem": async function() {
-      console.log(this.thongtinDK.masotiem)
+      console.log(this.thongtinDK.masotiem);
       this.getSoTiemByCode();
-      console.log(this.thongtinDK.hoten+"2")
+      console.log(this.thongtinDK.hoten + "2");
     },
   },
   computed: {

@@ -85,8 +85,8 @@
       <div class="icon-nav icon-common"></div>
       <div
         class="nav-item-text"
-        @click="$router.push({ name: 'vaccine' })"
-        :class="{ 'option-focus': currentRouteName == 'vaccine' }"
+        @click="$router.push({ name: 'manage-vaccines' })"
+        :class="{ 'option-focus': currentRouteName == 'manage-vaccines' }"
       >
         Vắc xin
       </div>

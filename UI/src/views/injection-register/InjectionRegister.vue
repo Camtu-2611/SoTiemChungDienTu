@@ -37,15 +37,16 @@
             </div>
 
             <div
+              id="preventLeftClick"
+              class="btn icon-edit-pen features-pane-item"
+              :class="['disable' ? '' : allowEdit]"
+              @click="showDetail('update', null)"
+              title="Sửa thông tin sổ tiêm"
+            ></div>
+            <div
               @click="getInjectionRegister('')"
               class="btn icon-refresh features-pane-item"
               title="Tải lại"
-            ></div>
-            <div
-              id="preventLeftClick"
-              class="btn icon-edit-pen features-pane-item"
-              @click="showDetail()"
-              title="Sửa thông tin sổ tiêm"
             ></div>
           </div>
         </div>
@@ -105,15 +106,6 @@
               >
                 Số điện thoại
               </th>
-              <!-- <th
-                sortProp="department"
-                sortOrder="asc"
-                id="columnDepartment"
-                class="hover-pointer"
-                style="text-align: center"
-              >
-                Email
-              </th> -->
               <th
                 sortProp="department"
                 sortOrder="asc"
@@ -166,7 +158,9 @@
             <tr
               v-for="(TTDangKy, index) in listTTDangKy"
               :key="TTDangKy.iddangky"
-              v-bind:class="selectedRow(TTDangKy.iddangky) ? 'selected-row' : ''"
+              v-bind:class="
+                selectedRow(TTDangKy.iddangky) ? 'selected-row' : ''
+              "
               @click="selectRow(TTDangKy.iddangky, $event)"
               @click.right="showContexMenu(TTDangKy.iddangky, $event)"
               @dblclick="showDetail('update', TTDangKy.iddangky)"
@@ -174,15 +168,22 @@
               <td class="no-border-left">{{ index + 1 }}</td>
               <td>{{ TTDangKy.hoten }}</td>
               <td>{{ TTDangKy.ngaysinh | formatDate(TTDangKy.ngaysinh) }}</td>
-              <td>{{ TTDangKy.gioitinh }}</td>
+              <td>
+                {{ TTDangKy.gioitinh | formatGioiTinh(TTDangKy.gioiTinh) }}
+              </td>
               <td>{{ TTDangKy.sodienthoai }}</td>
               <!-- <td>{{ TTDangKy.email }}</td> -->
               <td>{{ TTDangKy.diachi }}</td>
-              <td>{{ TTDangKy.ngaydangkytiem | formatDate(TTDangKy.ngaydangkytiem) }}</td>
+              <td>
+                {{
+                  TTDangKy.ngaydangkytiem | formatDate(TTDangKy.ngaydangkytiem)
+                }}
+              </td>
               <td>{{ TTDangKy.tentrungtam }}</td>
               <td>{{ TTDangKy.danhsachvacxin }}</td>
-              <td>{{ TTDangKy.trangthai | formatStatus(TTDangKy.trangthai) }}</td>
-              
+              <td>
+                {{ TTDangKy.trangthai | formatStatus(TTDangKy.trangthai) }}
+              </td>
             </tr>
           </tbody>
           <BaseLoading ref="loadingTTDKT_reft" />
@@ -261,34 +262,27 @@
               </select>
             </div>
           </div>
-
-          <!-- <div class="price-number">
-            Tổng nguyên giá: {{ totalPrice | formatMoney() }}
-          </div> -->
         </div>
       </div>
 
       <div id="assetPopup"></div>
     </div>
-    <InjectionRegisterDetail
-      ref="ModalCreateInjectionRegister_ref"
-      :formMode="formMode"
-      :idDangKyUpdate="idDangKyUpdate"
-      @reload="reload"
-      @msgAlert="msgAlert"
-    />
+    <BaseConfirm ref="baseConfirm" />
   </div>
 </template>
 <script>
 import axios from "axios";
 import BaseLoading from "../../components/common/BaseLoading.vue";
-import InjectionRegisterDetail from "./InjectionRegisterDetail.vue"
+import InjectionRegisterDetail from "./InjectionRegisterDetail.vue";
+import { trangthai, gioitinh } from "../../enumeration/enumaration";
+import BaseConfirm from "@/components/common/baseControlAcounting/BaseConfirm";
 
 export default {
   name: "InjectionRegister",
   components: {
     BaseLoading,
-    InjectionRegisterDetail
+    InjectionRegisterDetail,
+    BaseConfirm,
   },
   data() {
     return {
@@ -315,7 +309,6 @@ export default {
       isError: false,
       getSuccess: true,
       getEmty: false,
-      //   totalPrice: 0,
       amountTTDangKy: 0,
       showWarning: false,
       paging: {
@@ -329,6 +322,7 @@ export default {
       showMenuFilter: true,
       showMenuType: false,
       showMenuDepartment: true,
+      allowEdit: false,
     };
   },
 
@@ -339,6 +333,17 @@ export default {
   },
 
   watch: {
+    idDangKyUpdate() {
+      if (
+        !this.idDangKyUpdate ||
+        this.idDangKyUpdate === "00000000-0000-0000-0000-000000000000"
+      ) {
+        this.allowEdit = false;
+        console.log(this.allowEdit + "w");
+      } else {
+        this.allowEdit = true;
+      }
+    },
     // dialog(val) {
     //   val || this.close();
     // },
@@ -348,7 +353,6 @@ export default {
   },
 
   created() {
-    //this.getInjectionRegister();
     this.processkey();
   },
   mounted() {
@@ -372,7 +376,8 @@ export default {
         this.paging.pageNumber = 1;
       }
       var me = this;
-       this.$refs.loadingTTDKT_reft.show();
+      me.amountTTDangKy = 0;
+      this.$refs.loadingTTDKT_reft.show();
       await axios
         .get("http://localhost:64016/api/ThongTinDangKyTiem")
         .then((response) => {
@@ -391,9 +396,6 @@ export default {
               // duyệt qua tất cả các bản ghi
               me.listIdDangKy.push(element.iddangky); // push tất cả id tài sản vào mảng
               me.amountTTDangKy++; // đếm tổng số bản ghi
-              // if (element.originalPrice != null) {
-              //   me.totalPrice += parseInt(element.originalPrice); // tính tổng nguyên giá
-              // }
             });
           }
         })
@@ -401,27 +403,55 @@ export default {
           this.errorMessage = error.message;
           console.error("GET ThongTinDangKy Failed: ", error.message);
           setTimeout(() => {
-             me.$refs.loadingTTDKT_reft.hide(); // tắt dialog loading
-            me.getEmty = true; 
+            me.$refs.loadingTTDKT_reft.hide(); // tắt dialog loading
+            me.getEmty = true;
           }, 4000);
         });
     },
     /// todo hiển thị dialog thêm
     showDetail(text, Id) {
+      this.allowEdit = false;
+      this.formMode = "insert";
+
       if (text == "insert") {
         this.formMode = "insert";
         this.alerMsg = "Thêm mới thành công";
       } else {
         this.formMode = "update";
         this.alerMsg = "Cập nhật thành công";
-        this.idDangKyUpdate = Id;
+        if(Id){
+          this.idDangKyUpdate = Id;
+        }
+        if (
+          this.idDangKyUpdate &&
+          this.idDangKyUpdate !== "00000000-0000-0000-0000-000000000000"
+        ) {
+          this.allowEdit = true;
+        } else {
+          this.allowEdit = false;
+        }
       }
-      console.log(this.idDangKyUpdate)
       setTimeout(() => {
-         this.$router.push({ name: "injection-register-detail" , params: {formMode:this.formMode, idDangKyUpdate: this.idDangKyUpdate}});
-        // this.$refs.ModalCreateInjectionRegister_ref.show();
-        // console.log("showwư")
-
+        if (this.allowEdit && text == "update") {
+          this.$router.push({
+            name: "injection-register-detail",
+            params: {
+              formMode: this.formMode,
+              idDangKyUpdate: this.idDangKyUpdate,
+            },
+          });
+        } else if (text == "insert") {
+          this.$router.push({
+            name: "injection-register-detail",
+          });
+        } else {
+          this.$refs.baseConfirm.showForm(
+            "warning",
+            1,
+            "Vui lòng chọn 1 bản ghi!"
+          );
+          return;
+        }
       }, 300);
     },
 
@@ -490,8 +520,10 @@ export default {
 
     // kiểm tra hàng đã được select hay chưa
     selectedRow(id) {
-      if (this.listSelectRow.indexOf(id) > -1) return true;
-      else return false;
+      if (this.listSelectRow.indexOf(id) > -1) {
+        this.idDangKyUpdate = id;
+        return true;
+      } else return false;
     },
 
     // todo xử lý sự kiện mũi tên lên xuống để select row
@@ -605,7 +637,7 @@ export default {
     },
   },
 
-  filters:{
+  filters: {
     // định dạng ngày
     formatDate(inputDate) {
       var a = new Date(inputDate);
@@ -616,16 +648,30 @@ export default {
       var date = day + "/" + month + "/" + a.getFullYear().toString();
       return date;
     },
-    formatStatus(status){
-      
-    }
-  }
+    formatStatus(status) {
+      var statusDisplay = "";
+      if (trangthai && status !== null) {
+        statusDisplay = trangthai[status.toString()];
+      }
+      return statusDisplay;
+    },
+    formatGioiTinh(gt) {
+      var gtDisplay = "";
+      if (gioitinh) {
+        gtDisplay = gioitinh[gt.toString()];
+      }
+      return gtDisplay;
+    },
+  },
 };
 </script>
 
 <style lang="scss" scoped>
 @import url(../../style/scss/icon.scss);
 @import url(../../style/scss/button.scss);
+.disable {
+  pointer-events: none;
+}
 #assetPopup {
   padding: 0 40px;
   height: 80px;
@@ -721,13 +767,13 @@ export default {
     .btn-add-asset {
       padding: 0 36px;
       color: white;
-      background-color: #00abfe;
+      background-color: #1565C0;
       border: none;
     }
 
     .btn.btn-add-asset:hover,
     .btn.btn-save:hover {
-      background-color: #29b8ff;
+      background-color: #00abfe;
     }
     .btn-search {
       margin-left: 10px;

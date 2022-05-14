@@ -2,8 +2,8 @@
   <div class="modal-register">
     <div class="modal-content">
       <div class="header">
-        <div v-if="formMode == 'insert'" class="title">Thêm sổ tiêm</div>
-        <div v-else class="title">Chi tiết sổ tiêm {{ this.masotiem }}</div>
+        <div v-if="formMode == 'insert'" class="title">Thêm vắc xin</div>
+        <div v-else class="title">Chi tiết văc xin {{ this.masotiem }}</div>
 
         <div class="header-right">
           <div class="icon-help btn btn-help" title="Hỗ trợ"></div>
@@ -15,36 +15,7 @@
         </div>
       </div>
 
-      <div class="content">
-        <v-card>
-          <v-tabs v-model="tab" background-color="" left icons-and-text>
-            <v-tabs-slider></v-tabs-slider>
-
-            <v-tab href="#tab-1">
-              Thông tin sổ tiêm
-              <v-icon>mdi-phone</v-icon>
-            </v-tab>
-
-            <v-tab href="#tab-2">
-              Danh sách đăng ký tiêm
-              <v-icon>mdi-heart</v-icon>
-            </v-tab>
-
-            <v-tab href="#tab-3">
-              Lịch sử tiêm chủng
-              <v-icon>mdi-account-box</v-icon>
-            </v-tab>
-          </v-tabs>
-
-          <v-tabs-items v-model="tab">
-            <v-tab-item v-for="i in 3" :key="i" :value="'tab-' + i">
-              <v-card flat>
-                <v-card-text>{{ text }}</v-card-text>
-              </v-card>
-            </v-tab-item>
-          </v-tabs-items>
-        </v-card>
-      </div>
+      <div class="content"></div>
     </div>
     <BaseConfirm ref="baseConfirm" />
   </div>
@@ -58,19 +29,13 @@ export default {
   },
   props: {
     formMode: String,
-    idSoTiemUpdate: String,
-    maSoTiem: String,
+    idVacxinUpdate: String,
+    maVacxin: String,
   },
   data() {
     return {
-      tab: null,
-      lstMaSoTiem: [],
-      ttSoTiem: {},
-      validation: {
-        emailVal: false,
-        emailValMsg: "",
-        sdtVal: true,
-      },
+      lstvacxin: [],
+      ttVacxin: {},
     };
   },
   created() {
@@ -78,28 +43,19 @@ export default {
   },
   methods: {
     /**
-     * Thực hiện lấy toàn bộ bản ghi của sổ tiêm
+     * Thực hiện lấy bản ghi của sổ tiêm có mã là mã truyển vào
      * */
-    async getSoTiemByCode() {
+    async getVacxinByCode() {
       try {
         await axios
           .get(
-            `http://localhost:64016/api/SoTiem/bycode/${this.ttSoTiem.masotiem}`
+            `http://localhost:64016/api/Vacxin/bycode/${this.ttVacxin.mavacxin}`
           )
           .then((response) => {
             if (response.data) {
               var res = response.data.data;
               if (res) {
-                this.ttSoTiem.hoten = res.hoten;
-                this.ttSoTiem.ngaysinh = res.ngaysinh;
-                this.ttSoTiem.ngaysinh = this.formatDate(
-                  this.ttSoTiem.ngaysinh
-                );
-                this.ttSoTiem.gioitinh = res.gioitinh;
-                this.ttSoTiem.email = res.email;
-                this.ttSoTiem.sodienthoai = res.sodienthoai;
-                this.ttSoTiem.diachi = res.diachi;
-                console.log(this.ttSoTiem.hoten + "3");
+                this.ttVacxin = res;
               }
             }
           })
@@ -117,15 +73,14 @@ export default {
       console.log(this.formMode);
       if (this.formMode == "update") {
         await axios
-          .get("http://localhost:64016/api/SoTiem/" + this.idSoTiemUpdate)
+          .get("http://localhost:64016/api/Vacxin/" + this.idVacxinUpdate)
           .then((response) => {
             if (response.data) {
               var res = response.data.data;
               if (res) {
                 this.disableMasotiem = true;
-                me.ttSoTiem = res;
-                me.ttSoTiem.ngaysinh = this.formatDate(me.ttSoTiem.ngaysinh);
-                console.log(me.ttSoTiem);
+                me.ttVacxin = res;
+                console.log(me.ttVacxin);
               }
             }
           })
@@ -139,28 +94,12 @@ export default {
     },
 
     // todo reset lại các input
-    resetInput() {
-      //   (this.ttSoTiem.hoten = ""),
-      //     (this.ttSoTiem.ngaysinh = ""),
-      //     (this.ttSoTiem.gioitinh = ""),
-      //     (this.ttSoTiem.sodienthoai = ""),
-      //     (this.ttSoTiem.email = ""),
-      //     (this.ttSoTiem.diachi = ""),
-      //     (this.ttSoTiem.trangthai = 1),
-      //     (this.ttSoTiem.tentrungtam = ""),
-      //     (this.ttSoTiem.idtrungtam = "00000000-0000-0000-0000-000000000000"),
-      //     (this.ttSoTiem.ngaydangkytiem = new Date().toISOString()),
-      //     (this.ttSoTiem.danhsachvacxin = []),
-      //     (this.ttSoTiem.nguoitao = ""),
-      //     (this.ttSoTiem.ngaytao = new Date().toISOString()),
-      //     (this.ttSoTiem.nguoichinhsua = ""),
-      //     (this.ttSoTiem.ngaychinhsua = new Date().toISOString());
-    },
+    resetInput() {},
 
     // todo ẩn dialog
     hide() {
       this.isActive = false;
-      this.$router.push({ name: "injection-books" });
+      this.$router.push({ name: "manage-vaccines" });
     },
 
     /**
@@ -168,11 +107,11 @@ export default {
      * CreatedBy: nctu2
      * */
     tabValidate(id, message) {
-      if (id == "emailAddress") {
-        console.log("email");
-        if (!this.ttSoTiem.email) {
-          this.validation.emailVal = true;
-          this.emailValMsg = message;
+      if (id == "tenvacxin") {
+        console.log("tenvacxin");
+        if (!this.ttVacxin.tenvacxin) {
+          this.validation.tenvacxinVal = true;
+          this.tenvacxinMsg = message;
         }
       }
     },
@@ -181,12 +120,12 @@ export default {
      * Thực hiện validate email không được bỏ trống
      * CreatedBy: nctu
      * */
-    validateEmail() {
-      if (!this.ttSoTiem.email) {
+    validateTenVacxin() {
+      if (!this.ttVacxin.tenvacxin) {
         this.$refs.baseConfirm.showForm(
           "error",
           1,
-          "Email không được để trống"
+          "Tên vắc xin không được để trống"
         );
         this.stateValidate = false;
         return false;
@@ -196,9 +135,11 @@ export default {
       }
     },
     validateData() {
-      if (this.validateEmail()) {
+      if (validateTenVacxin()) {
         return true;
-      } else return false;
+      } else {
+        return false;
+      }
     },
   },
 };
@@ -328,20 +269,39 @@ input.required {
     box-sizing: border-box;
     overflow-y: auto;
     overflow-x: hidden;
-    .v-sheet.v-card {
+    .step-content {
+      width: 100%;
       height: 100%;
-      ::v-deep .v-window{
-          height: calc(100% - 72px);
-          .v-window__container{
-              padding: 0;
-              height: 100%;
+      box-sizing: border-box;
+
+      .v-stepper__step {
+        padding: 12px !important;
+      }
+      .v-stepper__items {
+        height: calc(100% - 70px) !important;
+        .v-stepper__content {
+          padding: 0 !important;
+          .v-stepper__wrapper {
+            height: 100% !important;
           }
+          .v-sheet.v-card {
+            height: calc(100% - 75px);
+          }
+          .v-sheet.v-card:not(.v-sheet--outlined) {
+            box-shadow: none;
+          }
+        }
+        ::v-deep .v-input__slot {
+          justify-content: center !important;
+          margin-top: 4px;
+          top: 10px;
+        }
+      }
+      .contact-form {
+        width: 100%;
+        // height: calc(100% - 100px)
       }
     }
-    .v-sheet.v-card:not(.v-sheet--outlined) {
-      box-shadow: none;
-    }
-    
     .input-field {
       float: left;
       padding: 0 16px 16px 0px;

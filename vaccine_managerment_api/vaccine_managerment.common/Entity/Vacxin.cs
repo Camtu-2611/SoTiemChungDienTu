@@ -57,5 +57,15 @@ namespace vaccine_managerment.common
         /// giá vắc xin
         /// </summary>
         public long giavacxin { get; set; }
+
+        /// <summary>
+        /// số lượng còn
+        /// </summary>
+        public int soluong { get; set; }
+
+        /// <summary>
+        /// trạng thái vắc xin: 0 - hết hàng, 1 - còn hàng, 2 - sắp hết
+        /// </summary>
+        public int trangthai { get; set; }
     }
 }

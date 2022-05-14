@@ -1,5 +1,5 @@
 <template>
-  <div class="injection-books content">
+  <div class="injection-register content">
     <div class="div-container">
       <div class="content-nav">
         <v-alert
@@ -14,16 +14,16 @@
         <v-alert v-if="showWarning" id="required-choose" type="warning">{{
           alerMsg
         }}</v-alert>
-        <h5>Danh sách sổ tiêm</h5>
+        <h5 class="mb-4">Quản lý vắc xin</h5>
         <div class="features-pane">
           <div class="features-pane-left">
             <input
-              id="assetSearchBox"
+              id="vaccineSearchBox"
               class="input-search"
               type="text"
-              placeholder="Tìm kiếm theo họ tên, mã sổ tiêm "
+              placeholder="Tìm kiếm theo tên, mã vắc xin "
               v-model="inputSearch"
-              @change="getInjectionBook('filter')"
+              @change="getAllVaccines('filter')"
             />
             <div class="icon-search" title="Tìm kiếm"></div>
           </div>
@@ -35,15 +35,16 @@
             >
               Thêm
             </div>
+
             <div
               id="preventLeftClick"
               class="btn icon-edit-pen features-pane-item"
+              :class="['disable' ? '' : allowEdit]"
               @click="showDetail('update', null)"
-              title="Sửa thông tin sổ tiêm"
+              title="Cập nhật thông tin vaccine"
             ></div>
-
             <div
-              @click="getInjectionBook('')"
+              @click="getAllVaccines('')"
               class="btn icon-refresh features-pane-item"
               title="Tải lại"
             ></div>
@@ -57,26 +58,19 @@
       <div class="content-grid grid" oncontextmenu="return false;">
         <table class="table-asset" id="tableAsset">
           <colgroup>
-            <col width="50" />
-            <col width="120" />
-            <col min-width="400" />
-            <col min-width="200" />
-            <col min-width="100" />
+            <col width="40" />
             <col width="100" />
+            <col width="200" />
+            <col width="60" />
+            <col width="100" />
+            <col width="100" />
+            <col width="100" />
+            <col width="200" />
             <col width="100" />
           </colgroup>
           <thead>
             <tr>
               <th style="text-align: left">STT</th>
-              <th
-                sortProp="code"
-                sortOrder="asc"
-                id="columnAssetCode"
-                class="hover-pointer"
-                style="text-align: left"
-              >
-                mã sổ tiêm
-              </th>
               <th
                 sortProp="name"
                 sortOrder="asc"
@@ -84,7 +78,7 @@
                 class="hover-pointer"
                 style="text-align: left"
               >
-                Họ và tên
+                Mã vaccine
               </th>
               <th
                 sortProp="type"
@@ -93,7 +87,7 @@
                 id="columnAssetType"
                 class="hover-pointer"
               >
-                Ngày sinh
+                Tên vắc xin
               </th>
               <th
                 sortProp="department"
@@ -102,7 +96,61 @@
                 class="hover-pointer"
                 style="text-align: left"
               >
-                Giới tính
+                Số lô nhập
+              </th>
+              <th
+                sortProp="department"
+                sortOrder="asc"
+                id="columnDepartment"
+                class="hover-pointer"
+                style="text-align: left"
+              >
+                Ngày nhập
+              </th>
+              <th
+                sortProp="department"
+                sortOrder="asc"
+                id="columnDepartment"
+                class="hover-pointer"
+                style="text-align: left"
+              >
+                Đơn giá
+              </th>
+              <th
+                sortProp="department"
+                sortOrder="asc"
+                id="columnDepartment"
+                class="hover-pointer"
+                style="text-align: left"
+              >
+                Số lượng còn
+              </th>
+              <!-- <th
+                sortProp="department"
+                sortOrder="asc"
+                id="columnDepartment"
+                class="hover-pointer"
+                style="text-align: left"
+              >
+                Ngày sản xuất
+              </th>
+              <th
+                sortProp="department"
+                sortOrder="asc"
+                id="columnDepartment"
+                class="hover-pointer"
+                style="text-align: left"
+              >
+                Hạn sử dụng
+              </th> -->
+              <th
+                sortProp="department"
+                sortOrder="asc"
+                id="columnDepartment"
+                class="hover-pointer"
+                style="text-align: left"
+              >
+                Mô tả
               </th>
               <th
                 sortProp="price"
@@ -111,107 +159,55 @@
                 class="hover-pointer"
                 style="text-align: left"
               >
-                Số điện thoại
+                Trạng thái
               </th>
-              <th
-                sortProp="price"
-                sortOrder="asc"
-                id="columnPrice"
-                class="hover-pointer"
-                style="text-align: left"
-              >
-                CMND/CCCD
-              </th>
-              <!-- <th style="text-align: left">chức năng</th> -->
             </tr>
           </thead>
 
           <tbody>
             <tr
-              v-for="(sotiem, index) in listSoTiem"
-              :key="sotiem.idsotiem"
+              v-for="(TTVaccine, index) in lstVaccine"
+              :key="TTVaccine.idvacxin"
               v-bind:class="
-                selectedRow(sotiem.idsotiem, sotiem.masotiem)
-                  ? 'selected-row'
-                  : ''
+                selectedRow(TTVaccine.idvacxin) ? 'selected-row' : ''
               "
-              @click="selectRow(sotiem.idsotiem, $event)"
-              @click.right="showContexMenu(sotiem.idsotiem, $event)"
-              @dblclick="showDetail('update', sotiem.idsotiem)"
+              @click="selectRow(TTVaccine.idvacxin, $event)"
+              @click.right="showContexMenu(TTVaccine.idvacxin, $event)"
+              @dblclick="showDetail('update', TTVaccine.idvaccine)"
             >
-              <td class="no-border-left">{{ index + 1 }}</td>
-              <td>{{ sotiem.masotiem }}</td>
-              <td>{{ sotiem.hoten }}</td>
-              <td>{{ sotiem.ngaysinh | formatDate(sotiem.ngaysinh) }}</td>
-              <td>{{ sotiem.gioitinh | formatGioiTinh(sotiem.gioitinh) }}</td>
-              <td>{{ sotiem.sodienthoai }}</td>
-              <td>{{ sotiem.cmnd }}</td>
-              <!-- <td style="text-align: right">
-                {{ asset.originalPrice | formatMoney(asset.originalPrice) }}
-              </td> -->
-              <!-- <td class="no-border-right">
-                <div class="features-box">
-                  <div
-                    :id="'tableRow' + index + '_edit'"
-                    class="table-icon icon-edit-pen"
-                    @click="showDetail('update', sotiem.idSoTiem)"
-                    title="Sửa"
-                  ></div>
-                  <div
-                    id="preventLeftClick"
-                    class="table-icon icon-trash-table"
-                    @click="showDetail('inRow')"
-                    title="Xóa"
-                  ></div>
-                  <div
-                    class="table-icon icon-refresh-time"
-                    title="Chức năng chưa phát triển"
-                  ></div>
-                </div>
-              </td> -->
+              <td>{{ index + 1 }}</td>
+              <td>{{ TTVaccine.mavacxin }}</td>
+              <td>{{ TTVaccine.tenvacxin }}</td>
+              <td>{{ TTVaccine.solo }}</td>
+              <td>{{ TTVaccine.ngaynhap | formatDate(TTVaccine.ngaynhap) }}</td>
+              <!-- <td>{{ TTVaccine.ngansanxuat | formatDate(TTVaccine.ngaynhap) }}</td>
+              <td>{{ TTVaccine.hansudung | formatDate(TTVaccine.hansudung) }}</td> -->
+              <td>{{ TTVaccine.giavacxin | formatedMoney(TTVaccine.giavacxin) }}</td>
+              <td>{{ TTVaccine.soluong }}</td>
+              <td>{{ TTVaccine.mota }}</td>
+              <td>
+                {{ TTVaccine.trangthai | formatStatus(TTVaccine.trangthai) }}
+              </td>
             </tr>
           </tbody>
-          <BaseLoading ref="BaseLoading_ref" />
+          <BaseLoading ref="loadingTTVaccine_reft" />
 
           <div v-show="getEmty" class="loading-emty">Không có dữ liệu</div>
         </table>
         <div class="ctx-menu" id="ctxMenu">
-          <div class="ctx-menu-item" @click="showDetail('insert', 0)">
-            Thêm mới
-          </div>
+          <div class="ctx-menu-item" @click="showDetail('insert', 0)">Thêm</div>
           <div
             class="ctx-menu-item"
             @click="showDetail('update', listSelectRow[0])"
           >
-            Cập nhật sổ tiêm
-          </div>
-          <div
-            id="preventLeftClick"
-            class="ctx-menu-item"
-            @click="showDanhSachDK(listSelectRow[0])"
-          >
-            Danh sách đã đăng ký tiêm
-          </div>
-          <div
-            id="preventLeftClick"
-            class="ctx-menu-item"
-            @click="showThongTinCaNhan(listSelectRow[0])"
-          >
-            Thông tin cá nhân
-          </div>
-          <div
-            id="preventLeftClick"
-            class="ctx-menu-item"
-            @click="showLichSuTiemChung(listSelectRow[0])"
-          >
-            Lịch sử tiêm chủng
+            Sửa
           </div>
         </div>
       </div>
 
       <div class="table-summary">
         <div class="summary">
-          <div class="asset-number">Tổng số bản ghi: {{ amountSoTiem }}</div>
+          <div class="asset-number">Tổng số bản ghi: {{ amountTTVaccine }}</div>
 
           <div class="paging-toolbar">
             <div class="leftchild">
@@ -247,7 +243,7 @@
               <div
                 title="Tải lại"
                 class="p-button refresh"
-                @click="getInjectionBook()"
+                @click="getAllVaccines()"
               ></div>
               <select
                 title="Số bản ghi trên 1 trang"
@@ -255,7 +251,7 @@
                 id=""
                 class="select-quantitypage"
                 v-model="paging.recordNumber"
-                @change="getInjectionBook('filter')"
+                @change="getAllVaccines('filter')"
               >
                 <option value="25">25</option>
                 <option value="50">50</option>
@@ -271,44 +267,45 @@
     <BaseConfirm ref="baseConfirm" />
   </div>
 </template>
-
 <script>
-import BaseLoading from "../../components/common/BaseLoading.vue";
 import axios from "axios";
+import BaseLoading from "../../components/common/BaseLoading.vue";
+import { trangthaiVacxin } from "../../enumeration/enumaration";
 import BaseConfirm from "@/components/common/baseControlAcounting/BaseConfirm";
-import { gioitinh } from "../../enumeration/enumaration";
+
 export default {
+  name: "InjectionRegister",
   components: {
     BaseLoading,
     BaseConfirm,
   },
-  props: {
-    isFilterMenu: Boolean,
-  },
   data() {
     return {
-      listSoTiem: [],
-      sotiem: {
-        idSoTiem: null,
-        maSoTiem: null,
-        hoTen: null,
-        ngaySinh: null,
-        gioiTinh: null,
-        sodienthoai: null,
-        cmnd: null,
+      lstVaccine: [],
+      TTVaccine: {
+        idvacxin: null,
+        mavacxin: null,
+        tenvacxin: null,
+        solo: null,
+        ngaynhap: null,
+        soluong: null,
+        giavacxin: null,
+        mota: null,
+        trangthai: null,
+        ngaysanxuat: null,
+        hansudung: null,
       },
       formMode: "",
       alerMsg: "",
-      idSoTiemUpdate: null,
-      maSoTiemUpdate: "",
+      idVaccineUpdate: null,
       listSelectRow: [],
-      listIdSoTiem: [],
+      lstIdVaccine: [],
       inputSearch: "",
       showSuccess: false,
       isError: false,
       getSuccess: true,
       getEmty: false,
-      amountSoTiem: 0,
+      amountTTVaccine: 0,
       showWarning: false,
       paging: {
         amountPage: 1,
@@ -324,6 +321,35 @@ export default {
       allowEdit: false,
     };
   },
+
+  computed: {
+    formTitle() {
+      return this.editedIndex === -1 ? "New Item" : "Edit Item";
+    },
+  },
+
+  watch: {
+    idVaccineUpdate() {
+      if (
+        !this.idVaccineUpdate ||
+        this.idVaccineUpdate === "00000000-0000-0000-0000-000000000000"
+      ) {
+        this.allowEdit = false;
+        console.log(this.allowEdit + "w");
+      } else {
+        this.allowEdit = true;
+      }
+    },
+  },
+
+  created() {
+    this.processkey();
+  },
+  mounted() {
+    this.getAllVaccines();
+    this.hideContextMenu();
+  },
+
   methods: {
     msgAlert(text, value) {
       this.showWarning = value;
@@ -334,71 +360,61 @@ export default {
         res.showWarning = false;
       }, 3000);
     },
-    /**
-     * Gửi request GET tới API
-     * Author: TVThinh (12/5/2021)
-     */
-    async getInjectionBook(text) {
+
+    async getAllVaccines(text) {
       if (text == "filter") {
         this.paging.pageNumber = 1;
       }
-
-      var res = this;
-      this.listSelectRow = [];
-
-      res.$refs.BaseLoading_ref.show();
-      this.getEmty = false;
-      this.amountSoTiem = 0;
+      var me = this;
+      me.amountTTVaccine = 0;
+      this.$refs.loadingTTVaccine_reft.show();
       await axios
-        .get("http://localhost:64016/api/SoTiem")
+        .get("http://localhost:64016/api/Vacxin")
         .then((response) => {
           if (response.data) {
-            res.listSoTiem = response.data.data;
+            me.lstVaccine = response.data.data;
 
-            if (res.listSoTiem.length == 0) {
-              res.getEmty = true;
+            if (me.lstVaccine.length == 0) {
+              me.getEmty = true;
             }
 
-            res.$refs.BaseLoading_ref.hide();
-            res.listIdSoTiem = [];
-            res.paging.amountPage = response.data.totalPage;
+            me.$refs.loadingTTVaccine_reft.hide();
+            me.lstIdVaccine = [];
+            me.paging.amountPage = response.data.totalPage;
 
-            res.listSoTiem.forEach((element) => {
+            me.lstVaccine.forEach((element) => {
               // duyệt qua tất cả các bản ghi
-              res.listIdSoTiem.push(element.idSoTiem); // push tất cả id tài sản vào mảng
-              res.amountSoTiem++; // đếm tổng số bản ghi
+              me.lstIdVaccine.push(element.iddangky); // push tất cả id tài sản vào mảng
+              me.amountTTVaccine++; // đếm tổng số bản ghi
             });
           }
         })
         .catch((error) => {
-          console.log(error);
+          this.errorMessage = error.message;
+          console.error("GET Vacxin Failed: ", error.message);
           setTimeout(() => {
-            res.$refs.BaseLoading_ref.hide(); // tắt dialog loading
-            res.getEmty = true;
+            me.$refs.loadingTTVaccine_reft.hide(); // tắt dialog loading
+            me.getEmty = true;
           }, 300);
         });
-
-      setTimeout(() => {
-        this.listSelectRow.push(this.listIdSoTiem[0]);
-      }, 0);
     },
     /// todo hiển thị dialog thêm
     showDetail(text, Id) {
       this.allowEdit = false;
       this.formMode = "insert";
-      console.log(this.formMode);
+
       if (text == "insert") {
         this.formMode = "insert";
         this.alerMsg = "Thêm mới thành công";
       } else {
         this.formMode = "update";
         this.alerMsg = "Cập nhật thành công";
-        if (Id) {
-          this.idSoTiemUpdate = Id;
+        if(Id){
+          this.idVaccineUpdate = Id;
         }
         if (
-          this.idSoTiemUpdate &&
-          this.idSoTiemUpdate !== "00000000-0000-0000-0000-000000000000"
+          this.idVaccineUpdate &&
+          this.idVaccineUpdate !== "00000000-0000-0000-0000-000000000000"
         ) {
           this.allowEdit = true;
         } else {
@@ -408,16 +424,15 @@ export default {
       setTimeout(() => {
         if (this.allowEdit && text == "update") {
           this.$router.push({
-            name: "injection-book-detail",
+            name: "manage-vaccine-detail",
             params: {
               formMode: this.formMode,
-              idSoTiemUpdate: this.idSoTiemUpdate,
-              maSoTiemUpdate: this.maSoTiemUpdate,
+              idVaccineUpdate: this.idVaccineUpdate,
             },
           });
         } else if (text == "insert") {
           this.$router.push({
-            name: "injection-book-detail",
+            name: "manage-vaccine-detail",
           });
         } else {
           this.$refs.baseConfirm.showForm(
@@ -429,28 +444,32 @@ export default {
         }
       }, 300);
     },
-    // hiển thị danh sách đã đăng ký tiêm của sổ tiêm
-    showDanhSachDK(id) {
-      alert("hiển thị danh sách đăng ký của sổ tiêm này" + id);
-    },
-    // hiển thị thông tin cá nhân
-    showThongTinCaNhan(id) {
-      alert("hiển thị thông tin cá nhân của sổ tiêm" + id);
-    },
-    // hiển thị lịch sử tiêm chủng
-    showLichSuTiemChung(id) {
-      alert("hiển thị lịch sử tiêm chủng của sổ tiêm" + id);
-    },
 
     // todo tải lại dữ liệu
     reload(value) {
       if (value == true) {
-        this.getInjectionBook("");
+        this.getAllVaccines("");
         this.showSuccess = true;
         setTimeout(() => {
           this.showSuccess = false;
         }, 3000);
       }
+    },
+
+    //todo hiển thị form xác nhận xóa
+    showDeleteDialog(text) {
+      // var res = this
+      this.alerMsg = "Xóa thành công!";
+      if (text != "inRow" && this.listSelectRow.length == 0) {
+        this.showWarning = true;
+        this.alerMsg = "Vui lòng chọn bản ghi";
+      } else {
+        this.$refs.ModalDeleteAsset_ref.show();
+        this.showWarning = false;
+      }
+      setTimeout(() => {
+        this.showWarning = false;
+      }, 3000);
     },
 
     //  select hàng, nếu hàng đã được select thì xóa khỏi mẩng listSelectRow, và ngược lại
@@ -465,9 +484,9 @@ export default {
 
         // vị trí đầu tiên trong mảng listSelectRow
         var idStart = this.listSelectRow[0];
-        var indexStart = this.listIdSoTiem.indexOf(idStart);
+        var indexStart = this.lstIdVaccine.indexOf(idStart);
 
-        var indexEnd = this.listIdSoTiem.indexOf(id);
+        var indexEnd = this.lstIdVaccine.indexOf(id);
         if (indexStart > indexEnd) {
           indexStart--;
           var tem = indexStart;
@@ -477,7 +496,7 @@ export default {
           indexStart++;
         }
         for (var i = indexStart; i <= indexEnd; i++) {
-          this.listSelectRow.push(this.listIdSoTiem[i]);
+          this.listSelectRow.push(this.lstIdVaccine[i]);
         }
       } else if (event.ctrlKey) {
         var index = this.listSelectRow.indexOf(id);
@@ -490,10 +509,9 @@ export default {
     },
 
     // kiểm tra hàng đã được select hay chưa
-    selectedRow(id, ma) {
+    selectedRow(id) {
       if (this.listSelectRow.indexOf(id) > -1) {
-        this.idSoTiemUpdate = id;
-        this.maSoTiem = ma;
+        this.idVaccineUpdate = id;
         return true;
       } else return false;
     },
@@ -503,24 +521,24 @@ export default {
       var res = this;
       document.addEventListener("keydown", function(e) {
         var len1 = res.listSelectRow.length; // số phần tử của mảng listSelectRow
-        var len2 = res.listIdSoTiem.length; //số phần tử của mảng listIdSoTiem
+        var len2 = res.lstIdVaccine.length; //số phần tử của mảng lstIdVaccine
         switch (e.keyCode) {
           case 38:
             {
               //up arrow
               if (
                 len1 == 0 ||
-                res.listIdSoTiem.indexOf(res.listSelectRow[0]) == 0
+                res.lstIdVaccine.indexOf(res.listSelectRow[0]) == 0
               ) {
                 res.listSelectRow = [];
-                res.listSelectRow.push(res.listIdSoTiem[len2 - 1]);
+                res.listSelectRow.push(res.lstIdVaccine[len2 - 1]);
               } else if (len1 > 0) {
                 //res.listSelectRow = [];
-                var indexIdFirst = res.listIdSoTiem.indexOf(
+                var indexIdFirst = res.lstIdVaccine.indexOf(
                   res.listSelectRow[0]
                 );
                 res.listSelectRow = [];
-                res.listSelectRow.push(res.listIdSoTiem[indexIdFirst - 1]);
+                res.listSelectRow.push(res.lstIdVaccine[indexIdFirst - 1]);
               }
             }
             break;
@@ -529,18 +547,18 @@ export default {
               // //down arrow
               if (
                 len1 == 0 ||
-                res.listIdSoTiem.indexOf(res.listSelectRow[len1 - 1]) ==
+                res.lstIdVaccine.indexOf(res.listSelectRow[len1 - 1]) ==
                   len2 - 1
               ) {
                 res.listSelectRow = [];
-                res.listSelectRow.push(res.listIdSoTiem[0]);
+                res.listSelectRow.push(res.lstIdVaccine[0]);
               } else if (len1 > 0) {
                 //res.listSelectRow = [];
-                var indexIdLast = res.listIdSoTiem.indexOf(
+                var indexIdLast = res.lstIdVaccine.indexOf(
                   res.listSelectRow[len1 - 1]
                 );
                 res.listSelectRow = [];
-                res.listSelectRow.push(res.listIdSoTiem[indexIdLast + 1]);
+                res.listSelectRow.push(res.lstIdVaccine[indexIdLast + 1]);
               }
             }
             break;
@@ -575,14 +593,14 @@ export default {
     nextPage() {
       if (this.paging.pageNumber < this.paging.amountPage) {
         this.paging.pageNumber++;
-        this.getInjectionBook();
+        this.getAllVaccines();
       }
     },
     // todo chuyển đến trang trước
     backPage() {
       if (this.paging.pageNumber > 1) {
         this.paging.pageNumber--;
-        this.getInjectionBook();
+        this.getAllVaccines();
       }
     },
     hideContextMenu() {
@@ -593,34 +611,29 @@ export default {
     },
     lastPage() {
       this.paging.pageNumber = this.paging.amountPage;
-      this.getInjectionBook();
+      this.getAllVaccines();
     },
     firstPage() {
       this.paging.pageNumber = 1;
-      this.getInjectionBook();
+      this.getAllVaccines();
     },
     reloadPage() {
       if (
         parseInt(this.paging.pageNumber) <= this.paging.amountPage &&
         parseInt(this.paging.pageNumber) > 0
       ) {
-        this.getInjectionBook();
+        this.getAllVaccines();
       } else alert("Trang không hợp lệ");
     },
   },
+
   filters: {
-    // todo định dạng kiểu tiền tệ cho nguyên giá
-    formatMoney: function(money) {
-      if (money != null)
-        var num = money.toFixed(0).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
-      else return "0";
-      return num;
-    },
     // định dạng ngày
     formatDate(inputDate) {
       var a = new Date(inputDate);
       var month = a.getMonth();
       var day = a.getDate();
+      console.log(day)
       if (month < 10) month = "0" + month.toString();
       if (day < 10) day = "0" + day.toString();
       var date = day + "/" + month + "/" + a.getFullYear().toString();
@@ -628,28 +641,11 @@ export default {
     },
     formatStatus(status) {
       var statusDisplay = "";
-      if (trangthai && status !== null) {
-        statusDisplay = trangthai[status.toString()];
+      if (trangthaiVacxin && status !== null) {
+        statusDisplay = trangthaiVacxin[status.toString()];
       }
       return statusDisplay;
     },
-    formatGioiTinh(gt) {
-      var gtDisplay = "";
-      if (gioitinh) {
-        gtDisplay = gioitinh[gt.toString()];
-      }
-      return gtDisplay;
-    },
-  },
-  watch: {},
-  created() {
-    //this.getInjectionBook();
-    this.processkey();
-  },
-  mounted() {
-    // this.getInjectionBookType();
-    this.getInjectionBook();
-    this.hideContextMenu();
   },
 };
 </script>
@@ -657,6 +653,9 @@ export default {
 <style lang="scss" scoped>
 @import url(../../style/scss/icon.scss);
 @import url(../../style/scss/button.scss);
+.disable {
+  pointer-events: none;
+}
 #assetPopup {
   padding: 0 40px;
   height: 80px;
@@ -685,12 +684,10 @@ export default {
   display: none;
 
   .ctx-menu-item {
-    padding: 8px 14px 8px 18px;
+    padding: 8px 34px 8px 18px;
 
     &:hover {
-      background-color: #1565C0 ;
-      box-shadow: 2px 2px 4px grey;
-      color: white;
+      background-color: #5973b3;
       cursor: pointer;
     }
   }
@@ -786,9 +783,7 @@ export default {
         width: 40px;
         height: 40px;
         padding: 6px;
-        // background: url(/img/qlts-icon.d656886f.svg) no-repeat -454px -104px;
       }
-      // background-color:lightsalmon;
       display: flex;
       .features-pane-item {
         margin: 0px 5px;
@@ -956,7 +951,7 @@ table tbody tr {
 
 #ctxMenu {
   position: relative;
-  width: fit-content;
+  width: 152px;
   position: fixed !important;
 }
 #required-choose {
