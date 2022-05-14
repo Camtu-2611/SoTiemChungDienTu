@@ -17,7 +17,7 @@ namespace vaccine_managerment.infrastructure
         protected string _tableName = string.Empty;
 
         //Chuỗi kết nối đến CSDL
-        protected string _connectionString = "Data Source=NCTU2;Initial Catalog=Vaccine_management;Integrated Security=True";
+        protected string _connectionString = "Data Source=DESKTOP-9D0EPU6\\SQLEXPRESS;Initial Catalog=Vaccine_management;Integrated Security=True";
 
         //Khai báo kết nối
         protected IDbConnection _dbConnection;

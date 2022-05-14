@@ -17,7 +17,7 @@ namespace vaccine_managerment.infrastructure
         /// <param name="phonenumber">số điện thoại</param>
         /// <returns></returns>
         /// CreatedBy: nctu 1.05.2022
-        public ThongTinDangKyTiem GetThongTinDangKyTiemByPhoneNumber(string phonenumber)
+        public IEnumerable<ThongTinDangKyTiem> GetThongTinDangKyTiemByPhoneNumber(string phonenumber)
         {
             // Thực hiện lấy thông tin một đối tượng
             var storeName = $"Proc_GetThongTinDangKyTiemByCode";
@@ -29,8 +29,7 @@ namespace vaccine_managerment.infrastructure
             var entity = _dbConnection.Query<ThongTinDangKyTiem>(
                 storeName,
                 dynamicParameters,
-                commandType: CommandType.StoredProcedure)
-                .FirstOrDefault();
+                commandType: CommandType.StoredProcedure);
             return entity;
         }
     }
