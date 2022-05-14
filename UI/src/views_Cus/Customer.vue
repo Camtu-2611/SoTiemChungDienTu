@@ -20,7 +20,7 @@ import Footer from "./Footer.vue";
 export default {
     name: 'Customer',
     components:{
-        Home,
+    Home,
     Head,
     Footer,
     },

@@ -1,5 +1,7 @@
 <template>
-  <div
+<div class="signinAdmin">
+  <!-- <Admin v-if="redirectString === 'admin'" /> -->
+  <div 
     class="page-hero bg-image overlay-dark"
     style="background-image: url(../assets/img/bg_image_1.jpg)"
   >
@@ -17,14 +19,14 @@
           >
           </ol>
         </nav>
-        <h1 class="font-weight-normal">Đăng nhập ngay</h1>
+        <h1 class="font-weight-normal">Đăng nhập dành cho Nhân viên y tế</h1>
         <form class="main-form">
           <div class="row mt-5">
             <div class="col-12 py-2 wow fadeInUp" data-wow-delay="300ms">
               <input
                 type="text"
                 class="form-control"
-                placeholder="Tên tài khoản.."
+                placeholder="Mã nhân viên.."
               />
             </div>
             <div class="col-12 py-2 wow fadeInUp" data-wow-delay="300ms">
@@ -37,52 +39,41 @@
           </div>
           <div
             class="btn btn-primary mt-3 wow zoomIn"
-            @click="btnSigninClick()"
+           @click="btnSigninAdminnClick()"
           >
             Đăng nhập
           </div>
-          <div class="col-12 py-2 wow fadeInUp" data-wow-delay="300ms">
-            <li class="breadcrumb-item" @click="$router.push({ name: 'dang-ky' })">
-              <a >Chưa có tài khoản? Đăng ký ngay</a>
-            </li>
-          </div>
-           <div class="col-12 py-2 wow fadeInUp" data-wow-delay="300ms">
-            <li class="breadcrumb-item" @click="btnSigninAdminClick()">
-              <a >Đăng nhập dành cho nhân viên y tế</a>
-            </li>
-          </div>
+         
         </form>
       </div>
     </div>
   </div>
+  </div>
 </template>
 
 <script>
+import Admin from "../views/Admin.vue";
 export default {
-  name: "Signin",
+  name: "SigninAdmin",
+   components: {
+    Admin,    
+  },
   props: {
     redirectString: String,
-    isShow: Boolean
+    isShowSigninAdmin: Boolean
   },
   data() {
     return {};
   },
   methods: {
-    btnSigninClick() {
+    btnSigninAdminnClick() {
       console.log(this.redirectString)
-      this.redirectString = 'customer'
-      this.isShow = false
-      console.log(this.redirectString, this.isShow)
-      this.$emit('redirect', this.redirectString, this.isShow)
-      
+      this.redirectString = 'admin'
+      this.isShowSigninAdmin = false
+      console.log(this.redirectString, this.isShowSigninAdmin)
+      this.$emit('redirect', this.redirectString, this.isShowSigninAdmin)
     },
-     btnSigninAdminClick() {
-      console.log(this.redirectString)
-      this.redirectString = 'signinAdmin'
-      this.isShow = false
-      this.$emit('redirect', this.redirectString, this.isShow)
-    },
-  },
+  }
 };
 </script>
 

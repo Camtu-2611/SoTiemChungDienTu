@@ -12,25 +12,30 @@
         {{isShowCustomer}} -->
         <Customer v-if="redirectString === 'customer'" />
         <Admin v-else-if="redirectString === 'admin'" />
-        <div v-else></div>
+        <SigninAdmin
+          :redirectString="redirectString"
+          :isShow="isShowSigninAdmin"
+          @redirect="redirect"
+          v-show="isShowSigninAdmin"
+        />
+
       </div>
     </v-main>
   </v-app>
 </template>
 
 <script>
-import Admin from "./views/Admin.vue";
+ import Admin from "./views/Admin.vue";
 import Customer from "./views_Cus/Customer.vue";
 import Header from "./components/layout/TheHeader.vue";
 import Navbar from "./components/layout/TheNavbar.vue";
 
 import Signin from "./signin/Signin.vue";
+import SigninAdmin from "./signin/SigninAdmin.vue";
 
 import Head from "./components/layout/Head.vue";
 import Home from "./views_Cus/Home.vue";
 import Footer from "./views_Cus/Footer.vue";
-
-
 
 export default {
   name: "App",
@@ -42,7 +47,8 @@ export default {
     Head,
     Footer,
     Signin,
-    Admin,
+    SigninAdmin,
+     Admin,
     Customer,
   },
   methods: {
@@ -55,10 +61,14 @@ export default {
     redirect(redirectString, showLogin) {
       this.redirectString = redirectString;
       this.isShow = showLogin;
-      if (this.redirectString === 'admin') {
+      if (this.redirectString === "admin") {
+        this.isShowSigninAdmin = this.showLogin;
         this.$router.push({ name: "admin" });
-      } else if (this.redirectString === 'customer') {
+      } else if (this.redirectString === "customer") {
         this.$router.push({ name: "STC-dien-tu" });
+      } else if (this.redirectString === "signinAdmin") {
+        this.$router.push({ name: "signinAdmin" });
+        this.isShowSigninAdmin = true
       }
     },
   },
@@ -70,6 +80,7 @@ export default {
       isShowCustomer: true,
       isShowAdmin: false,
       isShow: true,
+      isShowSigninAdmin: false,
       redirectString: "",
     };
   },
@@ -82,7 +93,6 @@ export default {
 @import "../public/assets/vendor/owl-carousel/css/owl.carousel.css";
 @import "../public/assets/vendor/animate/animate.css";
 @import "../public/assets/css/theme.css";
-
 
 @import "~bootstrap/dist/css/bootstrap.css";
 

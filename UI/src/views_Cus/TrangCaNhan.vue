@@ -128,13 +128,223 @@
     </v-tab-item>
     
     <v-tab-item>
-    <div class="container">
+     <div >
+     
+<div class="injection-register content">
+    <div class="div-container">
+      <div class="content-nav">
+        <div class="features-pane">
+          <div class="features-pane-left">
+            <input
+              id="assetSearchBox"
+              class="input-search"
+              type="text"
+              placeholder="Tìm kiếm theo họ tên, mã sổ tiêm "
+              v-model="inputSearch"
+              @change="getInjectionRegister('filter')"
+            />
+            <div class="icon-search" title="Tìm kiếm"></div>
+          </div>
+
+          <div class="features-pane-right">
+
+            <div
+              @click="getInjectionRegister('')"
+              class="btn icon-refresh features-pane-item"
+              title="Tải lại"
+            ></div>
+            <!-- <div
+              id="preventLeftClick"
+              class="btn icon-trash features-pane-item"
+              @click="showDeleteDialog()"
+              title="Xóa nhiều bản ghi"
+            ></div> -->
+          </div>
+        </div>
+
+        <div class="clear-float"></div>
+      </div>
+
+      <div id="loadBar"></div>
+      <div class="content-grid grid" oncontextmenu="return false;">
+        <table class="table-asset" id="tableAsset">
+          <colgroup>
+            <col width="50" />
+            <!-- <col width="120" /> -->
+            <col width="120" />
+            <col min-width="400" />
+            <col min-width="200" />
+            <col min-width="100" />
+            <col width="450" />
+            <col width="100" />
+          </colgroup>
+          <thead>
+            <tr>
+              <th style="text-align: center">STT</th>
+              <th
+                sortProp="name"
+                sortOrder="asc"
+                id="columnAssetName"
+                class="hover-pointer"
+                style="text-align: center"
+              >
+                Họ và tên
+              </th>
+              <th
+                sortProp="type"
+                style="text-align: center"
+                sortOrder="asc"
+                id="columnAssetType"
+                class="hover-pointer"
+              >
+                Ngày sinh
+              </th>
+              <th
+                sortProp="department"
+                sortOrder="asc"
+                id="columnDepartment"
+                class="hover-pointer"
+                style="text-align: center"
+              >
+                Giới tính
+              </th>
+              <th
+                sortProp="department"
+                sortOrder="asc"
+                id="columnDepartment"
+                class="hover-pointer"
+                style="text-align: center"
+              >
+                Số điện thoại
+              </th>
+              <th
+                sortProp="department"
+                sortOrder="asc"
+                id="columnDepartment"
+                class="hover-pointer"
+                style="text-align: center"
+              >
+                Email
+              </th>
+              <th
+                sortProp="department"
+                sortOrder="asc"
+                id="columnDepartment"
+                class="hover-pointer"
+                style="text-align: center"
+              >
+                Địa chỉ
+              </th>
+              <th
+                sortProp="department"
+                sortOrder="asc"
+                id="columnDepartment"
+                class="hover-pointer"
+                style="text-align: center"
+              >
+                Ngày đăng ký tiêm
+              </th>
+              <th
+                sortProp="department"
+                sortOrder="asc"
+                id="columnDepartment"
+                class="hover-pointer"
+                style="text-align: center"
+              >
+                Tên trung tâm
+              </th>
+              <th
+                sortProp="price"
+                sortOrder="asc"
+                id="columnPrice"
+                class="hover-pointer"
+                style="text-align: center"
+              >
+                Danh sách vắc xin đã đăng ký
+              </th>
+              <th style="text-align: left">chức năng</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr
+              v-for="(TTDangKy, index) in listTTDangKy"
+              :key="TTDangKy.iddangky"
+              v-bind:class="selectedRow(TTDangKy.iddangky) ? 'selected-row' : ''"
+              @click="selectRow(TTDangKy.iddangky, $event)"
+              @click.right="showContexMenu(TTDangKy.iddangky, $event)"
+              @dblclick="showDialog('update', TTDangKy.iddangky)"
+            >
+              <td class="no-border-left">{{ index + 1 }}</td>
+              <td>{{ TTDangKy.hoten }}</td>
+              <td>{{ TTDangKy.ngaysinh }}</td>
+              <td>{{ TTDangKy.gioitinh }}</td>
+              <td>{{ TTDangKy.sodienthoai }}</td>
+              <td>{{ TTDangKy.email }}</td>
+              <td>{{ TTDangKy.diachi }}</td>
+              <td>{{ TTDangKy.ngaydangkytiem }}</td>
+              <td>{{ TTDangKy.tentrungtam }}</td>
+              <td>{{ TTDangKy.danhsachvacxin }}</td>
+              <!-- <td style="text-align: right">
+                {{ asset.originalPrice | formatMoney(asset.originalPrice) }}
+              </td> -->
+              <td class="no-border-right">
+                <div class="features-box">
+                  <div
+                    :id="'tableRow' + index + '_edit'"
+                    class="table-icon icon-edit-pen"
+                    @click="showDialog('update', TTDangKy.iddangky)"
+                    title="Sửa"
+                  ></div>
+                  <!-- <div
+                    id="preventLeftClick"
+                    class="table-icon icon-trash-table"
+                    @click="showDeleteDialog('inRow')"
+                    title="Xóa"
+                  ></div> -->
+                  <div
+                    class="table-icon icon-refresh-time"
+                    title="Chức năng chưa phát triển"
+                  ></div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+          <BaseLoading ref="loadingTTDKT_reft" />
+
+          
+        </table>
+        <div class="ctx-menu" id="ctxMenu">
+          <div class="ctx-menu-item" @click="showDialog('insert', 0)">Thêm</div>
+          <div
+            class="ctx-menu-item"
+            @click="showDialog('update', listSelectRow[0])"
+          >
+            Sửa
+          </div>
+          <!-- <div
+            id="preventLeftClick"
+            class="ctx-menu-item"
+            @click="showDeleteDialog(listSelectRow[0])"
+          >
+            Xóa
+          </div> -->
+        </div>
+      </div>
+
     
-      <v-data-table :headers="headers" :items="desserts" class="elevation-1">
-        <template v-slot:header.name="{ header }">
-          {{ header.text.toUpperCase() }}
-        </template>
-      </v-data-table>
+
+      <div id="assetPopup"></div>
+    </div>
+    <InjectionRegisterDetail
+      ref="ModalCreateInjectionRegister_ref"
+      :formMode="formMode"
+      :idDangKyUpdate="idDangKyUpdate"
+      @reload="reload"
+      @msgAlert="msgAlert"
+    />
+  </div>
+
     </div>
     </v-tab-item>
     <v-tab-item>
@@ -487,7 +697,50 @@ export default {
       var me = this;
       
       await axios
-        .get("http://localhost:64016/api/ThongTinDangKyTiem")
+        .get("http://localhost:64016/api/ThongTinDangKyTiem/byphonenumber/123")
+        .then((response) => {
+          if (response.data) {
+            me.listTTDangKy = response.data.data;
+
+            if (me.listTTDangKy.length == 0) {
+              me.getEmty = true;
+            }
+
+            me.$refs.loadingTTDKT_reft.hide();
+            me.listIdDangKy = [];
+            me.paging.amountPage = response.data.totalPage;
+
+            me.listTTDangKy.forEach((element) => {
+              // duyệt qua tất cả các bản ghi
+              me.listIdDangKy.push(element.iddangky); // push tất cả id vào mảng
+              me.amountTTDangKy++; // đếm tổng số bản ghi
+
+            });
+          }
+        })
+        .catch((error) => {
+          this.errorMessage = error.message;
+          // console.error("GET ThongTinDangKy Failed: ", error.message);
+          setTimeout(() => {
+             me.$refs.loadingTTDKT_reft.hide(); // tắt dialog loading
+            me.getEmty = true; 
+          }, 4000);
+        });
+    },
+
+
+    /**
+     * Thực hiện lấy thông tin đăng ký tiêm theo số điện thoại
+     * * CreatedBy: linhhn
+     * */  
+    async getInjectionRegister(text) {
+      if (text == "filter") {
+        this.paging.pageNumber = 1;
+      }
+      var me = this;
+      
+      await axios
+        .get("http://localhost:64016/api/ThongTinDangKyTiem/byphonenumber/123")
         .then((response) => {
           if (response.data) {
             me.listTTDangKy = response.data.data;
