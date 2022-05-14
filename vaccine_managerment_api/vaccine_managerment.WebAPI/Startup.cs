@@ -45,6 +45,11 @@ namespace vaccine_managerment.WebAPI
             services.AddScoped<IVacxinDL, VacxinDL>();
             services.AddScoped<IVacxinBL, VacxinBL>();
 
+            // goivacxin
+            services.AddScoped<IGoiVacxinDL, GoiVacxinDL>();
+            services.AddScoped<IGoiVacxinBL, GoiVacxinBL>();
+
+
             // sotiem
             services.AddScoped<ISoTiemDL, SoTiemDL>();
             services.AddScoped<ISoTiemBL, SoTiemBL>();

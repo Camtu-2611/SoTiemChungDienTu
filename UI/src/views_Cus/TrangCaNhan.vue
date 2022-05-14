@@ -45,75 +45,149 @@
       <v-tab-item>
     <div class="container">
       <form class="contact-form mt-5">
-        <div class="row mb-3">
-          
+
+           <div class="row mb-3" >
           <div class="col-sm-12 py-2 wow fadeInright">
             <label for="fullName"></label>
             <vue-qr :bgSrc='src' :logoSrc="src2" text="http://10.15.167.46:8080/#/trangcanhan" :size="200"></vue-qr>
          
           </div>
-           <div class="col-sm-6 py-2 wow fadeInLeft">
-            <label for="fullName">Mã sổ tiêm </label>
-            <input
-              type="text"
-              id="fullName"
-              class="form-control"
-              placeholder=""
-            />
-          </div>
-          <div class="col-sm-6 py-2 wow fadeInLeft">
-            <label for="fullName">Họ tên </label>
-            <input
-              type="text"
-              id="fullName"
-              class="form-control"
-              placeholder="Họ tên.."
-            />
-          </div>
-          <div
-            class="col-12 col-sm-6 py-2 wow fadeInLeft"
-            data-wow-delay="300ms"
-          >
-            <label for="date">Ngày sinh </label>
-            <input type="date" class="form-control" />
-          </div>
-          <div
-            class="col-12 col-sm-6 py-2 wow fadeInRight"
-            data-wow-delay="300ms"
-          >
-            <label for="subject">Giới tính</label>
-            <select name="departement" id="departement" class="custom-select">
-              <option value="male">Nam</option>
-              <option value="feMale">Nữ</option>
-              <option value="null">Khác</option>
-            </select>
-          </div>
-          <div class="col-sm-6 py-2 wow fadeInRight">
-            <label for="emailAddress">Email</label>
-            <input
-              type="text"
-              id="emailAddress"
-              class="form-control"
-              placeholder="Địa chỉ email"
-            />
-          </div>
-          <div
-            class="col-12 col-sm-6 py-2 wow fadeInLeft"
-            data-wow-delay="300ms"
-          >
-            <label for="phonenumber">Số điện thoại </label>
-            <input type="text" class="form-control" />
-          </div>
-          <div class="col-sm-12 py-2 wow fadeInRight">
-            <label for="subject">Địa chỉ</label>
-            <input
-              type="text"
-              id="subject"
-              class="form-control"
-              placeholder="Địa chỉ.."
-            />
-          </div>
-         
+            <div class="col-sm-6 py-2 wow fadeInLeft">
+                    <label for="fullName"
+                      >Mã sổ tiêm <span style="color: #ff0000">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      id="masotiem"
+                      class="form-control"
+                      placeholder=""
+                      v-model="thongtinDK.masotiem"
+                      :disabled="disableMasotiem"
+                      readonly
+                    />
+                  </div>
+                  <div class="col-sm-6 py-2 wow fadeInLeft">
+                    <label for="fullName"
+                      >Họ tên <span style="color: #ff0000">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      id="fullName"
+                      class="form-control"
+                      placeholder="Họ tên.."
+                      v-model="thongtinDK.hoten"
+                      readonly
+                      disabled
+
+                      :class="{ 'class-error': validation.fullNameVal }"
+                      :title="validation.fullNameValMsg"
+                      @blur="
+                        tabValidate(
+                          'fullName',
+                          'Số điện thoại không được để trống.'
+                        )
+                      "
+                      @tab="
+                        tabValidate(
+                          'fullName',
+                          'Số điện thoại không được để trống.'
+                        )
+                      "
+                    />
+                  </div>
+                  <div
+                    class="col-12 col-sm-6 py-2 wow fadeInLeft"
+                    data-wow-delay="300ms"
+                  >
+                    <label for="date">Ngày sinh </label>
+                    <input
+                      type="date"
+                      class="form-control"
+                      v-model="thongtinDK.ngaysinh"
+                          
+                    />
+                  </div>
+                  <div
+                    class="col-12 col-sm-6 py-2 wow fadeInRight"
+                    data-wow-delay="300ms"
+                  >
+                    <label for="subject">Giới tính</label>
+                    <select
+                      name="departement"
+                      id="departement"
+                      class="custom-select"
+                      v-model="thongtinDK.gioitinh"
+                    >
+                      <option value="1">Nam</option>
+                      <option value="2">Nữ</option>
+                      <option value="0">Khác</option>
+                    </select>
+                  </div>
+                  <div class="col-sm-6 py-2 wow fadeInRight">
+                    <label for="emailAddress"
+                      >Email <span style="color: #ff0000">*</span></label
+                    >
+                    <input
+                      type="email"
+                      id="emailAddress"
+                      class="form-control"
+                      placeholder="Nhập địa chỉ email"
+                      v-model="thongtinDK.email"
+                      :class="{ 'class-error': validation.emailVal }"
+                      :title="validation.emailValMsg"
+                      @blur="
+                        tabValidate(
+                          'emailAddress',
+                          'email không được để trống.'
+                        )
+                      "
+                      @tab="
+                        tabValidate(
+                          'emailAddress',
+                          'email không được để trống.'
+                        )
+                      "
+                    />
+                  </div>
+                  <div
+                    class="col-12 col-sm-6 py-2 wow fadeInLeft"
+                    data-wow-delay="300ms"
+                  >
+                    <label for="SDT"
+                      >Số điện thoại <span style="color: #ff0000">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      id="phonenumber"
+                      class="form-control"
+                      v-model="thongtinDK.sodienthoai"
+                      :class="{ 'class-error': validation.sdtVal }"
+                      :title="validation.sdtValMsg"
+                      @blur="
+                        tabValidate(
+                          'phonenumber',
+                          'Số điện thoại không được để trống.'
+                        )
+                      "
+                      @tab="
+                        tabValidate(
+                          'phonenumber',
+                          'Số điện thoại không được để trống.'
+                        )
+                      "
+                    />
+                  </div>
+                  <div class="col-sm-12 py-2 wow fadeInRight">
+                    <label for="diachi">Địa chỉ</label>
+                    <input
+                      type="text"
+                      id="diachi"
+                      class="form-control"
+                      placeholder="Địa chỉ.."
+                      v-model="thongtinDK.diachi"
+                    />
+
+         </div>
            <div 
               class=" py-2 wow btn btn-primary" 
               @click="$router.push({ name: 'dang-ky-tiem' })"
@@ -351,20 +425,9 @@
      <div >
      
 <div class="injection-register content">
-    <div class="div-container">
+    <div class="container">
       <div class="content-nav">
-        <v-alert
-          id="success-dialog"
-          v-show="showSuccess"
-          color="green"
-          elevation="30"
-          type="success"
-        >
-          {{ alerMsg }}</v-alert
-        >
-        <v-alert v-if="showWarning" id="required-choose" type="warning">{{
-          alerMsg
-        }}</v-alert>
+       
 
         <div class="features-pane">
           <div class="features-pane-left">
@@ -372,7 +435,7 @@
               id="assetSearchBox"
               class="input-search"
               type="text"
-              placeholder="Tìm kiếm theo họ tên, mã sổ tiêm "
+              placeholder="Tìm kiếm... "
               v-model="inputSearch"
               @change="getInjectionRegister('filter')"
             />
@@ -410,69 +473,23 @@
           <colgroup>
             <col width="50" />
             <!-- <col width="120" /> -->
-            <col width="120" />
+            <col min-width="400" />
             <col min-width="400" />
             <col min-width="200" />
             <col min-width="100" />
-            <col width="450" />
-            <col width="100" />
+
           </colgroup>
           <thead>
             <tr>
               <th style="text-align: center">STT</th>
-              <th
-                sortProp="name"
+             <th
+                sortProp="price"
                 sortOrder="asc"
-                id="columnAssetName"
+                id="columnPrice"
                 class="hover-pointer"
                 style="text-align: center"
               >
-                Họ và tên
-              </th>
-              <th
-                sortProp="type"
-                style="text-align: center"
-                sortOrder="asc"
-                id="columnAssetType"
-                class="hover-pointer"
-              >
-                Ngày sinh
-              </th>
-              <th
-                sortProp="department"
-                sortOrder="asc"
-                id="columnDepartment"
-                class="hover-pointer"
-                style="text-align: center"
-              >
-                Giới tính
-              </th>
-              <th
-                sortProp="department"
-                sortOrder="asc"
-                id="columnDepartment"
-                class="hover-pointer"
-                style="text-align: center"
-              >
-                Số điện thoại
-              </th>
-              <th
-                sortProp="department"
-                sortOrder="asc"
-                id="columnDepartment"
-                class="hover-pointer"
-                style="text-align: center"
-              >
-                Email
-              </th>
-              <th
-                sortProp="department"
-                sortOrder="asc"
-                id="columnDepartment"
-                class="hover-pointer"
-                style="text-align: center"
-              >
-                Địa chỉ
+                Danh sách vắc xin đã đăng ký
               </th>
               <th
                 sortProp="department"
@@ -490,17 +507,9 @@
                 class="hover-pointer"
                 style="text-align: center"
               >
-                Tên trung tâm
+                Địa chỉ đăng ký tiêm
               </th>
-              <th
-                sortProp="price"
-                sortOrder="asc"
-                id="columnPrice"
-                class="hover-pointer"
-                style="text-align: center"
-              >
-                Danh sách vắc xin đã đăng ký
-              </th>
+             
               <th style="text-align: left">chức năng</th>
             </tr>
           </thead>
@@ -515,15 +524,10 @@
               @dblclick="showDialog('update', TTDangKy.iddangky)"
             >
               <td class="no-border-left">{{ index + 1 }}</td>
-              <td>{{ TTDangKy.hoten }}</td>
-              <td>{{ TTDangKy.ngaysinh }}</td>
-              <td>{{ TTDangKy.gioitinh }}</td>
-              <td>{{ TTDangKy.sodienthoai }}</td>
-              <td>{{ TTDangKy.email }}</td>
-              <td>{{ TTDangKy.diachi }}</td>
+              <td>{{ TTDangKy.danhsachvacxin }}</td>
               <td>{{ TTDangKy.ngaydangkytiem }}</td>
               <td>{{ TTDangKy.tentrungtam }}</td>
-              <td>{{ TTDangKy.danhsachvacxin }}</td>
+              
               <!-- <td style="text-align: right">
                 {{ asset.originalPrice | formatMoney(asset.originalPrice) }}
               </td> -->
@@ -571,8 +575,6 @@
         </div>
       </div>
 
-    
-
       <div id="assetPopup"></div>
     </div>
     <InjectionRegisterDetail
@@ -604,11 +606,13 @@ export default {
     BaseLoading,
     VueQr
   },
+ 
   data () {
    return {
     tab: null,
     listTTDangKy: [],
       TTDangKy: {
+
         iddangky: null,
         hoten: null,
         ngaysinh: null,
@@ -619,6 +623,24 @@ export default {
         tentrungtam: null,
         ngaydangkytiem: null,
         danhsachvacxin: null,
+      },
+
+       thongtinDK: {},
+      defaultthongtinDK: {
+        masotiem:"",
+        hoten: "",
+        ngaysinh: "",
+        gioitinh: "",
+        sodienthoai: "",
+        email: "",
+        diachi: "",
+        tentrungtam: "",
+        ngaydangkytiem: "",
+        danhsachvacxin: [],
+        nguoitao: "",
+        ngaytao: new Date().toISOString(),
+        nguoichinhsua: "",
+        ngaychinhsua: new Date().toISOString(),
       },
       formMode: "",
       alerMsg: "",
@@ -644,7 +666,23 @@ export default {
       showMenuFilter: true,
       showMenuType: false,
       showMenuDepartment: true,
+      disableMasotiem: false,
       
+        validation: {
+        emailVal: false,
+        emailValMsg: "",
+        sdtVal: false,
+        sdtValMsg: "",
+        fullNameVal: false,
+        fullNameValMsg: "",
+        tttiemchungVal: false,
+        tttiemchungValMsg: "",
+        ngaymuontiemVal: false,
+        ngaymuontiemValMsg: "",
+        vacxinVal: false,
+        vacxinValMsg: "",
+      },
+      stateValidate: true,
   };
 },
     timing: {
@@ -668,6 +706,7 @@ export default {
   },
 
   created() {
+    this.thongtinDK = this.defaultthongtinDK;
     // this.getInjectionRegister();
     this.processkey();
   },
@@ -675,8 +714,219 @@ export default {
     this.getInjectionRegister();
     this.hideContextMenu();
   },
-
+ watch: {
+    "thongtinDK.masotiem": async function() {
+      console.log(this.thongtinDK.masotiem)
+      this.getSoTiemByCode();
+    },
+  },
    methods: {
+/**
+     * Thực hiện lấy toàn bộ bản ghi của sổ tiêm by code
+     * */
+    async getSoTiemByCode() {
+      try {
+        await axios
+          .get(
+            `http://localhost:64016/api/SoTiem/bycode/ST01`
+          )
+          .then((response) => {
+            if (response.data) {
+              var res = response.data.data;
+              if (res) {
+                console.log(res)
+                this.thongtinDK.masotiem = res.masotiem;
+                this.thongtinDK.hoten = res.hoten;
+                this.thongtinDK.ngaysinh = res.ngaysinh
+                this.thongtinDK.ngaysinh = this.formatDate(this.thongtinDK.ngaysinh);
+                this.thongtinDK.gioitinh = res.gioitinh;
+                this.thongtinDK.email = res.email;
+                this.thongtinDK.sodienthoai = res.sodienthoai;
+                this.thongtinDK.diachi = res.diachi;
+
+              }
+            }
+          })
+          .catch(() => {});
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    
+     // todo reset lại các input
+    resetInput() {
+        (this.thongtinDK.cauhoi1 = false),
+        (this.thongtinDK.cauhoi2 = false),
+        (this.thongtinDK.cauhoi3 = false),
+        (this.thongtinDK.cauhoi4 = false),
+        (this.thongtinDK.cauhoi5 = false),
+        (this.thongtinDK.cauhoi6 = false),
+        (this.thongtinDK.cauhoi7 = false),
+        (this.thongtinDK.cauhoi8 = false),
+        (this.thongtinDK.cauhoi9 = false),
+        (this.thongtinDK.cauhoi10 = false),
+        (this.thongtinDK.trangthai = 1),
+        (this.thongtinDK.tentrungtam = ""),
+        (this.thongtinDK.idtrungtam = "00000000-0000-0000-0000-000000000000"),
+        (this.thongtinDK.ngaydangkytiem = new Date().toISOString()),
+        (this.thongtinDK.danhsachvacxin = []),
+        (this.thongtinDK.nguoitao = ""),
+        (this.thongtinDK.ngaytao = new Date().toISOString()),
+        (this.thongtinDK.nguoichinhsua = ""),
+        (this.thongtinDK.ngaychinhsua = new Date().toISOString());
+    },
+/**
+     * Thực hiện validate input bị trống
+     * CreatedBy: nctu2
+     * editBy : Linhhn
+     * */
+    tabValidate(id, message) {
+      if (id == "emailAddress") {
+        console.log("email");
+        if (!this.thongtinDK.email) {
+          this.validation.emailVal = true;
+          this.emailValMsg = message;
+        }
+      } else if (id == "phonenumber") {
+        console.log("sodienthoai");
+        if (!this.thongtinDK.sodienthoai) {
+          this.validation.sdtVal = true;
+          this.sdtValMsg = message;
+        }
+      } else if (id == "fullName") {
+        console.log("Hoten");
+        if (!this.thongtinDK.hoten) {
+          this.validation.fullNameVal = true;
+          this.fullNameValMsg = message;
+        }
+      } else if (id == "tttiemchung") {
+        console.log("tttiemchung");
+        if (!this.thongtinDK.idtrungtam) {
+          this.validation.tttiemchungVal = true;
+          this.tttiemchungValMsg = message;
+        }
+      } else if (id == "ngaymuontiem") {
+        console.log("ngaymuontiem");
+        if (!this.thongtinDK.ngaydangkytiem) {
+          this.validation.ngaymuontiemVal = true;
+          this.ngaymuontiemValMsg = message;
+        }
+      } else if (id == "vacxin") {
+        console.log("vacxin");
+        if (!this.thongtinDK.danhsachvacxin) {
+          this.validation.vacxinVal = true;
+          this.vacxinValMsg = message;
+        }
+      }
+    },
+
+    /**
+     * Thực hiện validate email không được bỏ trống
+     * CreatedBy: nctu
+     * */
+    validateEmail() {
+      var formatEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(
+        this.thongtinDK.email
+      );
+      console.log(formatEmail);
+      if (!this.thongtinDK.email) {
+        this.$refs.baseConfirm.showForm(
+          "error",
+          1,
+          "Email không được để trống"
+        );
+        this.stateValidate = false;
+        return false;
+      } else if (!formatEmail) {
+        this.$refs.baseConfirm.showForm(
+          "error",
+          1,
+          "Vui lòng nhập đúng định dạng email"
+        );
+        this.stateValidate = false;
+        return false;
+      } else {
+        this.stateValidate = true;
+        return true;
+      }
+    },
+     // định dạng ngày
+    formatDate(inputDate) {
+      var a = new Date(inputDate);
+      var month = a.getMonth();
+      var day = a.getDate();
+      if (month < 10) month = "0" + month.toString();
+      if (day < 10) day = "0" + day.toString();
+      var date = a.getFullYear().toString() + "-" + month + "-" + day;
+      return date;
+    },
+    /**
+     * Thực hiện validate số điện thoại không được bỏ trống
+     * CreatedBy: linhhn
+     * */
+    validateSDT() {
+       var formatSDT =/^((\+)33|0)[1-9](\d{2}){4}$/.test(
+        this.thongtinDK.sodienthoai
+      );
+      if (!this.thongtinDK.sodienthoai) {
+        this.$refs.baseConfirm.showForm(
+          "error",
+          1,
+          "Số điện thoại không được để trống"
+        );
+        this.stateValidate = false;
+        return false;
+      } else if (!formatSDT) {
+        this.$refs.baseConfirm.showForm(
+          "error",
+          1,
+          "Vui lòng nhập đúng định dạng Số điện thoại"
+        );
+        this.stateValidate = false;
+        return false;
+      }
+      else {
+        this.stateValidate = true;
+        return true;
+      }
+    },
+    /**
+     * Thực hiện validate họ tên không được bỏ trống
+     * CreatedBy: linhhn
+     * */
+    validatefullName() {
+      if (!this.thongtinDK.hoten) {
+        this.$refs.baseConfirm.showForm(
+          "error",
+          1,
+          "Họ tên không được để trống"
+        );
+        this.stateValidate = false;
+        return false;
+      } else {
+        this.stateValidate = true;
+        return true;
+      }
+    },
+ 
+  validateData() {
+      this.validateEmail();
+      this.validateSDT();
+      this.validatefullName();
+
+      if (
+        this.validateEmail() &&
+        this.validateSDT() &&
+        this.validatefullName() 
+      ){
+        return true
+      }
+      else{
+        return false
+      }
+      
+    },
+
      test(dataUrl,id){
             console.log(url, id)
      },
@@ -689,46 +939,6 @@ export default {
         res.showWarning = false;
       }, 3000);
     },
-
-    async getInjectionRegister(text) {
-      if (text == "filter") {
-        this.paging.pageNumber = 1;
-      }
-      var me = this;
-      
-      await axios
-        .get("http://localhost:64016/api/ThongTinDangKyTiem/byphonenumber/123")
-        .then((response) => {
-          if (response.data) {
-            me.listTTDangKy = response.data.data;
-
-            if (me.listTTDangKy.length == 0) {
-              me.getEmty = true;
-            }
-
-            me.$refs.loadingTTDKT_reft.hide();
-            me.listIdDangKy = [];
-            me.paging.amountPage = response.data.totalPage;
-
-            me.listTTDangKy.forEach((element) => {
-              // duyệt qua tất cả các bản ghi
-              me.listIdDangKy.push(element.iddangky); // push tất cả id vào mảng
-              me.amountTTDangKy++; // đếm tổng số bản ghi
-
-            });
-          }
-        })
-        .catch((error) => {
-          this.errorMessage = error.message;
-          // console.error("GET ThongTinDangKy Failed: ", error.message);
-          setTimeout(() => {
-             me.$refs.loadingTTDKT_reft.hide(); // tắt dialog loading
-            me.getEmty = true; 
-          }, 4000);
-        });
-    },
-
-
     /**
      * Thực hiện lấy thông tin đăng ký tiêm theo số điện thoại
      * * CreatedBy: linhhn
@@ -740,7 +950,7 @@ export default {
       var me = this;
       
       await axios
-        .get("http://localhost:64016/api/ThongTinDangKyTiem/byphonenumber/123")
+        .get("http://localhost:64016/api/ThongTinDangKyTiem/byphonenumber/0869668106")
         .then((response) => {
           if (response.data) {
             me.listTTDangKy = response.data.data;
