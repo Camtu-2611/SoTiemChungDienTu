@@ -23,6 +23,7 @@ import Tuvan from '@/views_Cus/Tuvan'
 import TrangCaNhan from '@/views_Cus/TrangCaNhan'
 import Customer from '@/views_Cus/Customer'
 import Signin from "@/signin/Signin";
+import SigninAdmin from "@/signin/SigninAdmin";
 import InjectionRegister from "@/views/injection-register/InjectionRegister";
 import InjectionRegisterDetail from "@/views/injection-register/InjectionRegisterDetail";
 import InjectionBooks from "@/views/injection_books/InjectionBooks";
@@ -52,6 +53,7 @@ export const router = new VueRouter({
         //{ path: '/admin', component: Admin, name: "admin" },      
         { path: '/dang-ky-tiem', component: DKTiem, name: "dang-ky-tiem" },      
         { path: '/', component: Signin, name: "dang-nhap" },      
+        { path: '/signinAdmin', component: SigninAdmin, name: "signinAdmin" },
         { path: '/customer', component: Home, name: "STC-dien-tu" },   
         { path: '/trangcanhan', component: TrangCaNhan, name: "trang-ca-nhan" },  
         { path: '/vac-xin', component: Vacxin, name: "vac-xin" },       

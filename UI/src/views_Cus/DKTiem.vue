@@ -50,12 +50,28 @@
 
       <v-stepper-items>
         <v-stepper-content step="1">
-          <v-card class="mb-12" color="	#FFFFFF" height="350px">
+          <v-card class="mb-12" color="	#FFFFFF" >
             <div class="container">
               <h4>THÔNG TIN ĐĂNG KÝ TIÊM</h4>
 
               <form class="contact-form mt-5">
-                <div class="row mb-3">
+                <div class="row mb-3"
+                 v-for="(record, index) in soTiemByCode"
+                  :key="index"
+                >
+                   <div class="col-sm-6 py-2 wow fadeInLeft">
+                    <label for="fullName"
+                      >Mã sổ tiêm <span style="color: #ff0000">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      id="masotiem"
+                      class="form-control"
+                      placeholder=""
+                      v-model="thongtinDK.hoten"
+                     
+                    />
+                  </div>
                   <div class="col-sm-6 py-2 wow fadeInLeft">
                     <label for="fullName"
                       >Họ tên <span style="color: #ff0000">*</span>
@@ -183,11 +199,11 @@
           <v-btn text> Hủy </v-btn>
         </v-stepper-content>
         <v-stepper-content step="2">
-          <v-card class="mb-12" color="	#FFFFFF" height="350px">
+          <v-card class="mb-12" color="	#FFFFFF" height="400" >
             <div class="container">
               <h4>SÀNG LỌC TRƯỚC KHI TIÊM</h4>
 
-              <v-simple-table fixed-header height="300px">
+              <v-simple-table fixed-header height="340">
                 <template v-slot:default>
                   <thead>
                     <tr>
@@ -308,7 +324,7 @@
           <v-btn text @click="e1 = 1"> Quay lại </v-btn>
         </v-stepper-content>
         <v-stepper-content step="3">
-          <v-card class="mb-12" color="	#FFFFFF" height="1100px">
+          <v-card class="mb-12" color="	#FFFFFF" >
             <div class="container">
               <h4>THÔNG TIN DỊCH VỤ</h4>
               <form class="contact-form mt-5">
@@ -541,6 +557,8 @@ export default {
       listRecord: [],
       listTrungTam: [],
       Cauhoi: [],
+      soTiemByCode: [],
+
       checkbox1: false,
       checkbox2: false,
       checkbox3: false,
@@ -551,6 +569,7 @@ export default {
       checkbox8: false,
       checkbox9: false,
       checkbox10: false,
+
       validation: {
         emailVal: false,
         emailValMsg: "",
@@ -572,6 +591,7 @@ export default {
     this.thongtinDK = this.defaultthongtinDK;
     this.getAllRecord();
     this.getAllRecordTrungTam();
+    this.getRecordSoTiemByCode();
   },
 
   watch: {
@@ -650,6 +670,24 @@ export default {
       }
     },
     /**
+     * Thực hiện lấy thông tin sổ tiêm theo mã sổ tiêm 
+     * * CreatedBy: linhhn
+     * */
+     async getRecordSoTiemByCode() {
+      try {
+        var me = this;
+        await axios
+          .get("http://localhost:64016/api/SoTiem/ST01")
+          .then((response) => {
+            me.soTiemByCode = response.data.data;
+            me.totalRecord = response.data.length;
+          })
+          .catch(() => {});
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    /**
      * Thực hiện validate input bị trống
      * CreatedBy: nctu2
      * editBy : Linhhn
@@ -699,11 +737,23 @@ export default {
      * CreatedBy: nctu
      * */
     validateEmail() {
+      var formatEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(
+        this.thongtinDK.email
+      );
+      console.log(formatEmail);
       if (!this.thongtinDK.email) {
         this.$refs.baseConfirm.showForm(
           "error",
           1,
           "Email không được để trống"
+        );
+        this.stateValidate = false;
+        return false;
+      } else if (!formatEmail) {
+        this.$refs.baseConfirm.showForm(
+          "error",
+          1,
+          "Vui lòng nhập đúng định dạng email"
         );
         this.stateValidate = false;
         return false;
@@ -718,6 +768,9 @@ export default {
      * CreatedBy: linhhn
      * */
     validateSDT() {
+       var formatSDT =/^((\+)33|0)[1-9](\d{2}){4}$/.test(
+        this.thongtinDK.sodienthoai
+      );
       if (!this.thongtinDK.sodienthoai) {
         this.$refs.baseConfirm.showForm(
           "error",
@@ -726,7 +779,16 @@ export default {
         );
         this.stateValidate = false;
         return false;
-      } else {
+      } else if (!formatSDT) {
+        this.$refs.baseConfirm.showForm(
+          "error",
+          1,
+          "Vui lòng nhập đúng định dạng Số điện thoại"
+        );
+        this.stateValidate = false;
+        return false;
+      }
+      else {
         this.stateValidate = true;
         return true;
       }
@@ -812,7 +874,20 @@ export default {
       this.validatetttiemchung();
       this.validatengaymuontiem();
       this.validatevacxin();
-      return this.stateValidate;
+      if (
+        this.validateEmail() &&
+        this.validateSDT() &&
+        this.validatefullName() &&
+        this.validatetttiemchung() &&
+        this.validatengaymuontiem() &&
+        this.validatevacxin()
+      ){
+        return true
+      }
+      else{
+        return false
+      }
+      
     },
 
     // todo reset lại các input
