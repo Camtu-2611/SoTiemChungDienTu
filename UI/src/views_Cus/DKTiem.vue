@@ -203,7 +203,7 @@
 
           <v-btn color="primary" @click="e1 = 2"> Tiếp tục </v-btn>
 
-          <v-btn text> Hủy </v-btn>
+          <v-btn text  @click="hide()"> Hủy </v-btn>
         </v-stepper-content>
         <v-stepper-content step="2">
           <v-card class="mb-12" color="	#FFFFFF" height="400" >
@@ -329,6 +329,7 @@
           </v-card>
           <v-btn color="primary" @click="e1 = 3"> Tiếp tục </v-btn>
           <v-btn text @click="e1 = 1"> Quay lại </v-btn>
+          <v-btn text  @click="hide()"> Hủy </v-btn>
         </v-stepper-content>
         <v-stepper-content step="3">
           <v-card class="mb-12" color="	#FFFFFF" >
@@ -516,7 +517,7 @@
                         </v-expansion-panel-content>
                       </v-expansion-panel>
                     </v-expansion-panels>
-                  </div>
+                  </div>hide
                 </div>
               </form>
             </div>
@@ -525,6 +526,7 @@
           <v-btn color="primary" @click="insertRecord()"> Đăng ký </v-btn>
 
           <v-btn text @click="e1 = 2"> Quay lại </v-btn>
+          <v-btn text  @click="hide()"> Hủy </v-btn>
         </v-stepper-content>
       </v-stepper-items>
     </v-stepper>
@@ -562,6 +564,16 @@ export default {
         ngaytao: new Date().toISOString(),
         nguoichinhsua: "",
         ngaychinhsua: new Date().toISOString(),
+        cauhoi1: false,
+        cauhoi2: false,
+        cauhoi3: false,
+        cauhoi4: false,
+        cauhoi5: false,
+        cauhoi6: false,
+        cauhoi7: false,
+        cauhoi8: false,
+        cauhoi9: false,
+        cauhoi10: false,
       },
       listRecord: [],
       listRecordGoivacxin: [],
@@ -970,22 +982,12 @@ export default {
       }
       
     },
-
-    // todo reset lại các input
-    resetInput() {
-      (this.thongtinDK.hoten = ""),
-        (this.thongtinDK.ngaysinh = ""),
-        (this.thongtinDK.gioitinh = ""),
-        (this.thongtinDK.sodienthoai = ""),
-        (this.thongtinDK.email = ""),
-        (this.thongtinDK.diachi = ""),
-        (this.thongtinDK.idtrungtam = "00000000-0000-0000-0000-000000000000"),
-        (this.thongtinDK.ngaydangkytiem = new Date().toISOString()),
-        (this.thongtinDK.danhsachvacxin = []),
-        (this.thongtinDK.nguoitao = ""),
-        (this.thongtinDK.ngaytao = new Date().toISOString()),
-        (this.thongtinDK.nguoichinhsua = ""),
-        (this.thongtinDK.ngaychinhsua = new Date().toISOString());
+    
+    // todo ẩn dialog
+    hide() {
+      this.isActive = false;
+      this.resetInput();
+      this.$router.push({ name: "dang-ky-tiem" });
     },
     // todo hiện dialog
     async show() {

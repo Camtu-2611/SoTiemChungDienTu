@@ -44,15 +44,13 @@
     <v-tabs-items v-model="tab">
       <v-tab-item>
     <div class="container">
+      <div class="row">
+ <div class=" col-sm-9" >
       <form class="contact-form mt-5">
 
            <div class="row mb-3" >
-          <div class="col-sm-12 py-2 wow fadeInright">
-            <label for="fullName"></label>
-            <vue-qr :bgSrc='src' :logoSrc="src2" text="http://10.15.167.46:8080/#/trangcanhan" :size="200"></vue-qr>
-         
-          </div>
-            <div class="col-sm-6 py-2 wow fadeInLeft">
+
+            <div class="col-sm-6 py-2 wow ">
                     <label for="fullName"
                       >Mã sổ tiêm <span style="color: #ff0000">*</span>
                     </label>
@@ -61,12 +59,13 @@
                       id="masotiem"
                       class="form-control"
                       placeholder=""
-                      v-model="thongtinDK.masotiem"
+                      v-model="sotiem.masotiem"
                       :disabled="disableMasotiem"
                       readonly
                     />
                   </div>
-                  <div class="col-sm-6 py-2 wow fadeInLeft">
+                  
+                  <div class="col-sm-6 py-2 wow">
                     <label for="fullName"
                       >Họ tên <span style="color: #ff0000">*</span>
                     </label>
@@ -75,7 +74,7 @@
                       id="fullName"
                       class="form-control"
                       placeholder="Họ tên.."
-                      v-model="thongtinDK.hoten"
+                      v-model="sotiem.hoten"
                       readonly
                       disabled
 
@@ -84,31 +83,31 @@
                       @blur="
                         tabValidate(
                           'fullName',
-                          'Số điện thoại không được để trống.'
+                          'Họ tên không được để trống.'
                         )
                       "
                       @tab="
                         tabValidate(
                           'fullName',
-                          'Số điện thoại không được để trống.'
+                          'Họ tên không được để trống.'
                         )
                       "
                     />
                   </div>
                   <div
-                    class="col-12 col-sm-6 py-2 wow fadeInLeft"
+                    class="col-sm-6 py-2 wow"
                     data-wow-delay="300ms"
                   >
                     <label for="date">Ngày sinh </label>
                     <input
                       type="date"
                       class="form-control"
-                      v-model="thongtinDK.ngaysinh"
+                      v-model="sotiem.ngaysinh"
                           
                     />
                   </div>
                   <div
-                    class="col-12 col-sm-6 py-2 wow fadeInRight"
+                    class="col-sm-6 py-2 wow"
                     data-wow-delay="300ms"
                   >
                     <label for="subject">Giới tính</label>
@@ -116,14 +115,14 @@
                       name="departement"
                       id="departement"
                       class="custom-select"
-                      v-model="thongtinDK.gioitinh"
+                      v-model="sotiem.gioitinh"
                     >
                       <option value="1">Nam</option>
                       <option value="2">Nữ</option>
                       <option value="0">Khác</option>
                     </select>
                   </div>
-                  <div class="col-sm-6 py-2 wow fadeInRight">
+                  <div class="col-sm-6 py-2 wow">
                     <label for="emailAddress"
                       >Email <span style="color: #ff0000">*</span></label
                     >
@@ -132,7 +131,7 @@
                       id="emailAddress"
                       class="form-control"
                       placeholder="Nhập địa chỉ email"
-                      v-model="thongtinDK.email"
+                      v-model="sotiem.email"
                       :class="{ 'class-error': validation.emailVal }"
                       :title="validation.emailValMsg"
                       @blur="
@@ -150,7 +149,7 @@
                     />
                   </div>
                   <div
-                    class="col-12 col-sm-6 py-2 wow fadeInLeft"
+                    class="col-sm-6 py-2 wow"
                     data-wow-delay="300ms"
                   >
                     <label for="SDT"
@@ -160,7 +159,7 @@
                       type="text"
                       id="phonenumber"
                       class="form-control"
-                      v-model="thongtinDK.sodienthoai"
+                      v-model="sotiem.sodienthoai"
                       :class="{ 'class-error': validation.sdtVal }"
                       :title="validation.sdtValMsg"
                       @blur="
@@ -177,20 +176,50 @@
                       "
                     />
                   </div>
-                  <div class="col-sm-12 py-2 wow fadeInRight">
+                   <div
+                    class="col-sm-6 py-2 wow"
+                    data-wow-delay="300ms"
+                  >
+                    <label for="CMND"
+                      >CMND <span style="color: #ff0000"></span>
+                    </label>
+                    <input
+                      type="text"
+                      id="cmnd"
+                      class="form-control"
+                      v-model="sotiem.cmnd"
+                 
+                     
+                    />
+                  </div>
+                    <div
+                    class="col-sm-6 py-2 wow"
+                    data-wow-delay="300ms"
+                  >
+                    <label for="tuoi"
+                      >Tuổi <span style="color: #ff0000"></span>
+                    </label>
+                    <input
+                      type="text"
+                      id="tuoi"
+                      class="form-control"
+                      v-model="sotiem.tuoi"
+                    />
+                  </div>
+                  <div class="col-sm-12 py-2 wow">
                     <label for="diachi">Địa chỉ</label>
                     <input
                       type="text"
                       id="diachi"
                       class="form-control"
                       placeholder="Địa chỉ.."
-                      v-model="thongtinDK.diachi"
+                      v-model="sotiem.diachi"
                     />
 
          </div>
            <div 
               class=" py-2 wow btn btn-primary" 
-              @click="$router.push({ name: 'dang-ky-tiem' })"
+              @click="updateRecord('')"
               style="height : 45px"
             >
               Cập nhật thông tin
@@ -198,6 +227,23 @@
 
         </div>
       </form>
+      </div>
+       <div class="col-sm-3 " >
+      <form class="contact-form mt-5">
+
+           <div class="row mb-3" >
+          <div class="col-sm-12 py-2 wow fadeInright">
+            <label for="fullName"></label>
+            <vue-qr :bgSrc='src' :logoSrc="src2" :text= "sotiem.masotiem + sotiem.hoten + sotiem.sodienthoai + sotiem.email + sotiem.cmnd" :size="200"></vue-qr>
+         
+          </div> 
+         
+
+        </div>
+      </form>
+      </div>
+      </div>
+     
     </div>
     </v-tab-item>
     
@@ -336,7 +382,7 @@
               >
                 Danh sách vắc xin đã đăng ký
               </th>
-              <th style="text-align: left">chức năng</th>
+              <th style="text-align: left">Trạng thái</th>
             </tr>
           </thead>
 
@@ -477,6 +523,7 @@
             <col min-width="400" />
             <col min-width="200" />
             <col min-width="100" />
+            <col min-width="100" />
 
           </colgroup>
           <thead>
@@ -510,7 +557,8 @@
                 Địa chỉ đăng ký tiêm
               </th>
              
-              <th style="text-align: left">chức năng</th>
+              <th style="text-align: left">Trạng thái </th>
+               <th style="text-align: left">Chức năng </th>
             </tr>
           </thead>
 
@@ -527,7 +575,7 @@
               <td>{{ TTDangKy.danhsachvacxin }}</td>
               <td>{{ TTDangKy.ngaydangkytiem }}</td>
               <td>{{ TTDangKy.tentrungtam }}</td>
-              
+             <td> {{ TTDangKy.trangthai | formatStatus(TTDangKy.trangthai) }}</td> 
               <!-- <td style="text-align: right">
                 {{ asset.originalPrice | formatMoney(asset.originalPrice) }}
               </td> -->
@@ -591,10 +639,13 @@
     </div>
     </v-tab-item>
      </v-tabs-items>
+      <BaseConfirm ref="baseConfirm" />
   </div>
 </template>
 
 <script>
+import { trangthai, gioitinh } from "../enumeration/enumaration.js";
+import BaseConfirm from "@/components/common/baseControlAcounting/BaseConfirm";
 import axios from "axios";
 import BaseLoading from "../components/common/BaseLoading.vue";
 import VueQr from 'vue-qr'
@@ -604,6 +655,7 @@ export default {
   name: "TrangCaNhan",
   components: {
     BaseLoading,
+    BaseConfirm,
     VueQr
   },
  
@@ -612,7 +664,6 @@ export default {
     tab: null,
     listTTDangKy: [],
       TTDangKy: {
-
         iddangky: null,
         hoten: null,
         ngaysinh: null,
@@ -625,8 +676,8 @@ export default {
         danhsachvacxin: null,
       },
 
-       thongtinDK: {},
-      defaultthongtinDK: {
+        thongtinDK: {},
+        defaultthongtinDK: {
         masotiem:"",
         hoten: "",
         ngaysinh: "",
@@ -642,6 +693,24 @@ export default {
         nguoichinhsua: "",
         ngaychinhsua: new Date().toISOString(),
       },
+      sotiem: {},
+       defaultsotiem: {
+        idsotiem:"",
+        masotiem:"",
+        hoten: "",
+        ngaysinh: "",
+        gioitinh: "",
+        sodienthoai: "",
+        cmnd: "",
+        email: "",
+        diachi: "",
+        tuoi: "",
+        nguoitao: "",
+        ngaytao: new Date().toISOString(),
+        nguoichinhsua: "",
+        ngaychinhsua: new Date().toISOString(),
+      },
+  
       formMode: "",
       alerMsg: "",
       idDangKyUpdate: null,
@@ -707,24 +776,28 @@ export default {
 
   created() {
     this.thongtinDK = this.defaultthongtinDK;
+    this.sotiem = this.defaultsotiem;
     // this.getInjectionRegister();
     this.processkey();
   },
   mounted() {
     this.getInjectionRegister();
     this.hideContextMenu();
+    this.updateRecord();
   },
  watch: {
-    "thongtinDK.masotiem": async function() {
-      console.log(this.thongtinDK.masotiem)
-      this.getSoTiemByCode();
+    "sotiem.masotiem": async function() {
+      console.log(this.sotiem.masotiem)
+      this.getSoTiemByMaSoTiem();
+      
     },
   },
+
    methods: {
 /**
-     * Thực hiện lấy toàn bộ bản ghi của sổ tiêm by code
+     * Thực hiện lấy bản ghi của sổ tiêm theo mã sổ tiêm
      * */
-    async getSoTiemByCode() {
+    async getSoTiemByMaSoTiem() {
       try {
         await axios
           .get(
@@ -735,14 +808,18 @@ export default {
               var res = response.data.data;
               if (res) {
                 console.log(res)
-                this.thongtinDK.masotiem = res.masotiem;
-                this.thongtinDK.hoten = res.hoten;
-                this.thongtinDK.ngaysinh = res.ngaysinh
-                this.thongtinDK.ngaysinh = this.formatDate(this.thongtinDK.ngaysinh);
-                this.thongtinDK.gioitinh = res.gioitinh;
-                this.thongtinDK.email = res.email;
-                this.thongtinDK.sodienthoai = res.sodienthoai;
-                this.thongtinDK.diachi = res.diachi;
+                this.sotiem.idsotiem = res.idsotiem;
+                this.sotiem.masotiem = res.masotiem;
+                this.sotiem.hoten = res.hoten;
+                this.sotiem.ngaysinh = res.ngaysinh
+                this.sotiem.ngaysinh = this.formatDate(this.sotiem.ngaysinh);
+                this.sotiem.gioitinh = res.gioitinh;
+                this.sotiem.email = res.email;
+                this.sotiem.sodienthoai = res.sodienthoai;
+                this.sotiem.cmnd = res.cmnd;
+                this.sotiem.diachi = res.diachi;
+                this.sotiem.tuoi = res.tuoi;
+ 
 
               }
             }
@@ -751,6 +828,75 @@ export default {
       } catch (error) {
         console.log(error);
       }
+    },
+     /**
+     * Thực hiện Cập nhật thông tin cá nhân
+     * */
+     async updateRecord() {
+      try {
+        let me = this;
+            await axios
+              .put(
+                `http://localhost:64016/api/SoTiem/${this.sotiem.idsotiem}`,
+                this.sotiem
+              )
+              .then(() => {
+                // alert("Cập nhật thông tin thành công !");
+                this.$refs.baseConfirm.showForm(
+                  "sucess",
+                  1,
+                  "Cập nhật thông tin thành công !"
+                );
+                this.$router.push({ name: "trang-ca-nhan" });
+              })
+              .catch(() => {});
+          }
+      
+     catch (error) {
+        console.log(error);
+      }
+    },
+
+     /**
+     * Thực hiện lấy thông tin đăng ký tiêm theo số điện thoại
+     * * CreatedBy: linhhn
+     * */  
+    async getInjectionRegister(text) {
+      if (text == "filter") {
+        this.paging.pageNumber = 1;
+      }
+      var me = this;
+      
+      await axios
+        .get("http://localhost:64016/api/ThongTinDangKyTiem/byphonenumber/0869668106")
+        .then((response) => {
+          if (response.data) {
+            me.listTTDangKy = response.data.data;
+
+            if (me.listTTDangKy.length == 0) {
+              me.getEmty = true;
+            }
+
+            me.$refs.loadingTTDKT_reft.hide();
+            me.listIdDangKy = [];
+            me.paging.amountPage = response.data.totalPage;
+
+            me.listTTDangKy.forEach((element) => {
+              // duyệt qua tất cả các bản ghi
+              me.listIdDangKy.push(element.iddangky); // push tất cả id vào mảng
+              me.amountTTDangKy++; // đếm tổng số bản ghi
+
+            });
+          }
+        })
+        .catch((error) => {
+          this.errorMessage = error.message;
+          // console.error("GET ThongTinDangKy Failed: ", error.message);
+          setTimeout(() => {
+             me.$refs.loadingTTDKT_reft.hide(); // tắt dialog loading
+            me.getEmty = true; 
+          }, 4000);
+        });
     },
     
      // todo reset lại các input
@@ -775,6 +921,7 @@ export default {
         (this.thongtinDK.nguoichinhsua = ""),
         (this.thongtinDK.ngaychinhsua = new Date().toISOString());
     },
+    
 /**
      * Thực hiện validate input bị trống
      * CreatedBy: nctu2
@@ -783,53 +930,61 @@ export default {
     tabValidate(id, message) {
       if (id == "emailAddress") {
         console.log("email");
-        if (!this.thongtinDK.email) {
+        if (!this.sotiem.email) {
           this.validation.emailVal = true;
           this.emailValMsg = message;
         }
       } else if (id == "phonenumber") {
         console.log("sodienthoai");
-        if (!this.thongtinDK.sodienthoai) {
+        if (!this.sotiem.sodienthoai) {
           this.validation.sdtVal = true;
           this.sdtValMsg = message;
         }
       } else if (id == "fullName") {
         console.log("Hoten");
-        if (!this.thongtinDK.hoten) {
+        if (!this.sotiem.hoten) {
           this.validation.fullNameVal = true;
           this.fullNameValMsg = message;
         }
       } else if (id == "tttiemchung") {
         console.log("tttiemchung");
-        if (!this.thongtinDK.idtrungtam) {
+        if (!this.sotiem.idtrungtam) {
           this.validation.tttiemchungVal = true;
           this.tttiemchungValMsg = message;
         }
       } else if (id == "ngaymuontiem") {
         console.log("ngaymuontiem");
-        if (!this.thongtinDK.ngaydangkytiem) {
+        if (!this.sotiem.ngaydangkytiem) {
           this.validation.ngaymuontiemVal = true;
           this.ngaymuontiemValMsg = message;
         }
       } else if (id == "vacxin") {
         console.log("vacxin");
-        if (!this.thongtinDK.danhsachvacxin) {
+        if (!this.sotiem.danhsachvacxin) {
           this.validation.vacxinVal = true;
           this.vacxinValMsg = message;
         }
       }
     },
-
+  formatDate(inputDate) {
+      var a = new Date(inputDate);
+      var month = a.getMonth();
+      var day = a.getDate();
+      if (month < 10) month = "0" + month.toString();
+      if (day < 10) day = "0" + day.toString();
+      var date = a.getFullYear().toString() + "-" + month + "-" + day;
+      return date;
+    },
     /**
      * Thực hiện validate email không được bỏ trống
      * CreatedBy: nctu
      * */
     validateEmail() {
       var formatEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(
-        this.thongtinDK.email
+        this.sotiem.email
       );
       console.log(formatEmail);
-      if (!this.thongtinDK.email) {
+      if (!this.sotiem.email) {
         this.$refs.baseConfirm.showForm(
           "error",
           1,
@@ -850,25 +1005,16 @@ export default {
         return true;
       }
     },
-     // định dạng ngày
-    formatDate(inputDate) {
-      var a = new Date(inputDate);
-      var month = a.getMonth();
-      var day = a.getDate();
-      if (month < 10) month = "0" + month.toString();
-      if (day < 10) day = "0" + day.toString();
-      var date = a.getFullYear().toString() + "-" + month + "-" + day;
-      return date;
-    },
+   
     /**
      * Thực hiện validate số điện thoại không được bỏ trống
      * CreatedBy: linhhn
      * */
     validateSDT() {
        var formatSDT =/^((\+)33|0)[1-9](\d{2}){4}$/.test(
-        this.thongtinDK.sodienthoai
+        this.sotiem.sodienthoai
       );
-      if (!this.thongtinDK.sodienthoai) {
+      if (!this.sotiem.sodienthoai) {
         this.$refs.baseConfirm.showForm(
           "error",
           1,
@@ -895,7 +1041,7 @@ export default {
      * CreatedBy: linhhn
      * */
     validatefullName() {
-      if (!this.thongtinDK.hoten) {
+      if (!this.sotiem.hoten) {
         this.$refs.baseConfirm.showForm(
           "error",
           1,
@@ -939,47 +1085,7 @@ export default {
         res.showWarning = false;
       }, 3000);
     },
-    /**
-     * Thực hiện lấy thông tin đăng ký tiêm theo số điện thoại
-     * * CreatedBy: linhhn
-     * */  
-    async getInjectionRegister(text) {
-      if (text == "filter") {
-        this.paging.pageNumber = 1;
-      }
-      var me = this;
-      
-      await axios
-        .get("http://localhost:64016/api/ThongTinDangKyTiem/byphonenumber/0869668106")
-        .then((response) => {
-          if (response.data) {
-            me.listTTDangKy = response.data.data;
-
-            if (me.listTTDangKy.length == 0) {
-              me.getEmty = true;
-            }
-
-            me.$refs.loadingTTDKT_reft.hide();
-            me.listIdDangKy = [];
-            me.paging.amountPage = response.data.totalPage;
-
-            me.listTTDangKy.forEach((element) => {
-              // duyệt qua tất cả các bản ghi
-              me.listIdDangKy.push(element.iddangky); // push tất cả id vào mảng
-              me.amountTTDangKy++; // đếm tổng số bản ghi
-
-            });
-          }
-        })
-        .catch((error) => {
-          this.errorMessage = error.message;
-          // console.error("GET ThongTinDangKy Failed: ", error.message);
-          setTimeout(() => {
-             me.$refs.loadingTTDKT_reft.hide(); // tắt dialog loading
-            me.getEmty = true; 
-          }, 4000);
-        });
-    },
+   
     /// todo hiển thị dialog thêm
     showDialog(text, Id) {
       // if (document.getElementById("ctxMenu") != null)
@@ -1180,6 +1286,17 @@ export default {
       } else alert("Trang không hợp lệ");
     },
    },
+    filters: {
+
+     formatStatus(status) {
+      var statusDisplay = "";
+      if (trangthai && status !== null) {
+        statusDisplay = trangthai[status.toString()];
+      }
+      return statusDisplay;
+      
+    },
+    },
 };
 </script>
 

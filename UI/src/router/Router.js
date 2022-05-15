@@ -18,6 +18,7 @@ import Admin from '@/views/Admin'
 import Home from '@/views_Cus/Home'
 import DKTiem from '@/views_Cus/DKTiem'
 import Vacxin from '@/views_Cus/Vacxin'
+import VacxinDetail from '@/views_Cus/VacxinDetail'
 import Camnang from '@/views_Cus/Camnang'
 import Tuvan from '@/views_Cus/Tuvan'
 import TrangCaNhan from '@/views_Cus/TrangCaNhan'
@@ -67,7 +68,8 @@ export const router = new VueRouter({
         { path: '/signinAdmin', component: SigninAdmin, name: "signinAdmin" },
         { path: '/customer', component: Home, name: "STC-dien-tu" },   
         { path: '/trangcanhan', component: TrangCaNhan, name: "trang-ca-nhan" },  
-        { path: '/vac-xin', component: Vacxin, name: "vac-xin" },       
+        { path: '/vac-xin', component: Vacxin, name: "vac-xin" },  
+        { path: '/vac-xin-detail', component: VacxinDetail, name: "vac-xin-detail" },      
         { path: '/cam-nang', component: Camnang, name: "cam-nang" },   
         { path: '/tu-van', component: Tuvan, name: "tu-van" },   
     ]
