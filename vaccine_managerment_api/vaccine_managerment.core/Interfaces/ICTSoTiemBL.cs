@@ -9,5 +9,12 @@ namespace vaccine_managerment.core
 {
     public interface ICTSoTiemBL:IBaseBL<CTSoTiem>
     {
+        /// <summary>
+        /// Lấy thông tin CT sổ tiêm theo mã sổ tiêm
+        /// </summary>
+        /// <param name="masotiem">mã sổ tiêm</param>
+        /// <returns></returns>
+        /// CreatedBy: nctu 11.05.2022
+        public ServiceResult GetCTSoTiemByCode(string masotiem);
     }
 }

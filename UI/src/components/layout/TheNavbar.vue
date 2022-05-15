@@ -5,26 +5,25 @@
       <div class="nav-item-text">SỔ TIÊM CHỦNG</div>
       <div class="icon-hamburger-menu" @click="toggleNavbar('no')"></div>
     </div>
-    <div id="navItem1" class="nav-item option nav-item-icon">
+    <div
+      id="navItem1"
+      class="nav-item option nav-item-icon"
+      @click="redirect('injection-register')"
+      :class="{ 'option-focus': currentRouteName == 'injection-register' }"
+    >
       <div class="icon-nav icon-computer-line"></div>
-      <div
-        class="nav-item-text"
-        @click="$router.push({ name: 'injection-register' })"
-        :class="{ 'option-focus': currentRouteName == 'injection-register' }"
-      >
+      <div class="nav-item-text">
         Đăng ký tiêm
       </div>
     </div>
-    <div id="navItem2" class="nav-item option nav-item-icon">
-      <div
-        class="icon-nav icon-community-line"
-        @click="$router.push({ name: 'injection-books' })"
-      ></div>
-      <div
-        class="nav-item-text"
-        @click="$router.push({ name: 'injection-books' })"
-        :class="{ 'option-focus': currentRouteName == 'injection-books' }"
-      >
+    <div
+      id="navItem2"
+      class="nav-item option nav-item-icon"
+      @click="redirect('injection-books')"
+      :class="{ 'option-focus': currentRouteName == 'injection-books' }"
+    >
+      <div class="icon-nav icon-community-line"></div>
+      <div class="nav-item-text">
         Sổ tiêm
       </div>
       <!-- <div class="icon-submenu" @click="$router.push({ name: 'asset' })"></div>
@@ -66,13 +65,14 @@
         </div>
       </div> -->
     </div>
-    <div id="navItem3" class="nav-item option nav-item-icon">
+    <div
+      id="navItem3"
+      class="nav-item option nav-item-icon"
+      @click="redirect('injection-schedules')"
+      :class="{ 'option-focus': currentRouteName == 'injection-schedules' }"
+    >
       <div class="icon-nav icon-paint-brush-line"></div>
-      <div
-        class="nav-item-text"
-        @click="$router.push({ name: 'injection-schedules' })"
-        :class="{ 'option-focus': currentRouteName == 'injection-schedules' }"
-      >
+      <div class="nav-item-text">
         Lịch tiêm
       </div>
       <!-- <div class="icon-submenu"></div> -->
@@ -81,13 +81,14 @@
         <div class="sub-navbar-item">Dụng cụ</div>
       </div> -->
     </div>
-    <div id="navItem4" class="nav-item option nav-item-icon">
+    <div
+      id="navItem4"
+      class="nav-item option nav-item-icon"
+      @click="redirect('manage-vaccines')"
+      :class="{ 'option-focus': currentRouteName == 'manage-vaccines' }"
+    >
       <div class="icon-nav icon-common"></div>
-      <div
-        class="nav-item-text"
-        @click="$router.push({ name: 'manage-vaccines' })"
-        :class="{ 'option-focus': currentRouteName == 'manage-vaccines' }"
-      >
+      <div class="nav-item-text">
         Vắc xin
       </div>
       <!-- <div class="icon-submenu"></div> -->
@@ -131,9 +132,8 @@ export default {
   },
   computed: {
     currentRouteName() {
-      // return this.$route.name;
-      console.log("CurrentRoutName = " + this.$route.fullPath.split("/")[1]);
-      return this.$route.fullPath.split("/")[1];
+      var length = this.$route.fullPath.split("/").length
+      return this.$route.fullPath.split("/")[length-1];
     },
   },
   watch: {
@@ -142,6 +142,11 @@ export default {
     // },
   },
   methods: {
+    redirect(routername) {
+      if (this.currentRouteName !== routername) {
+        this.$router.push({ name: routername });
+      }
+    },
     toggleNavbar(text) {
       this.collapseNavbar = !this.collapseNavbar;
       var navbar = document.getElementById("navbar");
@@ -195,7 +200,13 @@ export default {
 
 <style lang="scss" scoped>
 @import url("../../style/scss/icon.scss");
-
+.option-focus {
+  border-left: 4px solid #00abfe;
+  background-color: #035797;
+  outline: none;
+  padding-left: 9px !important;
+  transition: 0.2s;
+}
 .nav {
   // background-color: #0673c7;
   // color: rgb(5, 12, 75);
@@ -213,14 +224,6 @@ export default {
   display: block;
 
   .nav-item {
-    &.option-focus {
-      border-left: 4px solid #00abfe;
-      background-color: #035797;
-      outline: none;
-      padding-left: 9px !important;
-      transition: 0.2s;
-    }
-
     &.header {
       margin-bottom: 2px;
       padding-left: 6px;

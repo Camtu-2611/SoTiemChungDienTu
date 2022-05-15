@@ -21,19 +21,40 @@ namespace vaccine_managerment.common
         public string masotiem { get; set; }
 
         /// <summary>
+        /// họ tên người tiêm
+        /// </summary>
+        public string hoten { get; set; }
+
+        /// <summary>
         /// mã vắc xin
         /// </summary>
         public string mavacxin { get; set; }
+
+        /// <summary>
+        /// tên sổ tiêm
+        /// </summary>
+        public string tenvacxin { get; set; }
 
         /// <summary>
         /// lần tiêm
         /// </summary>
         public int lantiem { get; set; }
 
+        
+        /// <summary>
+        /// ngày tiêm
+        /// </summary>
+        public DateTime? ngaytiem { get; set; }
+        
+        /// <summary>
+        /// phản ứng sau tiêm
+        /// </summary>
+        public string phanungsautiem { get; set; }
+
         /// <summary>
         /// ngày hẹn tiêm lần sau (nếu có)
         /// </summary>
-        public DateTime ngayhen { get; set; }
+        public DateTime? ngayhen { get; set; }
 
         /// <summary>
         /// nơi tiêm
@@ -45,19 +66,5 @@ namespace vaccine_managerment.common
         /// </summary>
         public string manhanvien { get; set; }
 
-        /// <summary>
-        /// id nhân viên
-        /// </summary>
-        public Guid idnhanvien { get; set; }
-
-        /// <summary>
-        /// id sổ tiêm
-        /// </summary>
-        public Guid idsotiem { get; set; }
-
-        /// <summary>
-        /// id vắc xin
-        /// </summary>
-        public Guid idvacxin { get; set; }
     }
 }

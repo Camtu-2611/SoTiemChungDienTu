@@ -1,282 +1,188 @@
 <template>
-  <div class="injection-books content">
-    <div class="div-container">
-      <div class="content-nav">
-        <v-alert
-          id="success-dialog"
-          v-show="showSuccess"
-          color="green"
-          elevation="30"
-          type="success"
-        >
-          {{ alerMsg }}</v-alert
-        >
-        <v-alert v-if="showWarning" id="required-choose" type="warning">{{
-          alerMsg
-        }}</v-alert>
-        <h5>Danh sách sổ tiêm</h5>
-        <div class="features-pane">
-          <div class="features-pane-left">
-            <input
-              id="assetSearchBox"
-              class="input-search"
-              type="text"
-              placeholder="Tìm kiếm theo họ tên, mã sổ tiêm "
-              v-model="inputSearch"
-              @change="getInjectionBook('filter')"
-            />
-            <div class="icon-search" title="Tìm kiếm"></div>
-          </div>
-
-          <div class="features-pane-right">
-            <div
-              class="btn-add-asset btn features-pane-item"
-              @click="showDetail('insert', 0)"
+  <div class="div-container">
+    <div id="loadBar"></div>
+    <div class="content-grid grid" oncontextmenu="return false;">
+      <table class="table-asset" id="tableAsset">
+        <colgroup>
+          <col width="40" />
+          <col width="100" />
+          <col width="120" />
+          <col width="200" />
+          <col width="100" />
+          <col width="250" />
+          <col width="250" />
+          <col width="100" />
+        </colgroup>
+        <thead>
+          <tr>
+            <th style="text-align: left">STT</th>
+            <th
+              sortProp="code"
+              sortOrder="asc"
+              id="columnAssetCode"
+              class="hover-pointer"
+              style="text-align: left"
             >
-              Thêm
-            </div>
-            <div
-              id="preventLeftClick"
-              class="btn icon-edit-pen features-pane-item"
-              @click="showDetail('update', null)"
-              title="Sửa thông tin sổ tiêm"
-            ></div>
-
-            <div
-              @click="getInjectionBook('')"
-              class="btn icon-refresh features-pane-item"
-              title="Tải lại"
-            ></div>
-          </div>
-        </div>
-
-        <div class="clear-float"></div>
-      </div>
-
-      <div id="loadBar"></div>
-      <div class="content-grid grid" oncontextmenu="return false;">
-        <table class="table-asset" id="tableAsset">
-          <colgroup>
-            <col width="50" />
-            <col width="120" />
-            <col min-width="400" />
-            <col min-width="200" />
-            <col min-width="100" />
-            <col width="100" />
-            <col width="100" />
-          </colgroup>
-          <thead>
-            <tr>
-              <th style="text-align: left">STT</th>
-              <th
-                sortProp="code"
-                sortOrder="asc"
-                id="columnAssetCode"
-                class="hover-pointer"
-                style="text-align: left"
-              >
-                mã sổ tiêm
-              </th>
-              <th
-                sortProp="name"
-                sortOrder="asc"
-                id="columnAssetName"
-                class="hover-pointer"
-                style="text-align: left"
-              >
-                Họ và tên
-              </th>
-              <th
-                sortProp="type"
-                style="text-align: left"
-                sortOrder="asc"
-                id="columnAssetType"
-                class="hover-pointer"
-              >
-                Ngày sinh
-              </th>
-              <th
-                sortProp="department"
-                sortOrder="asc"
-                id="columnDepartment"
-                class="hover-pointer"
-                style="text-align: left"
-              >
-                Giới tính
-              </th>
-              <th
-                sortProp="price"
-                sortOrder="asc"
-                id="columnPrice"
-                class="hover-pointer"
-                style="text-align: left"
-              >
-                Số điện thoại
-              </th>
-              <th
-                sortProp="price"
-                sortOrder="asc"
-                id="columnPrice"
-                class="hover-pointer"
-                style="text-align: left"
-              >
-                CMND/CCCD
-              </th>
-              <!-- <th style="text-align: left">chức năng</th> -->
-            </tr>
-          </thead>
-
-          <tbody>
-            <tr
-              v-for="(sotiem, index) in listSoTiem"
-              :key="sotiem.idsotiem"
-              v-bind:class="
-                selectedRow(sotiem.idsotiem, sotiem.masotiem)
-                  ? 'selected-row'
-                  : ''
-              "
-              @click="selectRow(sotiem.idsotiem, $event)"
-              @click.right="showContexMenu(sotiem.idsotiem, $event)"
-              @dblclick="showDetail('update', sotiem.idsotiem)"
+              mã sổ tiêm
+            </th>
+            <th
+              sortProp="name"
+              sortOrder="asc"
+              id="columnAssetName"
+              class="hover-pointer"
+              style="text-align: left"
             >
-              <td class="no-border-left">{{ index + 1 }}</td>
-              <td>{{ sotiem.masotiem }}</td>
-              <td>{{ sotiem.hoten }}</td>
-              <td>{{ sotiem.ngaysinh | formatDate(sotiem.ngaysinh) }}</td>
-              <td>{{ sotiem.gioitinh | formatGioiTinh(sotiem.gioitinh) }}</td>
-              <td>{{ sotiem.sodienthoai }}</td>
-              <td>{{ sotiem.cmnd }}</td>
-              <!-- <td style="text-align: right">
-                {{ asset.originalPrice | formatMoney(asset.originalPrice) }}
-              </td> -->
-              <!-- <td class="no-border-right">
-                <div class="features-box">
-                  <div
-                    :id="'tableRow' + index + '_edit'"
-                    class="table-icon icon-edit-pen"
-                    @click="showDetail('update', sotiem.idSoTiem)"
-                    title="Sửa"
-                  ></div>
-                  <div
-                    id="preventLeftClick"
-                    class="table-icon icon-trash-table"
-                    @click="showDetail('inRow')"
-                    title="Xóa"
-                  ></div>
-                  <div
-                    class="table-icon icon-refresh-time"
-                    title="Chức năng chưa phát triển"
-                  ></div>
-                </div>
-              </td> -->
-            </tr>
-          </tbody>
-          <BaseLoading ref="BaseLoading_ref" />
+              Họ và tên
+            </th>
+            <th
+              sortProp="department"
+              sortOrder="asc"
+              id="columnDepartment"
+              class="hover-pointer"
+              style="text-align: left"
+            >
+              Tên vắc xin
+            </th>
+            <th
+              sortProp="price"
+              sortOrder="asc"
+              id="columnPrice"
+              class="hover-pointer"
+              style="text-align: left"
+            >
+              Lần tiêm
+            </th>
+            <th
+              sortProp="price"
+              sortOrder="asc"
+              id="columnPrice"
+              class="hover-pointer"
+              style="text-align: left"
+            >
+              Phản ứng sau tiêm
+            </th>
+            <th
+              sortProp="price"
+              sortOrder="asc"
+              id="columnPrice"
+              class="hover-pointer"
+              style="text-align: left"
+            >
+              Nơi tiêm
+            </th>
+            <th
+              sortProp="price"
+              sortOrder="asc"
+              id="columnPrice"
+              class="hover-pointer"
+              style="text-align: left"
+            >
+              Hẹn tiêm lần sau
+            </th>
+          </tr>
+        </thead>
 
-          <div v-show="getEmty" class="loading-emty">Không có dữ liệu</div>
-        </table>
-        <div class="ctx-menu" id="ctxMenu">
-          <div class="ctx-menu-item" @click="showDetail('insert', 0)">
-            Thêm mới
-          </div>
-          <div
-            class="ctx-menu-item"
-            @click="showDetail('update', listSelectRow[0])"
+        <tbody>
+          <tr
+            v-for="(ctsotiem, index) in lstCTSoTiem"
+            :key="ctsotiem.idctsotiem"
+            v-bind:class="
+              selectedRow(ctsotiem.idctsotiem, ctsotiem.mactsotiem)
+                ? 'selected-row'
+                : ''
+            "
+            @click="selectRow(ctsotiem.idctsotiem, $event)"
+            @click.right="showContexMenu(ctsotiem.idctsotiem, $event)"
+            @dblclick="showDetail('update', ctsotiem.idctsotiem)"
           >
-            Cập nhật sổ tiêm
-          </div>
-          <div
-            id="preventLeftClick"
-            class="ctx-menu-item"
-            @click="showDanhSachDK(listSelectRow[0])"
-          >
-            Danh sách đã đăng ký tiêm
-          </div>
-          <div
-            id="preventLeftClick"
-            class="ctx-menu-item"
-            @click="showThongTinCaNhan(listSelectRow[0])"
-          >
-            Thông tin cá nhân
-          </div>
-          <div
-            id="preventLeftClick"
-            class="ctx-menu-item"
-            @click="showLichSuTiemChung(listSelectRow[0])"
-          >
-            Lịch sử tiêm chủng
-          </div>
+            <td class="no-border-left">{{ index + 1 }}</td>
+            <td>{{ ctsotiem.masotiem }}</td>
+            <td>{{ ctsotiem.hoten }}</td>
+            <td>
+              {{ ctsotiem.tenvacxin }}
+            </td>
+            <td>
+              {{ ctsotiem.lantiem }}
+            </td>
+            <td>{{ ctsotiem.phanungsautiem }}</td>
+            <td>{{ ctsotiem.noitiem }}</td>
+            <td>{{ ctsotiem.ngayhentiem }}</td>
+          </tr>
+        </tbody>
+        <BaseLoading ref="BaseLoading_ref" />
+
+        <div v-show="getEmty" class="loading-emty">
+          Không có dữ liệu
         </div>
-      </div>
-
-      <div class="table-summary">
-        <div class="summary">
-          <div class="asset-number">Tổng số bản ghi: {{ amountSoTiem }}</div>
-
-          <div class="paging-toolbar">
-            <div class="leftchild">
-              <div
-                title="Trang đầu"
-                class="p-button first-page"
-                @click="firstPage()"
-              ></div>
-              <div
-                title="Trang trước"
-                class="p-button prev-page"
-                @click="backPage()"
-              ></div>
-              <div>Trang</div>
-              <input
-                type="number"
-                class="text-pagebumber"
-                v-model="paging.pageNumber"
-                @change="reloadPage()"
-              />
-              <div>Trên {{ paging.amountPage }}</div>
-
-              <div
-                title="Trang sau"
-                class="p-button next-page"
-                @click="nextPage()"
-              ></div>
-              <div
-                title="Trang cuối"
-                class="p-button last-page"
-                @click="lastPage()"
-              ></div>
-              <div
-                title="Tải lại"
-                class="p-button refresh"
-                @click="getInjectionBook()"
-              ></div>
-              <select
-                title="Số bản ghi trên 1 trang"
-                name=""
-                id=""
-                class="select-quantitypage"
-                v-model="paging.recordNumber"
-                @change="getInjectionBook('filter')"
-              >
-                <option value="25">25</option>
-                <option value="50">50</option>
-                <option value="100">100</option>
-              </select>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div id="assetPopup"></div>
+      </table>
     </div>
+
+    <div class="table-summary">
+      <div class="summary">
+        <div class="asset-number">Tổng số bản ghi: {{ amountSoTiem }}</div>
+
+        <div class="paging-toolbar">
+          <div class="leftchild">
+            <div
+              title="Trang đầu"
+              class="p-button first-page"
+              @click="firstPage()"
+            ></div>
+            <div
+              title="Trang trước"
+              class="p-button prev-page"
+              @click="backPage()"
+            ></div>
+            <div>Trang</div>
+            <input
+              type="number"
+              class="text-pagebumber"
+              v-model="paging.pageNumber"
+              @change="reloadPage()"
+            />
+            <div>Trên {{ paging.amountPage }}</div>
+
+            <div
+              title="Trang sau"
+              class="p-button next-page"
+              @click="nextPage()"
+            ></div>
+            <div
+              title="Trang cuối"
+              class="p-button last-page"
+              @click="lastPage()"
+            ></div>
+            <div
+              title="Tải lại"
+              class="p-button refresh"
+              @click="getCTSoTiem()"
+            ></div>
+            <select
+              title="Số bản ghi trên 1 trang"
+              name=""
+              id=""
+              class="select-quantitypage"
+              v-model="paging.recordNumber"
+              @change="getCTSoTiem('filter')"
+            >
+              <option value="25">25</option>
+              <option value="50">50</option>
+              <option value="100">100</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="assetPopup"></div>
     <BaseConfirm ref="baseConfirm" />
   </div>
 </template>
-
 <script>
-import BaseLoading from "../../components/common/BaseLoading.vue";
+import BaseLoading from "../components/common/BaseLoading.vue";
 import axios from "axios";
 import BaseConfirm from "@/components/common/baseControlAcounting/BaseConfirm";
-import { gioitinh } from "../../enumeration/enumaration";
+import { gioitinh } from "../enumeration/enumaration";
 export default {
   components: {
     BaseLoading,
@@ -284,26 +190,32 @@ export default {
   },
   props: {
     isFilterMenu: Boolean,
+    maSoTiem: String,
   },
   data() {
     return {
-      listSoTiem: [],
-      sotiem: {
-        idSoTiem: null,
-        maSoTiem: null,
-        hoTen: null,
-        ngaySinh: null,
-        gioiTinh: null,
-        sodienthoai: null,
-        cmnd: null,
+      lstCTSoTiem: [],
+      ctsotiem: {
+        idctsotiem: "",
+        masotiem: "",
+        hoten: "",
+        tenvacxin: "",
+        mavacxin: "",
+        lantiem: 1,
+        noitiem: "",
+        ngaytiem: "",
+        ngayhen: "",
+        manhanvien: "",
+        ngaytao: new Date().toISOString(),
+        nguoitao: "nctu2",
+        ngaychinhsua: new Date().toISOString(),
+        nguoichinhsua: "nctu2",
       },
       formMode: "",
       alerMsg: "",
       idSoTiemUpdate: null,
-      maSoTiemUpdate: "",
       listSelectRow: [],
       listIdSoTiem: [],
-      inputSearch: "",
       showSuccess: false,
       isError: false,
       getSuccess: true,
@@ -336,9 +248,8 @@ export default {
     },
     /**
      * Gửi request GET tới API
-     * Author: TVThinh (12/5/2021)
      */
-    async getInjectionBook(text) {
+    async getCTSoTiem(text) {
       if (text == "filter") {
         this.paging.pageNumber = 1;
       }
@@ -349,32 +260,33 @@ export default {
       res.$refs.BaseLoading_ref.show();
       this.getEmty = false;
       this.amountSoTiem = 0;
+      console.log(this.idSoTiemUpdate);
       await axios
-        .get("http://localhost:64016/api/SoTiem")
+        .get(`http://localhost:64016/api/CTSoTiem/bycode/${this.maSoTiem}`)
         .then((response) => {
           if (response.data) {
-            res.listSoTiem = response.data.data;
+            this.lstCTSoTiem = response.data.data;
 
-            if (res.listSoTiem.length == 0) {
-              res.getEmty = true;
+            if (this.lstCTSoTiem.length == 0) {
+              this.getEmty = true;
             }
 
-            res.$refs.BaseLoading_ref.hide();
-            res.listIdSoTiem = [];
-            res.paging.amountPage = response.data.totalPage;
+            this.$refs.BaseLoading_ref.hide();
+            this.listIdSoTiem = [];
+            this.paging.amountPage = response.data.totalPage;
 
-            res.listSoTiem.forEach((element) => {
+            this.lstCTSoTiem.forEach((element) => {
               // duyệt qua tất cả các bản ghi
-              res.listIdSoTiem.push(element.idSoTiem); // push tất cả id tài sản vào mảng
-              res.amountSoTiem++; // đếm tổng số bản ghi
+              this.listIdSoTiem.push(element.idSoTiem); // push tất cả id tài sản vào mảng
+              this.amountSoTiem++; // đếm tổng số bản ghi
             });
           }
         })
         .catch((error) => {
-          console.log(error);
+            
           setTimeout(() => {
-            res.$refs.BaseLoading_ref.hide(); // tắt dialog loading
-            res.getEmty = true;
+            this.$refs.BaseLoading_ref.hide(); // tắt dialog loading
+            this.getEmty = true;
           }, 300);
         });
 
@@ -382,73 +294,11 @@ export default {
         this.listSelectRow.push(this.listIdSoTiem[0]);
       }, 0);
     },
-    /// todo hiển thị dialog thêm
-    showDetail(text, Id) {
-      this.allowEdit = false;
-      this.formMode = "insert";
-      console.log(this.formMode);
-      if (text == "insert") {
-        this.formMode = "insert";
-        this.alerMsg = "Thêm mới thành công";
-      } else {
-        this.formMode = "update";
-        this.alerMsg = "Cập nhật thành công";
-        if (Id) {
-          this.idSoTiemUpdate = Id;
-        }
-        if (
-          this.idSoTiemUpdate &&
-          this.idSoTiemUpdate !== "00000000-0000-0000-0000-000000000000"
-        ) {
-          this.allowEdit = true;
-        } else {
-          this.allowEdit = false;
-        }
-      }
-      setTimeout(() => {
-        if (this.allowEdit && text == "update") {
-          this.$router.push({
-            name: "injection-book-detail",
-            params: {
-              formMode: this.formMode,
-              idSoTiemUpdate: this.idSoTiemUpdate,
-              maSoTiemUpdate: this.maSoTiemUpdate,
-            },
-          });
-        } else if (text == "insert") {
-          this.$router.push({
-            name: "injection-book-detail",
-            params: {
-              formMode: this.formMode,
-              idSoTiemUpdate: this.idSoTiemUpdate}
-          });
-        } else {
-          this.$refs.baseConfirm.showForm(
-            "warning",
-            1,
-            "Vui lòng chọn 1 bản ghi!"
-          );
-          return;
-        }
-      }, 300);
-    },
-    // hiển thị danh sách đã đăng ký tiêm của sổ tiêm
-    showDanhSachDK(id) {
-      alert("hiển thị danh sách đăng ký của sổ tiêm này" + id);
-    },
-    // hiển thị thông tin cá nhân
-    showThongTinCaNhan(id) {
-      alert("hiển thị thông tin cá nhân của sổ tiêm" + id);
-    },
-    // hiển thị lịch sử tiêm chủng
-    showLichSuTiemChung(id) {
-      alert("hiển thị lịch sử tiêm chủng của sổ tiêm" + id);
-    },
 
     // todo tải lại dữ liệu
     reload(value) {
       if (value == true) {
-        this.getInjectionBook("");
+        this.getCTSoTiem("");
         this.showSuccess = true;
         setTimeout(() => {
           this.showSuccess = false;
@@ -578,14 +428,14 @@ export default {
     nextPage() {
       if (this.paging.pageNumber < this.paging.amountPage) {
         this.paging.pageNumber++;
-        this.getInjectionBook();
+        this.getCTSoTiem();
       }
     },
     // todo chuyển đến trang trước
     backPage() {
       if (this.paging.pageNumber > 1) {
         this.paging.pageNumber--;
-        this.getInjectionBook();
+        this.getCTSoTiem();
       }
     },
     hideContextMenu() {
@@ -596,18 +446,18 @@ export default {
     },
     lastPage() {
       this.paging.pageNumber = this.paging.amountPage;
-      this.getInjectionBook();
+      this.getCTSoTiem();
     },
     firstPage() {
       this.paging.pageNumber = 1;
-      this.getInjectionBook();
+      this.getCTSoTiem();
     },
     reloadPage() {
       if (
         parseInt(this.paging.pageNumber) <= this.paging.amountPage &&
         parseInt(this.paging.pageNumber) > 0
       ) {
-        this.getInjectionBook();
+        this.getCTSoTiem();
       } else alert("Trang không hợp lệ");
     },
   },
@@ -622,7 +472,7 @@ export default {
     // định dạng ngày
     formatDate(inputDate) {
       var a = new Date(inputDate);
-      var month = a.getMonth()+1;
+      var month = a.getMonth() + 1;
       var day = a.getDate();
       if (month < 10) month = "0" + month.toString();
       if (day < 10) day = "0" + day.toString();
@@ -646,20 +496,18 @@ export default {
   },
   watch: {},
   created() {
-    //this.getInjectionBook();
     this.processkey();
   },
   mounted() {
-    // this.getInjectionBookType();
-    this.getInjectionBook();
+    this.getCTSoTiem();
     this.hideContextMenu();
   },
 };
 </script>
 
 <style lang="scss" scoped>
-@import url(../../style/scss/icon.scss);
-@import url(../../style/scss/button.scss);
+@import url(../style/scss/icon.scss);
+@import url(../style/scss/button.scss);
 #assetPopup {
   padding: 0 40px;
   height: 80px;
@@ -691,7 +539,7 @@ export default {
     padding: 8px 14px 8px 18px;
 
     &:hover {
-      background-color: #1565C0 ;
+      background-color: #1565c0;
       box-shadow: 2px 2px 4px grey;
       color: white;
       cursor: pointer;
@@ -710,14 +558,6 @@ export default {
   margin-top: 8px;
   display: none;
   position: absolute;
-}
-
-.content {
-  height: calc(100vh - 60px);
-  width: calc(100% - 200px);
-  transition: all 0.25s;
-  background-color: white;
-  user-select: none;
 }
 
 .content-nav {
@@ -757,7 +597,7 @@ export default {
     .btn-add-asset {
       padding: 0 36px;
       color: white;
-      background-color: #1565C0;
+      background-color: #1565c0;
       border: none;
     }
 
@@ -774,7 +614,7 @@ export default {
       right: 0;
 
       .icon-refresh {
-        background-image: url("../../assets/UI/Icon/refresh.svg");
+        background-image: url("../assets/UI/Icon/refresh.svg");
         background-repeat: no-repeat;
         background-size: 22px 22px;
         background-position: center;
@@ -845,9 +685,7 @@ export default {
   font-family: GoogleSans-Medium;
   display: flex;
   position: relative;
-  margin: 18px 16px 0 16px;
   height: 45px;
-
   .price-number {
     position: absolute;
     //TODO sẽ phải sửa lại cái này cho chuẩn với cột nguyên giá
@@ -877,9 +715,7 @@ export default {
 }
 
 .content-grid {
-  // margin: 16px 16px 16px 16px;
   height: calc(100% - 165px);
-  /* height: 100%; */
   position: relative;
   overflow: auto;
   box-sizing: border-box;
@@ -888,14 +724,10 @@ export default {
   font-size: 14px;
   font-family: GoogleSans-Medium;
   display: flex;
-  /* position: relative; */
   width: 100%;
   position: absolute;
   bottom: 0px;
-  /* align-items: center; */
-  /* margin: 18px 16px 0 16px; */
   height: 63px;
-  padding: 18px 16px;
   box-sizing: border-box;
 }
 .table-summary .summary {
@@ -903,6 +735,7 @@ export default {
   width: 100%;
   display: flex;
   align-items: center;
+  margin-left: 16px;
 }
 
 .content .div-container {
@@ -914,6 +747,12 @@ export default {
   box-sizing: border-box;
   width: 100%;
   height: 100%;
+  width: 100%;
+  height: 100%;
+  // padding: 6px 6px 6px 6px;
+  box-sizing: border-box;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 table tr th {
@@ -1004,7 +843,7 @@ table tbody tr {
 .paging-toolbar {
   height: 100%;
   display: flex;
-  margin-left: calc((100% - 752px) / 2);
+  margin-left: calc((100% - 470px) / 2);
   .leftchild {
     height: 100%;
     min-width: 330px;
@@ -1019,7 +858,7 @@ table tbody tr {
       margin-right: 2px;
     }
     .first-page {
-      background: url(../../assets/icon/common-icon.png) no-repeat -649px -124px;
+      background: url(../assets/icon/common-icon.png) no-repeat -649px -124px;
       width: 24px;
       height: 24px;
       background-color: #fff;
@@ -1044,14 +883,14 @@ table tbody tr {
     }
 
     .refresh {
-      background: url(../../assets/icon/common-icon.png) no-repeat -849px -124px;
+      background: url(../assets/icon/common-icon.png) no-repeat -849px -124px;
       border: 1px solid #6b6f9d !important;
     }
     .last-page {
-      background: url(../../assets/icon/common-icon.png) no-repeat -798px -124px;
+      background: url(../assets/icon/common-icon.png) no-repeat -798px -124px;
     }
     .next-page {
-      background: url(../../assets/icon/common-icon.png) no-repeat -749px -124px;
+      background: url(../assets/icon/common-icon.png) no-repeat -749px -124px;
     }
 
     .select-quantitypage {
@@ -1065,7 +904,7 @@ table tbody tr {
 
 .select-quantitypage {
   appearance: none;
-  background: url(../../assets/icon/arrow-down-line.png) no-repeat;
+  background: url(../assets/icon/arrow-down-line.png) no-repeat;
   background-position: 34px 11px;
   cursor: pointer;
 }
@@ -1154,7 +993,7 @@ table {
 }
 
 .v-icon {
-  background-image: url(../../assets/icon/add.png) !important;
+  background-image: url(../assets/icon/add.png) !important;
   background-size: 16px;
   background-repeat: no-repeat;
   background-position: center;

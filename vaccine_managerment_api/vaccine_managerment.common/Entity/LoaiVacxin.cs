@@ -13,7 +13,7 @@ namespace vaccine_managerment.common
         /// id loại vắc xin
         /// </summary>
         [Key]
-        public Guid idloai { get; set; }
+        public Guid idloaivacxin { get; set; }
 
         /// <summary>
         /// mã loại vắc xin

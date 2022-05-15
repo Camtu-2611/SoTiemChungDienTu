@@ -198,13 +198,13 @@
           >
             Sửa
           </div>
-          <!-- <div
+          <div
             id="preventLeftClick"
             class="ctx-menu-item"
-            @click="showDeleteDialog(listSelectRow[0])"
+            @click="Cancel(listSelectRow[0])"
           >
-            Xóa
-          </div> -->
+            Hủy đăng ký
+          </div>
         </div>
       </div>
 
@@ -287,7 +287,7 @@ export default {
   data() {
     return {
       listTTDangKy: [],
-      TTDangKy: {
+      thongtinDK: {
         iddangky: null,
         hoten: null,
         ngaysinh: null,
@@ -299,6 +299,7 @@ export default {
         ngaydangkytiem: null,
         danhsachvacxin: null,
       },
+      thongtinUpdate: null,
       formMode: "",
       alerMsg: "",
       idDangKyUpdate: null,
@@ -405,7 +406,7 @@ export default {
           setTimeout(() => {
             me.$refs.loadingTTDKT_reft.hide(); // tắt dialog loading
             me.getEmty = true;
-          }, 4000);
+          }, 300);
         });
     },
     /// todo hiển thị dialog thêm
@@ -419,7 +420,7 @@ export default {
       } else {
         this.formMode = "update";
         this.alerMsg = "Cập nhật thành công";
-        if(Id){
+        if (Id) {
           this.idDangKyUpdate = Id;
         }
         if (
@@ -465,21 +466,79 @@ export default {
         }, 3000);
       }
     },
-
-    //todo hiển thị form xác nhận xóa
-    showDeleteDialog(text) {
+    Cancel() {
       // var res = this
-      this.alerMsg = "Xóa thành công!";
-      if (text != "inRow" && this.listSelectRow.length == 0) {
+      this.alerMsg = "Hủy thành công!";
+      if (this.listSelectRow.length == 0) {
         this.showWarning = true;
         this.alerMsg = "Vui lòng chọn bản ghi";
+        this.$refs.baseConfirm.showForm("warning", 1, this.alertMsg);
       } else {
-        this.$refs.ModalDeleteAsset_ref.show();
-        this.showWarning = false;
+        var status = 0;
+        // gọi hàm cập nhật trạng thái thông tin đăng ký
+        this.updateStatusTTDangKy(status);
       }
       setTimeout(() => {
         this.showWarning = false;
       }, 3000);
+    },
+    async updateStatusTTDangKy(status) {
+      console.log(idUpdateStatus);
+      if (this.idDangKyUpdate && status != null) {
+        this.getTTDangKyById(this.idDangKyUpdate);
+         console.log(this.thongtinUpdate)
+        if (this.thongtinUpdate) {
+          console.log(this.thongtinUpdate)
+          this.thongtinUpdate.trangthai = status;
+          console.log(this.thongtinUpdate.trangthai)
+          // await axios
+          //   .put(
+          //     `http://localhost:64016/api/ThongTinDangKyTiem/${idUpdateStatus}`,
+          //     this.thongtinDK
+          //   )
+          //   .then((response) => {
+          //     console.log(response);
+          //     this.showWarning = false;
+          //     this.showSuccess = true;
+          //   })
+          //   .catch((error) => {
+          //     this.errorMessage = error.message;
+          //     console.error("GET ThongTinDangKy Failed: ", error.message);
+          //     setTimeout(() => {
+          //       me.showWarning = true;
+          //       me.alerMsg = "Hủy không thành công";
+          //     }, 300);
+          //   });
+        }
+      }
+    },
+    getTTDangKyById(iddangky) {
+      if (iddangky) {
+        axios
+          .get(`http://localhost:64016/api/ThongTinDangKyTiem/${iddangky}` )
+          .then((response) => {
+            if (response.data) {
+              var res = response.data.data;
+              if (res) {
+                this.thongtinDK = response.data.data;
+                this.thongtinUpdate = this.thongtinDK;
+              } else {
+                setTimeout(() => {
+                  me.showWarning = true;
+                  me.alerMsg = "không có thông tin đăng ký";
+                }, 300);
+              }
+            }
+          })
+          .catch((error) => {
+            this.errorMessage = error.message;
+            console.error("GET ThongTinDangKy Failed: ", error.message);
+            setTimeout(() => {
+              me.showWarning = true;
+              me.alerMsg = "có lỗi xảy ra";
+            }, 300);
+          });
+      }
     },
 
     //  select hàng, nếu hàng đã được select thì xóa khỏi mẩng listSelectRow, và ngược lại
@@ -491,7 +550,7 @@ export default {
         var idFirst = this.listSelectRow[0];
         this.listSelectRow = [];
         this.listSelectRow.push(idFirst);
-
+         console.log(this.listSelectRow)
         // vị trí đầu tiên trong mảng listSelectRow
         var idStart = this.listSelectRow[0];
         var indexStart = this.listIdDangKy.indexOf(idStart);
@@ -641,7 +700,7 @@ export default {
     // định dạng ngày
     formatDate(inputDate) {
       var a = new Date(inputDate);
-      var month = a.getMonth();
+      var month = a.getMonth()+1;
       var day = a.getDate();
       if (month < 10) month = "0" + month.toString();
       if (day < 10) day = "0" + day.toString();
@@ -767,7 +826,7 @@ export default {
     .btn-add-asset {
       padding: 0 36px;
       color: white;
-      background-color: #1565C0;
+      background-color: #1565c0;
       border: none;
     }
 

@@ -32,5 +32,45 @@ namespace vaccine_managerment.infrastructure
                 commandType: CommandType.StoredProcedure).FirstOrDefault();
             return entity;
         }
+
+        /// <summary>
+        /// Tạo mã sổ tiêm tự động và không trùng
+        /// </summary>
+        /// <returns></returns>
+        public string GenerateMaSoTiem(int nam, int thang)
+        {
+            var storeName = $"GetLastestMaSoTiem";
+            DynamicParameters dynamicParameters = new DynamicParameters();
+            string paramValue = "";
+            if (thang < 10 && thang>0)
+            {
+                paramValue = nam.ToString() + '0'+ thang.ToString();
+            }
+            else
+            {
+                paramValue = nam.ToString() + thang.ToString();
+            }
+            var storeParamName = $"@prefix";
+            dynamicParameters.Add(storeParamName, paramValue);
+            var masotiem = _dbConnection.Query<String>(
+                storeName,
+                dynamicParameters,
+                commandType: CommandType.StoredProcedure).FirstOrDefault();
+            var mamoi = "";
+            if (!String.IsNullOrEmpty(masotiem))
+            {
+                mamoi = GenerateMa(masotiem, paramValue);
+            }
+            return mamoi;
+        }
+
+        public string GenerateMa(string ma, string paramValue)
+        {
+            int prevnum = int.Parse(ma.Substring(ma.Length - 4, 4));
+            int newnum = prevnum + 1;
+            var padString = newnum.ToString().PadLeft(4, '0');
+            var newstring = paramValue + padString;
+            return newstring;
+        }
     }
 }

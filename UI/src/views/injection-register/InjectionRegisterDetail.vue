@@ -53,6 +53,7 @@
                           class="custom-select"
                           v-model="thongtinDK.masotiem"
                           :disabled="disableMasotiem"
+                          @change="selectMaSoTiem()"
                         >
                           <option
                             v-for="(record, index) in lstMaSoTiem"
@@ -165,7 +166,7 @@
               <div class="footer">
                 <v-btn color="primary" @click="e1 = 2"> Tiếp tục </v-btn>
 
-                <v-btn text class="ml-2"> Hủy </v-btn>
+                <v-btn text class="ml-2" @click="hide()"> Hủy </v-btn>
               </div>
             </v-stepper-content>
             <v-stepper-content step="2">
@@ -654,7 +655,8 @@ export default {
     // định dạng ngày
     formatDate(inputDate) {
       var a = new Date(inputDate);
-      var month = a.getMonth();
+      console.log(inputDate)
+      var month = a.getMonth() + 1;
       var day = a.getDate();
       if (month < 10) month = "0" + month.toString();
       if (day < 10) day = "0" + day.toString();
@@ -828,7 +830,6 @@ export default {
                 this.thongtinDK
               )
               .then(() => {
-                // alert("Đăng ký tiêm thành công !");
                 this.$refs.baseConfirm.showForm(
                   "sucess",
                   1,
@@ -920,9 +921,9 @@ export default {
     /**
      * Thực hiện lấy toàn bộ bản ghi của sổ tiêm
      * */
-    async getSoTiemByCode() {
+    getSoTiemByCode() {
       try {
-        await axios
+        axios
           .get(
             `http://localhost:64016/api/SoTiem/bycode/${this.thongtinDK.masotiem}`
           )
@@ -948,6 +949,11 @@ export default {
         console.log(error);
       }
     },
+    selectMaSoTiem(){
+      console.log(this.thongtinDK.masotiem);
+      this.getSoTiemByCode();
+      console.log(this.thongtinDK.hoten + "2");
+    }
   },
   watch: {
     // todo theo dõi id phòng ban để lấy ra tên phòng ban tương ứng
@@ -961,11 +967,9 @@ export default {
       if (this.asset.assetTypeId == null) this.asset.assetTypeId = null;
       else this.getAssetTypeName();
     },
-    "thongtinDK.masotiem": async function() {
-      console.log(this.thongtinDK.masotiem);
-      this.getSoTiemByCode();
-      console.log(this.thongtinDK.hoten + "2");
-    },
+    // "thongtinDK.masotiem": async function() {
+      
+    // },
   },
   computed: {
     // todo nhận được kiểu định dạng tiền tệ khi nguyên giá thay đổi
@@ -980,8 +984,9 @@ export default {
     // định dạng ngày
     formatDate(inputDate) {
       var a = new Date(inputDate);
-      var month = a.getMonth();
+      var month = a.getMonth()+1;
       var day = a.getDate();
+      console.log(day)
       if (month < 10) month = "0" + month.toString();
       if (day < 10) day = "0" + day.toString();
       var date = day + "-" + month + "-" + a.getFullYear().toString();

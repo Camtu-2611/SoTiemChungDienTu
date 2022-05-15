@@ -16,5 +16,12 @@ namespace vaccine_managerment.core
         /// <returns></returns>
         /// CreatedBy: nctu 1.05.2022
         public ServiceResult GetSoTiemByCode(string masotiem);
+
+        /// <summary>
+        /// Tạo mã sổ tiêm tự động và không trùng
+        /// </summary>
+        /// <returns></returns>
+        /// CreatedBy: nctu 1.05.2022
+        public ServiceResult GenerateMaSoTiem(int na0m, int thang);
     }
 }

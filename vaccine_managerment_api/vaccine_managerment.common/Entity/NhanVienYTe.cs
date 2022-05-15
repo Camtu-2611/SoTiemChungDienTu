@@ -14,7 +14,7 @@ namespace vaccine_managerment.common
         /// Khóa chính
         /// </summary>
         [Key]
-        public Guid idnhanvien { get; set; }
+        public Guid idnhanviennhanvienyte { get; set; }
 
         /// <summary>
         /// mã nhân viên

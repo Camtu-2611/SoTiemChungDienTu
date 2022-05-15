@@ -44,5 +44,36 @@ namespace vaccine_managerment.WebAPI.Controllers
 
             return StatusCode(StatusCodes.Status200OK, responseResult);
         }
+        /// <summary>
+        /// API generate mã sổ tiêm mới nhất
+        /// </summary>
+        /// <param name="masotiem">mã sổ tiêm </param>
+        /// <returns></returns>
+        /// CreatedBy: nctu 05.05.2022
+        [HttpGet("generateCode")]
+        public IActionResult GenerateMaSoTiem()
+        {
+            var responseResult = new ServiceResult();
+            try
+            {
+                var ngayhientai = DateTime.Now;
+                if(ngayhientai > DateTime.MinValue && ngayhientai < DateTime.MaxValue)
+                {
+
+                int namhientai = ngayhientai.Year;
+                int thanghientai = ngayhientai.Month;
+                responseResult = _sotiemBL.GenerateMaSoTiem(namhientai, thanghientai);
+
+                }
+            }
+            catch (Exception)
+            {
+                responseResult.OnBadRequest(responseResult);
+                return StatusCode(StatusCodes.Status400BadRequest, responseResult);
+                throw;
+            }
+
+            return StatusCode(StatusCodes.Status200OK, responseResult);
+        }
     }
 }

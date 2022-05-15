@@ -42,5 +42,32 @@ namespace vaccine_managerment.core
 
             return result;
         }
+
+        /// <summary>
+        /// Tạo mã sổ tiêm tự động và không trùng
+        /// </summary>
+        /// <returns></returns>
+        /// CreatedBy: nctu 1.05.2022
+        public ServiceResult GenerateMaSoTiem(int nam, int thang)
+        {
+            var entity = _sotiemDL.GenerateMaSoTiem(nam, thang);
+
+            var result = new ServiceResult();
+            if (entity != null)
+            {
+                result.Data = entity;
+                result.ErrorCode = ErrorCode.NONE;
+                result.UserMsg = common.Resources.Messages.Success;
+            }
+            else
+            {
+                result.IsSuccess = false;
+                result.UserMsg = common.Resources.Messages.NoContent;
+                result.DevMsg = common.Resources.Messages.NoContent;
+                result.ErrorCode = ErrorCode.NOCONTENT;
+            }
+
+            return result;
+        }
     }
 }

@@ -180,9 +180,9 @@
               <td>{{ TTVaccine.tenvacxin }}</td>
               <td>{{ TTVaccine.solo }}</td>
               <td>{{ TTVaccine.ngaynhap | formatDate(TTVaccine.ngaynhap) }}</td>
-              <!-- <td>{{ TTVaccine.ngansanxuat | formatDate(TTVaccine.ngaynhap) }}</td>
-              <td>{{ TTVaccine.hansudung | formatDate(TTVaccine.hansudung) }}</td> -->
-              <td>{{ TTVaccine.giavacxin | formatedMoney(TTVaccine.giavacxin) }}</td>
+              <td>
+                {{ TTVaccine.giavacxin | formatedMoney(TTVaccine.giavacxin) }}
+              </td>
               <td>{{ TTVaccine.soluong }}</td>
               <td>{{ TTVaccine.mota }}</td>
               <td>
@@ -297,7 +297,7 @@ export default {
       },
       formMode: "",
       alerMsg: "",
-      idVaccineUpdate: null,
+      idVacxinUpdate: null,
       listSelectRow: [],
       lstIdVaccine: [],
       inputSearch: "",
@@ -329,10 +329,10 @@ export default {
   },
 
   watch: {
-    idVaccineUpdate() {
+    idVacxinUpdate() {
       if (
-        !this.idVaccineUpdate ||
-        this.idVaccineUpdate === "00000000-0000-0000-0000-000000000000"
+        !this.idVacxinUpdate ||
+        this.idVacxinUpdate === "00000000-0000-0000-0000-000000000000"
       ) {
         this.allowEdit = false;
         console.log(this.allowEdit + "w");
@@ -409,30 +409,37 @@ export default {
       } else {
         this.formMode = "update";
         this.alerMsg = "Cập nhật thành công";
-        if(Id){
-          this.idVaccineUpdate = Id;
+        if (Id) {
+          this.idVacxinUpdate = Id;
         }
         if (
-          this.idVaccineUpdate &&
-          this.idVaccineUpdate !== "00000000-0000-0000-0000-000000000000"
+          this.idVacxinUpdate &&
+          this.idVacxinUpdate !== "00000000-0000-0000-0000-000000000000"
         ) {
           this.allowEdit = true;
         } else {
           this.allowEdit = false;
         }
       }
+      console.log(this.idVacxinUpdate)
       setTimeout(() => {
         if (this.allowEdit && text == "update") {
           this.$router.push({
             name: "manage-vaccine-detail",
             params: {
               formMode: this.formMode,
-              idVaccineUpdate: this.idVaccineUpdate,
+              idVacxinUpdate: this.idVacxinUpdate,
+              maVacxin: this.mavacxin,
             },
           });
         } else if (text == "insert") {
           this.$router.push({
             name: "manage-vaccine-detail",
+            params: {
+              formMode: this.formMode,
+              idVacxinUpdate: this.idVacxinUpdate,
+              maVacxin: this.mavacxin,
+            },
           });
         } else {
           this.$refs.baseConfirm.showForm(
@@ -511,7 +518,7 @@ export default {
     // kiểm tra hàng đã được select hay chưa
     selectedRow(id) {
       if (this.listSelectRow.indexOf(id) > -1) {
-        this.idVaccineUpdate = id;
+        this.idVacxinUpdate = id;
         return true;
       } else return false;
     },
@@ -631,9 +638,9 @@ export default {
     // định dạng ngày
     formatDate(inputDate) {
       var a = new Date(inputDate);
-      var month = a.getMonth();
+      var month = a.getMonth() + 1;
       var day = a.getDate();
-      console.log(day)
+      console.log(day);
       if (month < 10) month = "0" + month.toString();
       if (day < 10) day = "0" + day.toString();
       var date = day + "/" + month + "/" + a.getFullYear().toString();
@@ -751,7 +758,7 @@ export default {
     .btn-add-asset {
       padding: 0 36px;
       color: white;
-      background-color: #1565C0;
+      background-color: #1565c0;
       border: none;
     }
 

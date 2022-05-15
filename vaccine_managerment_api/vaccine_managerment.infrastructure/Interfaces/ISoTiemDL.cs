@@ -16,5 +16,11 @@ namespace vaccine_managerment.infrastructure
         /// <returns></returns>
         /// CreatedBy: nctu 1.05.2022
         public SoTiem GetSoTiemByCode(string masotiem);
+
+        /// <summary>
+        /// Tạo mã sổ tiêm tự động và không trùng
+        /// </summary>
+        /// <returns></returns>
+        public string GenerateMaSoTiem(int nam, int thang);
     }
 }
