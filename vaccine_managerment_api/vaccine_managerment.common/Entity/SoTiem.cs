@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,6 +9,7 @@ namespace vaccine_managerment.common
 {
     public class SoTiem:BaseEntity
     {
+        [Key]
         public Guid idsotiem { get; set; }
 
         public string masotiem { get; set; }

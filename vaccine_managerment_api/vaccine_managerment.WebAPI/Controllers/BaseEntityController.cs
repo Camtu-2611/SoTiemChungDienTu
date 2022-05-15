@@ -107,7 +107,7 @@ namespace vaccine_managerment.WebAPI.Controllers
             catch (Exception)
             {
                 responseResult.OnBadRequest(responseResult);
-                return StatusCode(int.Parse(responseResult.ErrorCode.ToString()), responseResult);
+                return StatusCode(StatusCodes.Status400BadRequest, responseResult);
                 throw;
             }
             return StatusCode(StatusCodes.Status200OK, responseResult);
