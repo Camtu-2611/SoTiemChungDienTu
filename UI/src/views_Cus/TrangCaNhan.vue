@@ -30,27 +30,25 @@
       </div>
       <!-- .banner-section -->
     </div>
-     <v-tabs v-model="tab">
-  <v-tab>
-     <h10>THÔNG TIN CÁ NHÂN</h10>
-</v-tab>
-<v-tab>
-      <h10>LỊCH SỬ TIÊM CHỦNG</h10>
-</v-tab>
-<v-tab @click="getInjectionRegister('')">
-      <h10>DANH SÁCH VACXIN ĐÃ ĐĂNG KÝ TIÊM</h10>
-</v-tab>
-</v-tabs>
+    <v-tabs v-model="tab">
+      <v-tab>
+        <h10>THÔNG TIN CÁ NHÂN</h10>
+      </v-tab>
+      <v-tab>
+        <h10>LỊCH SỬ TIÊM CHỦNG</h10>
+      </v-tab>
+      <v-tab @click="getInjectionRegister('')">
+        <h10>DANH SÁCH VACXIN ĐÃ ĐĂNG KÝ TIÊM</h10>
+      </v-tab>
+    </v-tabs>
     <v-tabs-items v-model="tab">
       <v-tab-item>
-    <div class="container">
-      <div class="row">
- <div class=" col-sm-9" >
-      <form class="contact-form mt-5">
-
-           <div class="row mb-3" >
-
-            <div class="col-sm-6 py-2 wow ">
+        <div class="container">
+          <div class="row">
+            <div class="col-sm-9">
+              <form class="contact-form mt-5">
+                <div class="row mb-3">
+                  <div class="col-sm-6 py-2 wow">
                     <label for="fullName"
                       >Mã sổ tiêm <span style="color: #ff0000">*</span>
                     </label>
@@ -64,7 +62,7 @@
                       readonly
                     />
                   </div>
-                  
+
                   <div class="col-sm-6 py-2 wow">
                     <label for="fullName"
                       >Họ tên <span style="color: #ff0000">*</span>
@@ -77,43 +75,29 @@
                       v-model="sotiem.hoten"
                       readonly
                       disabled
-
                       :class="{ 'class-error': validation.fullNameVal }"
                       :title="validation.fullNameValMsg"
                       @blur="
-                        tabValidate(
-                          'fullName',
-                          'Họ tên không được để trống.'
-                        )
+                        tabValidate('fullName', 'Họ tên không được để trống.')
                       "
                       @tab="
-                        tabValidate(
-                          'fullName',
-                          'Họ tên không được để trống.'
-                        )
+                        tabValidate('fullName', 'Họ tên không được để trống.')
                       "
                     />
                   </div>
-                  <div
-                    class="col-sm-6 py-2 wow"
-                    data-wow-delay="300ms"
-                  >
+                  <div class="col-sm-6 py-2 wow" data-wow-delay="300ms">
                     <label for="date">Ngày sinh </label>
                     <input
                       type="date"
                       class="form-control"
                       v-model="sotiem.ngaysinh"
-                          
                     />
                   </div>
-                  <div
-                    class="col-sm-6 py-2 wow"
-                    data-wow-delay="300ms"
-                  >
+                  <div class="col-sm-6 py-2 wow" data-wow-delay="300ms">
                     <label for="subject">Giới tính</label>
                     <select
-                      name="departement"
-                      id="departement"
+                      name="gt"
+                      id="gt"
                       class="custom-select"
                       v-model="sotiem.gioitinh"
                     >
@@ -148,10 +132,7 @@
                       "
                     />
                   </div>
-                  <div
-                    class="col-sm-6 py-2 wow"
-                    data-wow-delay="300ms"
-                  >
+                  <div class="col-sm-6 py-2 wow" data-wow-delay="300ms">
                     <label for="SDT"
                       >Số điện thoại <span style="color: #ff0000">*</span>
                     </label>
@@ -176,10 +157,7 @@
                       "
                     />
                   </div>
-                   <div
-                    class="col-sm-6 py-2 wow"
-                    data-wow-delay="300ms"
-                  >
+                  <div class="col-sm-6 py-2 wow" data-wow-delay="300ms">
                     <label for="CMND"
                       >CMND <span style="color: #ff0000"></span>
                     </label>
@@ -188,14 +166,9 @@
                       id="cmnd"
                       class="form-control"
                       v-model="sotiem.cmnd"
-                 
-                     
                     />
                   </div>
-                    <div
-                    class="col-sm-6 py-2 wow"
-                    data-wow-delay="300ms"
-                  >
+                  <div class="col-sm-6 py-2 wow" data-wow-delay="300ms">
                     <label for="tuoi"
                       >Tuổi <span style="color: #ff0000"></span>
                     </label>
@@ -215,440 +188,213 @@
                       placeholder="Địa chỉ.."
                       v-model="sotiem.diachi"
                     />
-
-         </div>
-           <div 
-              class=" py-2 wow btn btn-primary" 
-              @click="updateRecord('')"
-              style="height : 45px"
-            >
-              Cập nhật thông tin
+                  </div>
+                  <div
+                    class="py-2 wow btn btn-primary"
+                    @click="updateRecord('')"
+                    style="height: 45px"
+                  >
+                    Cập nhật thông tin
+                  </div>
+                </div>
+              </form>
             </div>
-
-        </div>
-      </form>
-      </div>
-       <div class="col-sm-3 " >
-      <form class="contact-form mt-5">
-
-           <div class="row mb-3" >
-          <div class="col-sm-12 py-2 wow fadeInright">
-            <label for="fullName"></label>
-            <vue-qr :bgSrc='src' :logoSrc="src2" :text= "sotiem.masotiem + sotiem.hoten + sotiem.sodienthoai + sotiem.email + sotiem.cmnd" :size="200"></vue-qr>
-         
-          </div> 
-         
-
-        </div>
-      </form>
-      </div>
-      </div>
-     
-    </div>
-    </v-tab-item>
-    
-    <v-tab-item>
-     <div >
-     
-<div class="injection-register content">
-    <div class="div-container">
-      <div class="content-nav">
-        <div class="features-pane">
-          <div class="features-pane-left">
-            <input
-              id="assetSearchBox"
-              class="input-search"
-              type="text"
-              placeholder="Tìm kiếm theo họ tên, mã sổ tiêm "
-              v-model="inputSearch"
-              @change="getInjectionRegister('filter')"
-            />
-            <div class="icon-search" title="Tìm kiếm"></div>
+            <div class="col-sm-3">
+              <form class="contact-form mt-5">
+                <div class="row mb-3">
+                  <div class="col-sm-12 py-2 wow fadeInright">
+                    <label for="fullName"></label>
+                    <vue-qr
+                      :bgSrc="src"
+                      :logoSrc="src2"
+                      :text="
+                        sotiem.masotiem +
+                        sotiem.hoten +
+                        sotiem.sodienthoai +
+                        sotiem.email +
+                        sotiem.cmnd
+                      "
+                      :size="200"
+                    ></vue-qr>
+                  </div>
+                </div>
+              </form>
+            </div>
           </div>
+        </div>
+      </v-tab-item>
 
-          <div class="features-pane-right">
+      <v-tab-item>
+        <BaseConfirm ref="baseConfirm" />
+        <LSTiemChung :maSoTiem="sotiem.masotiem" />
+      </v-tab-item>
+      <v-tab-item>
+        <div>
+          <div class="injection-register content">
+            <div class="container">
+              <div class="content-nav">
+                <div class="features-pane">
+                  <div class="features-pane-left">
+                    <input
+                      id="assetSearchBox"
+                      class="input-search"
+                      type="text"
+                      placeholder="Tìm kiếm... "
+                      v-model="inputSearch"
+                      @change="getInjectionRegister('filter')"
+                    />
+                    <div class="icon-search" title="Tìm kiếm"></div>
+                  </div>
 
-            <div
-              @click="getInjectionRegister('')"
-              class="btn icon-refresh features-pane-item"
-              title="Tải lại"
-            ></div>
-            <!-- <div
+                  <div class="features-pane-right">
+                    <div
+                      class="btn-add-asset btn features-pane-item"
+                      @click="$router.push({ name: 'dang-ky-tiem' })"
+                    >
+                      Thêm
+                    </div>
+
+                    <div
+                      @click="getInjectionRegister('')"
+                      class="btn icon-refresh features-pane-item"
+                      title="Tải lại"
+                    ></div>
+                    <!-- <div
               id="preventLeftClick"
               class="btn icon-trash features-pane-item"
               @click="showDeleteDialog()"
               title="Xóa nhiều bản ghi"
             ></div> -->
-          </div>
-        </div>
-
-        <div class="clear-float"></div>
-      </div>
-
-      <div id="loadBar"></div>
-      <div class="content-grid grid" oncontextmenu="return false;">
-        <table class="table-asset" id="tableAsset">
-          <colgroup>
-            <col width="50" />
-            <!-- <col width="120" /> -->
-            <col width="120" />
-            <col min-width="400" />
-            <col min-width="200" />
-            <col min-width="100" />
-            <col width="450" />
-            <col width="100" />
-          </colgroup>
-          <thead>
-            <tr>
-              <th style="text-align: center">STT</th>
-              <th
-                sortProp="name"
-                sortOrder="asc"
-                id="columnAssetName"
-                class="hover-pointer"
-                style="text-align: center"
-              >
-                Họ và tên
-              </th>
-              <th
-                sortProp="type"
-                style="text-align: center"
-                sortOrder="asc"
-                id="columnAssetType"
-                class="hover-pointer"
-              >
-                Ngày sinh
-              </th>
-              <th
-                sortProp="department"
-                sortOrder="asc"
-                id="columnDepartment"
-                class="hover-pointer"
-                style="text-align: center"
-              >
-                Giới tính
-              </th>
-              <th
-                sortProp="department"
-                sortOrder="asc"
-                id="columnDepartment"
-                class="hover-pointer"
-                style="text-align: center"
-              >
-                Số điện thoại
-              </th>
-              <th
-                sortProp="department"
-                sortOrder="asc"
-                id="columnDepartment"
-                class="hover-pointer"
-                style="text-align: center"
-              >
-                Email
-              </th>
-              <th
-                sortProp="department"
-                sortOrder="asc"
-                id="columnDepartment"
-                class="hover-pointer"
-                style="text-align: center"
-              >
-                Địa chỉ
-              </th>
-              <th
-                sortProp="department"
-                sortOrder="asc"
-                id="columnDepartment"
-                class="hover-pointer"
-                style="text-align: center"
-              >
-                Ngày đăng ký tiêm
-              </th>
-              <th
-                sortProp="department"
-                sortOrder="asc"
-                id="columnDepartment"
-                class="hover-pointer"
-                style="text-align: center"
-              >
-                Tên trung tâm
-              </th>
-              <th
-                sortProp="price"
-                sortOrder="asc"
-                id="columnPrice"
-                class="hover-pointer"
-                style="text-align: center"
-              >
-                Danh sách vắc xin đã đăng ký
-              </th>
-              <th style="text-align: left">Trạng thái</th>
-            </tr>
-          </thead>
-
-          <tbody>
-            <tr
-              v-for="(TTDangKy, index) in listTTDangKy"
-              :key="TTDangKy.iddangky"
-              v-bind:class="selectedRow(TTDangKy.iddangky) ? 'selected-row' : ''"
-              @click="selectRow(TTDangKy.iddangky, $event)"
-              @click.right="showContexMenu(TTDangKy.iddangky, $event)"
-              @dblclick="showDialog('update', TTDangKy.iddangky)"
-            >
-              <td class="no-border-left">{{ index + 1 }}</td>
-              <td>{{ TTDangKy.hoten }}</td>
-              <td>{{ TTDangKy.ngaysinh }}</td>
-              <td>{{ TTDangKy.gioitinh }}</td>
-              <td>{{ TTDangKy.sodienthoai }}</td>
-              <td>{{ TTDangKy.email }}</td>
-              <td>{{ TTDangKy.diachi }}</td>
-              <td>{{ TTDangKy.ngaydangkytiem }}</td>
-              <td>{{ TTDangKy.tentrungtam }}</td>
-              <td>{{ TTDangKy.danhsachvacxin }}</td>
-              <!-- <td style="text-align: right">
-                {{ asset.originalPrice | formatMoney(asset.originalPrice) }}
-              </td> -->
-              <td class="no-border-right">
-                <div class="features-box">
-                  <div
-                    :id="'tableRow' + index + '_edit'"
-                    class="table-icon icon-edit-pen"
-                    @click="showDialog('update', TTDangKy.iddangky)"
-                    title="Sửa"
-                  ></div>
-                  <!-- <div
-                    id="preventLeftClick"
-                    class="table-icon icon-trash-table"
-                    @click="showDeleteDialog('inRow')"
-                    title="Xóa"
-                  ></div> -->
-                  <div
-                    class="table-icon icon-refresh-time"
-                    title="Chức năng chưa phát triển"
-                  ></div>
+                  </div>
                 </div>
-              </td>
-            </tr>
-          </tbody>
-          <BaseLoading ref="loadingTTDKT_reft" />
 
-          
-        </table>
-        <div class="ctx-menu" id="ctxMenu">
-          <div class="ctx-menu-item" @click="showDialog('insert', 0)">Thêm</div>
-          <div
-            class="ctx-menu-item"
-            @click="showDialog('update', listSelectRow[0])"
-          >
-            Sửa
-          </div>
-          <!-- <div
+                <div class="clear-float"></div>
+              </div>
+
+              <div id="loadBar"></div>
+              <div class="content-grid grid" oncontextmenu="return false;">
+                <table class="table-asset" id="tableAsset">
+                  <colgroup>
+                    <col width="50" />
+                    <!-- <col width="120" /> -->
+                    <col min-width="400" />
+                    <col min-width="400" />
+                    <col min-width="200" />
+                    <col min-width="100" />
+                    <col min-width="100" />
+                  </colgroup>
+                  <thead>
+                    <tr>
+                      <th style="text-align: center">STT</th>
+                      <th
+                        sortProp="price"
+                        sortOrder="asc"
+                        id="columnPrice"
+                        class="hover-pointer"
+                        style="text-align: center"
+                      >
+                        Danh sách vắc xin đã đăng ký
+                      </th>
+                      <th
+                        sortProp="department"
+                        sortOrder="asc"
+                        id="columnDepartment"
+                        class="hover-pointer"
+                        style="text-align: center"
+                      >
+                        Ngày đăng ký tiêm
+                      </th>
+                      <th
+                        sortProp="department"
+                        sortOrder="asc"
+                        id="columnDepartment"
+                        class="hover-pointer"
+                        style="text-align: center"
+                      >
+                        Địa chỉ đăng ký tiêm
+                      </th>
+
+                      <th style="text-align: left">Trạng thái</th>
+                      
+                    </tr>
+                  </thead>
+
+                  <tbody>
+                    <tr
+                      v-for="(TTDangKy, index) in listTTDangKy"
+                      :key="TTDangKy.iddangky"
+                      v-bind:class="
+                        selectedRow(TTDangKy.iddangky) ? 'selected-row' : ''
+                      "
+                      @click="selectRow(TTDangKy.iddangky, $event)"
+                      @click.right="showContexMenu(TTDangKy, $event)"
+                      @dblclick="showDialog('update', TTDangKy.iddangky)"
+                    >
+                      <td class="no-border-left">{{ index + 1 }}</td>
+                      <td>{{ TTDangKy.danhsachvacxin }}</td>
+
+                      <td>
+                        {{
+                          TTDangKy.ngaydangkytiem
+                            | formatDate(TTDangKy.ngaydangkytiem)
+                        }}
+                      </td>
+                      <td>{{ TTDangKy.tentrungtam }}</td>
+                      <td>
+                        {{
+                          TTDangKy.trangthai | formatStatus(TTDangKy.trangthai)
+                        }}
+                      </td>
+                    
+                    </tr>
+                  </tbody>
+                  <BaseLoading ref="loadingTTDKT_reft" />
+                </table>
+                <div class="ctx-menu" id="ctxMenu">
+                  <div class="ctx-menu-item" @click="$router.push({ name: 'dang-ky-tiem' })">
+                    Thêm
+                  </div>
+                  <div
+                    class="ctx-menu-item"
+                    @click="updateDKTiem(listSelectRow[0])"
+                  >
+                    Hủy đăng ký
+                  </div>
+                  <!-- <div
             id="preventLeftClick"
             class="ctx-menu-item"
             @click="showDeleteDialog(listSelectRow[0])"
           >
             Xóa
           </div> -->
-        </div>
-      </div>
-
-    
-
-      <div id="assetPopup"></div>
-    </div>
-    <InjectionRegisterDetail
-      ref="ModalCreateInjectionRegister_ref"
-      :formMode="formMode"
-      :idDangKyUpdate="idDangKyUpdate"
-      @reload="reload"
-      @msgAlert="msgAlert"
-    />
-  </div>
-
-    </div>
-    </v-tab-item>
-    <v-tab-item>
-     <div >
-     
-<div class="injection-register content">
-    <div class="container">
-      <div class="content-nav">
-       
-
-        <div class="features-pane">
-          <div class="features-pane-left">
-            <input
-              id="assetSearchBox"
-              class="input-search"
-              type="text"
-              placeholder="Tìm kiếm... "
-              v-model="inputSearch"
-              @change="getInjectionRegister('filter')"
-            />
-            <div class="icon-search" title="Tìm kiếm"></div>
-          </div>
-
-          <div class="features-pane-right">
-            <div
-              class="btn-add-asset btn features-pane-item"
-              @click="$router.push({ name: 'dang-ky-tiem' })"
-            >
-              Thêm
-            </div>
-
-            <div
-              @click="getInjectionRegister('')"
-              class="btn icon-refresh features-pane-item"
-              title="Tải lại"
-            ></div>
-            <!-- <div
-              id="preventLeftClick"
-              class="btn icon-trash features-pane-item"
-              @click="showDeleteDialog()"
-              title="Xóa nhiều bản ghi"
-            ></div> -->
-          </div>
-        </div>
-
-        <div class="clear-float"></div>
-      </div>
-
-      <div id="loadBar"></div>
-      <div class="content-grid grid" oncontextmenu="return false;">
-        <table class="table-asset" id="tableAsset">
-          <colgroup>
-            <col width="50" />
-            <!-- <col width="120" /> -->
-            <col min-width="400" />
-            <col min-width="400" />
-            <col min-width="200" />
-            <col min-width="100" />
-            <col min-width="100" />
-
-          </colgroup>
-          <thead>
-            <tr>
-              <th style="text-align: center">STT</th>
-             <th
-                sortProp="price"
-                sortOrder="asc"
-                id="columnPrice"
-                class="hover-pointer"
-                style="text-align: center"
-              >
-                Danh sách vắc xin đã đăng ký
-              </th>
-              <th
-                sortProp="department"
-                sortOrder="asc"
-                id="columnDepartment"
-                class="hover-pointer"
-                style="text-align: center"
-              >
-                Ngày đăng ký tiêm
-              </th>
-              <th
-                sortProp="department"
-                sortOrder="asc"
-                id="columnDepartment"
-                class="hover-pointer"
-                style="text-align: center"
-              >
-                Địa chỉ đăng ký tiêm
-              </th>
-             
-              <th style="text-align: left">Trạng thái </th>
-               <th style="text-align: left">Chức năng </th>
-            </tr>
-          </thead>
-
-          <tbody>
-            <tr
-              v-for="(TTDangKy, index) in listTTDangKy"
-              :key="TTDangKy.iddangky"
-              v-bind:class="selectedRow(TTDangKy.iddangky) ? 'selected-row' : ''"
-              @click="selectRow(TTDangKy.iddangky, $event)"
-              @click.right="showContexMenu(TTDangKy.iddangky, $event)"
-              @dblclick="showDialog('update', TTDangKy.iddangky)"
-            >
-              <td class="no-border-left">{{ index + 1 }}</td>
-              <td>{{ TTDangKy.danhsachvacxin }}</td>
-              <td>{{ TTDangKy.ngaydangkytiem }}</td>
-              <td>{{ TTDangKy.tentrungtam }}</td>
-             <td> {{ TTDangKy.trangthai | formatStatus(TTDangKy.trangthai) }}</td> 
-              <!-- <td style="text-align: right">
-                {{ asset.originalPrice | formatMoney(asset.originalPrice) }}
-              </td> -->
-              <td class="no-border-right">
-                <div class="features-box">
-                  <div
-                    :id="'tableRow' + index + '_edit'"
-                    class="table-icon icon-edit-pen"
-                    @click="showDialog('update', TTDangKy.iddangky)"
-                    title="Sửa"
-                  ></div>
-                  <!-- <div
-                    id="preventLeftClick"
-                    class="table-icon icon-trash-table"
-                    @click="showDeleteDialog('inRow')"
-                    title="Xóa"
-                  ></div> -->
-                  <div
-                    class="table-icon icon-refresh-time"
-                    title="Chức năng chưa phát triển"
-                  ></div>
                 </div>
-              </td>
-            </tr>
-          </tbody>
-          <BaseLoading ref="loadingTTDKT_reft" />
+              </div>
 
-          
-        </table>
-        <div class="ctx-menu" id="ctxMenu">
-          <div class="ctx-menu-item" @click="showDialog('insert', 0)">Thêm</div>
-          <div
-            class="ctx-menu-item"
-            @click="showDialog('update', listSelectRow[0])"
-          >
-            Sửa
+              <div id="assetPopup"></div>
+            </div>
+            <InjectionRegisterDetail
+              ref="ModalCreateInjectionRegister_ref"
+              :formMode="formMode"
+              :idDangKyUpdate="idDangKyUpdate"
+              @reload="reload"
+              @msgAlert="msgAlert"
+            />
           </div>
-          <!-- <div
-            id="preventLeftClick"
-            class="ctx-menu-item"
-            @click="showDeleteDialog(listSelectRow[0])"
-          >
-            Xóa
-          </div> -->
         </div>
-      </div>
-
-      <div id="assetPopup"></div>
-    </div>
-    <InjectionRegisterDetail
-      ref="ModalCreateInjectionRegister_ref"
-      :formMode="formMode"
-      :idDangKyUpdate="idDangKyUpdate"
-      @reload="reload"
-      @msgAlert="msgAlert"
-    />
-  </div>
-
-
-
-    </div>
-    </v-tab-item>
-     </v-tabs-items>
-      <BaseConfirm ref="baseConfirm" />
+      </v-tab-item>
+    </v-tabs-items>
+    <BaseConfirm ref="baseConfirm" />
   </div>
 </template>
 
 <script>
+import LSTiemChung from "./LSTiemChung.vue";
 import { trangthai, gioitinh } from "../enumeration/enumaration.js";
 import BaseConfirm from "@/components/common/baseControlAcounting/BaseConfirm";
 import axios from "axios";
 import BaseLoading from "../components/common/BaseLoading.vue";
-import VueQr from 'vue-qr'
+import VueQr from "vue-qr";
+
 // Vue.component('qr-code', VueQRCodeComponent)
 
 export default {
@@ -656,13 +402,16 @@ export default {
   components: {
     BaseLoading,
     BaseConfirm,
-    VueQr
+    VueQr,
+    LSTiemChung,
   },
- 
-  data () {
-   return {
-    tab: null,
-    listTTDangKy: [],
+ props:{
+        tenTaiKhoan : String
+    },
+  data() {
+    return {
+      tab: null,
+      listTTDangKy: [],
       TTDangKy: {
         iddangky: null,
         hoten: null,
@@ -676,9 +425,9 @@ export default {
         danhsachvacxin: null,
       },
 
-        thongtinDK: {},
-        defaultthongtinDK: {
-        masotiem:"",
+      thongtinDK: {},
+      defaultthongtinDK: {
+        masotiem: "",
         hoten: "",
         ngaysinh: "",
         gioitinh: "",
@@ -694,9 +443,10 @@ export default {
         ngaychinhsua: new Date().toISOString(),
       },
       sotiem: {},
-       defaultsotiem: {
-        idsotiem:"",
-        masotiem:"",
+      TTDangKySelected: {},
+      defaultsotiem: {
+        idsotiem: "",
+        masotiem: "",
         hoten: "",
         ngaysinh: "",
         gioitinh: "",
@@ -710,9 +460,10 @@ export default {
         nguoichinhsua: "",
         ngaychinhsua: new Date().toISOString(),
       },
-  
+
       formMode: "",
       alerMsg: "",
+
       idDangKyUpdate: null,
       listSelectRow: [],
       listIdDangKy: [],
@@ -736,8 +487,8 @@ export default {
       showMenuType: false,
       showMenuDepartment: true,
       disableMasotiem: false,
-      
-        validation: {
+
+      validation: {
         emailVal: false,
         emailValMsg: "",
         sdtVal: false,
@@ -752,23 +503,23 @@ export default {
         vacxinValMsg: "",
       },
       stateValidate: true,
-  };
-},
-    timing: {
-        scale: 1,
-        protectors: false,
-      },
-      alignment: {
-        scale: 1,
-        protectors: false,
-      },
-      cornerAlignment: {
-        scale: 1,
-        protectors: true,
-      },
+      allowEdit: false,
+    };
+  },
+  timing: {
+    scale: 1,
+    protectors: false,
+  },
+  alignment: {
+    scale: 1,
+    protectors: false,
+  },
+  cornerAlignment: {
+    scale: 1,
+    protectors: true,
+  },
 
-
- computed: {
+  computed: {
     formTitle() {
       return this.editedIndex === -1 ? "New Item" : "Edit Item";
     },
@@ -785,42 +536,38 @@ export default {
     this.hideContextMenu();
     this.updateRecord();
   },
- watch: {
-    "sotiem.masotiem": async function() {
-      console.log(this.sotiem.masotiem)
+  watch: {
+    "sotiem.masotiem": async function () {
+      console.log(this.sotiem.masotiem);
       this.getSoTiemByMaSoTiem();
-      
     },
   },
 
-   methods: {
-/**
+  methods: {
+    /**
      * Thực hiện lấy bản ghi của sổ tiêm theo mã sổ tiêm
      * */
     async getSoTiemByMaSoTiem() {
       try {
         await axios
-          .get(
-            `http://localhost:64016/api/SoTiem/bycode/ST01`
-          )
+          .get(`http://localhost:64016/api/SoTiem/bycode/${this.tenTaiKhoan}`)
           .then((response) => {
             if (response.data) {
               var res = response.data.data;
               if (res) {
-                console.log(res)
+                console.log(res);
                 this.sotiem.idsotiem = res.idsotiem;
                 this.sotiem.masotiem = res.masotiem;
                 this.sotiem.hoten = res.hoten;
-                this.sotiem.ngaysinh = res.ngaysinh
+                this.sotiem.ngaysinh = res.ngaysinh;
                 this.sotiem.ngaysinh = this.formatDate(this.sotiem.ngaysinh);
                 this.sotiem.gioitinh = res.gioitinh;
+                // this.sotiem.gioitinh = this.formatGt(this.sotiem.gioitinh);
                 this.sotiem.email = res.email;
                 this.sotiem.sodienthoai = res.sodienthoai;
                 this.sotiem.cmnd = res.cmnd;
                 this.sotiem.diachi = res.diachi;
                 this.sotiem.tuoi = res.tuoi;
- 
-
               }
             }
           })
@@ -829,46 +576,74 @@ export default {
         console.log(error);
       }
     },
-     /**
+
+    /**
      * Thực hiện Cập nhật thông tin cá nhân
      * */
-     async updateRecord() {
+    async updateRecord() {
       try {
         let me = this;
-            await axios
-              .put(
-                `http://localhost:64016/api/SoTiem/${this.sotiem.idsotiem}`,
-                this.sotiem
-              )
-              .then(() => {
-                // alert("Cập nhật thông tin thành công !");
-                this.$refs.baseConfirm.showForm(
-                  "sucess",
-                  1,
-                  "Cập nhật thông tin thành công !"
-                );
-                this.$router.push({ name: "trang-ca-nhan" });
-              })
-              .catch(() => {});
-          }
-      
-     catch (error) {
+        await axios
+          .put(
+            `http://localhost:64016/api/SoTiem/${this.sotiem.idsotiem}`,
+            this.sotiem
+          )
+          .then(() => {
+            // alert("Cập nhật thông tin thành công !");
+            this.$refs.baseConfirm.showForm(
+              "sucess",
+              1,
+              "Cập nhật thông tin thành công !"
+            );
+            this.$router.push({ name: "trang-ca-nhan" });
+          })
+          .catch(() => {});
+      } catch (error) {
         console.log(error);
       }
     },
 
-     /**
+    /**
+     * Thực hiện hủy thông tin đăng ký tiêm
+     * */
+    async updateDKTiem(Id) {
+      try {
+        if (Id === this.TTDangKySelected.iddangky) {
+          this.TTDangKySelected.trangthai = 0;
+
+          await axios
+            .put(
+              `http://localhost:64016/api/ThongTinDangKyTiem/${this.TTDangKySelected.iddangky}`,
+              this.TTDangKySelected
+            )
+            .then(() => {
+              this.$refs.baseConfirm.showForm(
+                "sucess",
+                1,
+                "Hủy đăng ký tiêm thành công !"
+              );
+              this.$router.push({ name: "trang-ca-nhan" });
+            })
+            .catch(() => {});
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    /**
      * Thực hiện lấy thông tin đăng ký tiêm theo số điện thoại
      * * CreatedBy: linhhn
-     * */  
+     * */
     async getInjectionRegister(text) {
       if (text == "filter") {
         this.paging.pageNumber = 1;
       }
       var me = this;
-      
+
       await axios
-        .get("http://localhost:64016/api/ThongTinDangKyTiem/byphonenumber/0869668106")
+        .get(
+          `http://localhost:64016/api/ThongTinDangKyTiem/bycode/${this.tenTaiKhoan}`
+        )
         .then((response) => {
           if (response.data) {
             me.listTTDangKy = response.data.data;
@@ -885,7 +660,6 @@ export default {
               // duyệt qua tất cả các bản ghi
               me.listIdDangKy.push(element.iddangky); // push tất cả id vào mảng
               me.amountTTDangKy++; // đếm tổng số bản ghi
-
             });
           }
         })
@@ -893,15 +667,15 @@ export default {
           this.errorMessage = error.message;
           // console.error("GET ThongTinDangKy Failed: ", error.message);
           setTimeout(() => {
-             me.$refs.loadingTTDKT_reft.hide(); // tắt dialog loading
-            me.getEmty = true; 
+            me.$refs.loadingTTDKT_reft.hide(); // tắt dialog loading
+            me.getEmty = true;
           }, 4000);
         });
     },
-    
-     // todo reset lại các input
+
+    // todo reset lại các input
     resetInput() {
-        (this.thongtinDK.cauhoi1 = false),
+      (this.thongtinDK.cauhoi1 = false),
         (this.thongtinDK.cauhoi2 = false),
         (this.thongtinDK.cauhoi3 = false),
         (this.thongtinDK.cauhoi4 = false),
@@ -921,8 +695,8 @@ export default {
         (this.thongtinDK.nguoichinhsua = ""),
         (this.thongtinDK.ngaychinhsua = new Date().toISOString());
     },
-    
-/**
+
+    /**
      * Thực hiện validate input bị trống
      * CreatedBy: nctu2
      * editBy : Linhhn
@@ -966,7 +740,7 @@ export default {
         }
       }
     },
-  formatDate(inputDate) {
+    formatDate(inputDate) {
       var a = new Date(inputDate);
       var month = a.getMonth();
       var day = a.getDate();
@@ -975,6 +749,7 @@ export default {
       var date = a.getFullYear().toString() + "-" + month + "-" + day;
       return date;
     },
+
     /**
      * Thực hiện validate email không được bỏ trống
      * CreatedBy: nctu
@@ -1005,13 +780,13 @@ export default {
         return true;
       }
     },
-   
+
     /**
      * Thực hiện validate số điện thoại không được bỏ trống
      * CreatedBy: linhhn
      * */
     validateSDT() {
-       var formatSDT =/^((\+)33|0)[1-9](\d{2}){4}$/.test(
+      var formatSDT = /^((\+)33|0)[1-9](\d{2}){4}$/.test(
         this.sotiem.sodienthoai
       );
       if (!this.sotiem.sodienthoai) {
@@ -1030,8 +805,7 @@ export default {
         );
         this.stateValidate = false;
         return false;
-      }
-      else {
+      } else {
         this.stateValidate = true;
         return true;
       }
@@ -1054,8 +828,8 @@ export default {
         return true;
       }
     },
- 
-  validateData() {
+
+    validateData() {
       this.validateEmail();
       this.validateSDT();
       this.validatefullName();
@@ -1063,19 +837,17 @@ export default {
       if (
         this.validateEmail() &&
         this.validateSDT() &&
-        this.validatefullName() 
-      ){
-        return true
+        this.validatefullName()
+      ) {
+        return true;
+      } else {
+        return false;
       }
-      else{
-        return false
-      }
-      
     },
 
-     test(dataUrl,id){
-            console.log(url, id)
-     },
+    test(dataUrl, id) {
+      console.log(url, id);
+    },
     msgAlert(text, value) {
       this.showWarning = value;
       this.alerMsg = text;
@@ -1085,7 +857,7 @@ export default {
         res.showWarning = false;
       }, 3000);
     },
-   
+
     /// todo hiển thị dialog thêm
     showDialog(text, Id) {
       // if (document.getElementById("ctxMenu") != null)
@@ -1098,11 +870,10 @@ export default {
         this.alerMsg = "Cập nhật thành công";
         this.idDangKyUpdate = Id;
       }
-      console.log("showw")
+      console.log("showw");
       setTimeout(() => {
         this.$refs.ModalCreateInjectionRegister_ref.show();
-        console.log("showwư")
-
+        console.log("showwư");
       }, 300);
       // debugger; // eslint-disable-line no-debugger
     },
@@ -1179,7 +950,7 @@ export default {
     // todo xử lý sự kiện mũi tên lên xuống để select row
     processkey() {
       var res = this;
-      document.addEventListener("keydown", function(e) {
+      document.addEventListener("keydown", function (e) {
         var len1 = res.listSelectRow.length; // số phần tử của mảng listSelectRow
         var len2 = res.listIdDangKy.length; //số phần tử của mảng listIdDangKy
         switch (e.keyCode) {
@@ -1240,9 +1011,10 @@ export default {
     },
 
     // todo hiện và thao tác với context menu
-    showContexMenu(id, e) {
+    showContexMenu(ttdangky, e) {
       this.listSelectRow = [];
-      this.listSelectRow.push(id);
+      this.listSelectRow.push(ttdangky.iddangky);
+      this.TTDangKySelected = ttdangky;
       var ctx = document.getElementById("ctxMenu");
       ctx.style.display = "block";
       ctx.style.top = (e.screenY - 70).toFixed() + "px";
@@ -1264,7 +1036,7 @@ export default {
       }
     },
     hideContextMenu() {
-      document.addEventListener("click", function() {
+      document.addEventListener("click", function () {
         if (document.getElementById("ctxMenu") != null)
           document.getElementById("ctxMenu").style.display = "none";
       });
@@ -1285,18 +1057,23 @@ export default {
         this.getInjectionRegister();
       } else alert("Trang không hợp lệ");
     },
-   },
-    filters: {
-
-     formatStatus(status) {
+  },
+  filters: {
+    formatStatus(status) {
       var statusDisplay = "";
       if (trangthai && status !== null) {
         statusDisplay = trangthai[status.toString()];
       }
       return statusDisplay;
-      
     },
+    formatGt(gt) {
+      var gtDisplay = "";
+      if (gioitinh && gt !== null) {
+        gtDisplay = gioitinh[gt.toString()];
+      }
+      return gtDisplay;
     },
+  },
 };
 </script>
 
@@ -1351,18 +1128,6 @@ export default {
   margin-top: 8px;
   display: none;
   position: absolute;
-}
-
-.content {
-  height: calc(100vh - 60px);
-  width: calc(100% - 200px);
-  //   margin-left: 8px;
-  //   margin-right: 4px;
-  //   margin-bottom: 4px;
-  //   margin-top: 4px;
-  transition: all 0.25s;
-  background-color: white;
-  user-select: none;
 }
 
 .content-nav {
@@ -1553,13 +1318,52 @@ export default {
 .content .div-container {
   height: 100%;
 }
-
 .content {
-  position: relative;
-  box-sizing: border-box;
-  margin-top: 6px;
   width: 100%;
-  height: calc(100% - 48px);
+  height: 100%;
+  // padding: 6px 6px 6px 6px;
+  box-sizing: border-box;
+  overflow-y: auto;
+  overflow-x: hidden;
+  transition: all 0.25s;
+  background-color: white;
+  user-select: none;
+  .v-sheet.v-card {
+    height: 100%;
+    ::v-deep .v-window {
+      height: calc(100% - 72px);
+      .v-window__container {
+        padding: 0;
+        height: 100%;
+      }
+      .v-window-item {
+        height: 100%;
+      }
+    }
+  }
+  .v-sheet.v-card:not(.v-sheet--outlined) {
+    box-shadow: none;
+  }
+
+  .input-field {
+    float: left;
+    padding: 0 16px 16px 0px;
+    position: relative;
+    height: 77px;
+
+    label {
+      display: block;
+      padding: 2px 2px 4px 2px;
+    }
+
+    input {
+      height: 34px;
+      box-sizing: border-box;
+      border: #e4e4e4 1px solid;
+      // outline-color: lightgreen;
+      padding: 4px;
+    }
+  }
 }
 
 table tr th {

@@ -543,6 +543,9 @@ export default {
     BaseConfirm,
   },
   name: "DKTiem",
+  props:{
+        tenTaiKhoan : String
+    },
   data() {
     return {
       e1: 1,
@@ -662,14 +665,14 @@ export default {
       }
     },
 
- /**
+    /**
      * Thực hiện lấy toàn bộ bản ghi của sổ tiêm by code
      * */
     async getSoTiemByCode() {
       try {
         await axios
           .get(
-            `http://localhost:64016/api/SoTiem/bycode/ST01`
+            `http://localhost:64016/api/SoTiem/bycode/${this.tenTaiKhoan}`
           )
           .then((response) => {
             if (response.data) {

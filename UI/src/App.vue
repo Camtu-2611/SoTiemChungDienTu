@@ -10,7 +10,7 @@
         />
         <!-- {{isShowAdmin}}
         {{isShowCustomer}} -->
-        <Customer v-if="redirectString === 'customer'" />
+        <Customer v-if="redirectString === 'customer'" :tentaikhoan="tenTK"/>
         <Admin v-else-if="redirectString === 'admin'" />
         <SigninAdmin
           :redirectString="redirectString"
@@ -58,7 +58,8 @@ export default {
     allAsset(value) {
       this.optionFilter = value;
     },
-    redirect(redirectString, showLogin) {
+    redirect(redirectString, showLogin, tentaikhoan) {
+      this.tenTK = tentaikhoan;
       this.redirectString = redirectString;
       this.isShow = showLogin;
       if (this.redirectString === "admin") {
@@ -82,6 +83,7 @@ export default {
       isShow: true,
       isShowSigninAdmin: false,
       redirectString: "",
+      tenTK : "",
     };
   },
 };

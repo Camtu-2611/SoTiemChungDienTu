@@ -6,6 +6,7 @@
       <router-view
         tag="div"
         :isFilterMenu="isFilterMenu"
+        :tenTaiKhoan="tentaikhoan"
         @allAsset="allAsset"
       />
       <Footer />
@@ -24,9 +25,9 @@ export default {
     Head,
     Footer,
     },
-    // props:{
-    //     isShowCustomer: Boolean
-    // },
+    props:{
+        tentaikhoan : String
+    },
     data() {
         return {
             
