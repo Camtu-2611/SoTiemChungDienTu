@@ -84,25 +84,44 @@
     <div
       id="navItem4"
       class="nav-item option nav-item-icon"
-      @click="redirect('manage-vaccines')"
-      :class="{ 'option-focus': currentRouteName == 'manage-vaccines' }"
+      :class="{
+        'option-focus':
+          (currentRouteName == 'manage-vaccines')
+          | (currentRouteName == 'manage-vaccine-type')
+          | (currentRouteName == 'manage-vaccine-package'),
+      }"
     >
       <div class="icon-nav icon-common"></div>
       <div class="nav-item-text">
-        Vắc xin
+        Quản lý vắc xin
       </div>
-      <!-- <div class="icon-submenu"></div> -->
-      <!-- <div class="sub-navbar">
+      <div class="icon-submenu"></div>
+      <div class="sub-navbar">
         <div
           class="sub-navbar-item"
-          @click="$router.push({ name: 'assetCategory' })"
+          @click="redirect('manage-vaccines')"
+          :class="{ 'option-focus': currentRouteName == 'manage-vaccines' }"
         >
-          Loại tài sản
+          Vắc xin
         </div>
-        <div class="sub-navbar-item">Tài sản</div>
-        <div class="sub-navbar-item">Vật liệu</div>
-        <div class="sub-navbar-item">Nguyên liệu</div>
-      </div> -->
+        <div
+          class="sub-navbar-item"
+          @click="redirect('manage-vaccine-type')"
+          :class="{ 'option-focus': currentRouteName == 'manage-vaccine-type' }"
+        >
+          Nhóm Vắc xin
+        </div>
+        <div
+          class="sub-navbar-item"
+          @click="redirect('manage-vaccine-package')"
+          :class="{
+            'option-focus': currentRouteName == 'manage-vaccine-package',
+          }"
+        >
+          Gói Vắc xin
+        </div>
+        <!-- <div class="sub-navbar-item">Nguyên liệu</div> -->
+      </div>
     </div>
     <!-- <div
       id="navItem5"
@@ -132,8 +151,8 @@ export default {
   },
   computed: {
     currentRouteName() {
-      var length = this.$route.fullPath.split("/").length
-      return this.$route.fullPath.split("/")[length-1];
+      var length = this.$route.fullPath.split("/").length;
+      return this.$route.fullPath.split("/")[length - 1];
     },
   },
   watch: {

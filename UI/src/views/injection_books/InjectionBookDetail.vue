@@ -207,14 +207,22 @@
                   >
                     Lưu</v-button
                   >
-                  <v-button class="btn btn-primary align-center" color="primary" @click="updateRecord()" v-else
+                  <v-button
+                    class="btn btn-primary align-center"
+                    color="primary"
+                    @click="updateRecord()"
+                    v-else
                     >Cập nhật</v-button
                   >
-                  <v-button text class="btn ml-2 align-center" @click="hide()"> Hủy</v-button>
+                  <v-button text class="btn ml-2 align-center" @click="hide()">
+                    Hủy</v-button
+                  >
                 </div>
               </div>
             </v-tab-item>
-            <v-tab-item value="tab-2"> </v-tab-item>
+            <v-tab-item value="tab-2">
+              <DSDangKyTiem :maSoTiem="ttSoTiem.masotiem"
+            /></v-tab-item>
             <v-tab-item value="tab-3">
               <LichSuTiemChung :maSoTiem="ttSoTiem.masotiem" />
             </v-tab-item>
@@ -240,11 +248,13 @@
 <script>
 import axios from "axios";
 import LichSuTiemChung from "../LichSuTiemChung.vue";
+import DSDangKyTiem from "./DSDangKyTiem.vue";
 import BaseConfirm from "@/components/common/baseControlAcounting/BaseConfirm";
 export default {
   components: {
     BaseConfirm,
     LichSuTiemChung,
+    DSDangKyTiem,
   },
   props: {
     formMode: String,

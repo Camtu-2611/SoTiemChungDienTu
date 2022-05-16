@@ -16,5 +16,13 @@ namespace vaccine_managerment.infrastructure
         /// <returns></returns>
         /// CreatedBy: nctu 1.05.2022
         public IEnumerable<ThongTinDangKyTiem> GetThongTinDangKyTiemByPhoneNumber(string phonenumber);
+
+        /// <summary>
+        /// Lấy thông tin đăng ký theo mã sổ tiêm
+        /// </summary>
+        /// <param name="masotiem">mã sổ tiêm</param>
+        /// <returns></returns>
+        /// CreatedBy: nctu 1.05.2022
+        public IEnumerable<ThongTinDangKyTiem> GetThongTinDangKyTiemByCode(string masotiem);
     }
 }

@@ -1,293 +1,233 @@
 <template>
-  <div class="injection-register content">
-    <div class="div-container">
-      <div class="content-nav">
-        <v-alert
-          id="success-dialog"
-          v-show="showSuccess"
-          color="green"
-          elevation="30"
-          type="success"
-        >
-          {{ alerMsg }}</v-alert
-        >
-        <v-alert v-if="showWarning" id="required-choose" type="warning">{{
-          alerMsg
-        }}</v-alert>
-        <h5 class="mb-4">Danh sách đăng ký tiêm</h5>
-        <div class="features-pane">
-          <div class="features-pane-left">
-            <input
-              id="assetSearchBox"
-              class="input-search"
-              type="text"
-              placeholder="Tìm kiếm theo họ tên, mã sổ tiêm "
-              v-model="inputSearch"
-              @change="getInjectionRegister('filter')"
-            />
-            <div class="icon-search" title="Tìm kiếm"></div>
-          </div>
-
-          <div class="features-pane-right">
-            <div
-              class="btn-add-asset btn features-pane-item"
-              @click="showDetail('insert', 0)"
+  <div class="div-container">
+    <div id="loadBar"></div>
+    <div class="content-grid grid" oncontextmenu="return false;">
+      <table class="table-asset" id="tableAsset">
+        <colgroup>
+          <col width="50" />
+          <!-- <col width="120" /> -->
+          <col width="120" />
+          <col min-width="400" />
+          <col min-width="200" />
+          <col min-width="100" />
+          <col width="450" />
+          <col width="100" />
+        </colgroup>
+        <thead>
+          <tr>
+            <th style="text-align: center">STT</th>
+            <th
+              sortProp="name"
+              sortOrder="asc"
+              id="columnAssetName"
+              class="hover-pointer"
+              style="text-align: center"
             >
-              Thêm
-            </div>
-
-            <div
-              id="preventLeftClick"
-              class="btn icon-edit-pen features-pane-item"
-              :class="['disable' ? '' : allowEdit]"
-              @click="showDetail('update', null)"
-              title="Sửa thông tin sổ tiêm"
-            ></div>
-            <div
-              @click="getInjectionRegister('')"
-              class="btn icon-refresh features-pane-item"
-              title="Tải lại"
-            ></div>
-          </div>
-        </div>
-
-        <div class="clear-float"></div>
-      </div>
-
-      <div id="loadBar"></div>
-      <div class="content-grid grid" oncontextmenu="return false;">
-        <table class="table-asset" id="tableAsset">
-          <colgroup>
-            <col width="40" />
-            <col width="120" />
-            <col width="100" />
-            <col width="70" />
-            <col width="100" />
-            <col width="200" />
-            <col width="100" />
-            <col width="200" />
-            <col width="100" />
-          </colgroup>
-          <thead>
-            <tr>
-              <th style="text-align: center">STT</th>
-              <th
-                sortProp="name"
-                sortOrder="asc"
-                id="columnAssetName"
-                class="hover-pointer"
-                style="text-align: center"
-              >
-                Họ và tên
-              </th>
-              <th
-                sortProp="type"
-                style="text-align: center"
-                sortOrder="asc"
-                id="columnAssetType"
-                class="hover-pointer"
-              >
-                Ngày sinh
-              </th>
-              <th
-                sortProp="department"
-                sortOrder="asc"
-                id="columnDepartment"
-                class="hover-pointer"
-                style="text-align: center"
-              >
-                Giới tính
-              </th>
-              <th
-                sortProp="department"
-                sortOrder="asc"
-                id="columnDepartment"
-                class="hover-pointer"
-                style="text-align: center"
-              >
-                Số điện thoại
-              </th>
-              <th
-                sortProp="department"
-                sortOrder="asc"
-                id="columnDepartment"
-                class="hover-pointer"
-                style="text-align: center"
-              >
-                Địa chỉ
-              </th>
-              <th
-                sortProp="department"
-                sortOrder="asc"
-                id="columnDepartment"
-                class="hover-pointer"
-                style="text-align: center"
-              >
-                Ngày đăng ký
-              </th>
-              <th
-                sortProp="department"
-                sortOrder="asc"
-                id="columnDepartment"
-                class="hover-pointer"
-                style="text-align: center"
-              >
-                Tên trung tâm
-              </th>
-              <th
-                sortProp="price"
-                sortOrder="asc"
-                id="columnPrice"
-                class="hover-pointer"
-                style="text-align: center"
-              >
-                Danh sách vắc xin
-              </th>
-              <th
-                sortProp="price"
-                sortOrder="asc"
-                id="columnPrice"
-                class="hover-pointer"
-                style="text-align: center"
-              >
-                Trạng thái
-              </th>
-            </tr>
-          </thead>
-
-          <tbody>
-            <tr
-              v-for="(TTDangKy, index) in listTTDangKy"
-              :key="TTDangKy.iddangky"
-              v-bind:class="
-                selectedRow(TTDangKy.iddangky) ? 'selected-row' : ''
-              "
-              @click="selectRow(TTDangKy.iddangky, $event)"
-              @click.right="showContexMenu(TTDangKy, $event)"
-              @dblclick="showDetail('update', TTDangKy.iddangky)"
+              Họ và tên
+            </th>
+            <th
+              sortProp="type"
+              style="text-align: center"
+              sortOrder="asc"
+              id="columnAssetType"
+              class="hover-pointer"
             >
-              <td class="no-border-left">{{ index + 1 }}</td>
-              <td>{{ TTDangKy.hoten }}</td>
-              <td>{{ TTDangKy.ngaysinh | formatDate(TTDangKy.ngaysinh) }}</td>
-              <td>
-                {{ TTDangKy.gioitinh | formatGioiTinh(TTDangKy.gioiTinh) }}
-              </td>
-              <td>{{ TTDangKy.sodienthoai }}</td>
-              <!-- <td>{{ TTDangKy.email }}</td> -->
-              <td>{{ TTDangKy.diachi }}</td>
-              <td>
-                {{
-                  TTDangKy.ngaydangkytiem | formatDate(TTDangKy.ngaydangkytiem)
-                }}
-              </td>
-              <td>{{ TTDangKy.tentrungtam }}</td>
-              <td>{{ TTDangKy.danhsachvacxin }}</td>
-              <td>
-                {{ TTDangKy.trangthai | formatStatus(TTDangKy.trangthai) }}
-              </td>
-            </tr>
-          </tbody>
-          <BaseLoading ref="loadingTTDKT_reft" />
+              Ngày sinh
+            </th>
+            <th
+              sortProp="department"
+              sortOrder="asc"
+              id="columnDepartment"
+              class="hover-pointer"
+              style="text-align: center"
+            >
+              Giới tính
+            </th>
+            <th
+              sortProp="department"
+              sortOrder="asc"
+              id="columnDepartment"
+              class="hover-pointer"
+              style="text-align: center"
+            >
+              Số điện thoại
+            </th>
+            <th
+              sortProp="department"
+              sortOrder="asc"
+              id="columnDepartment"
+              class="hover-pointer"
+              style="text-align: center"
+            >
+              Địa chỉ
+            </th>
+            <th
+              sortProp="department"
+              sortOrder="asc"
+              id="columnDepartment"
+              class="hover-pointer"
+              style="text-align: center"
+            >
+              Ngày đăng ký
+            </th>
+            <th
+              sortProp="department"
+              sortOrder="asc"
+              id="columnDepartment"
+              class="hover-pointer"
+              style="text-align: center"
+            >
+              Tên trung tâm
+            </th>
+            <th
+              sortProp="price"
+              sortOrder="asc"
+              id="columnPrice"
+              class="hover-pointer"
+              style="text-align: center"
+            >
+              Danh sách vắc xin
+            </th>
+            <th
+              sortProp="price"
+              sortOrder="asc"
+              id="columnPrice"
+              class="hover-pointer"
+              style="text-align: center"
+            >
+              Trạng thái
+            </th>
+          </tr>
+        </thead>
 
-          <div v-show="getEmty" class="loading-emty">Không có dữ liệu</div>
-        </table>
-        <div class="ctx-menu" id="ctxMenu">
-          <div class="ctx-menu-item" @click="showDetail('insert', 0)">Thêm</div>
-          <div
-            class="ctx-menu-item"
-            @click="showDetail('update', listSelectRow[0])"
+        <tbody>
+          <tr
+            v-for="(ttDangKy, index) in lstDangKyTiem"
+            :key="ttDangKy.iddangky"
+            v-bind:class="selectedRow(ttDangKy.iddangky) ? 'selected-row' : ''"
+            @click="selectRow(ttDangKy.iddangky, $event)"
+            @click.right="showContexMenu(ttDangKy.iddangky, $event)"
+            @dblclick="showDetail('update', ttDangKy.iddangky)"
           >
-            Sửa
-          </div>
-          <div
-            id="preventLeftClick"
-            class="ctx-menu-item"
-            @click="Cancel(listSelectRow[0])"
-          >
-            Hủy đăng ký
-          </div>
+            <td class="no-border-left">{{ index + 1 }}</td>
+            <td>{{ ttDangKy.hoten }}</td>
+            <td>{{ ttDangKy.ngaysinh | formatDate(ttDangKy.ngaysinh) }}</td>
+            <td>
+              {{ ttDangKy.gioitinh | formatGioiTinh(ttDangKy.gioiTinh) }}
+            </td>
+            <td>{{ ttDangKy.sodienthoai }}</td>
+            <td>{{ ttDangKy.diachi }}</td>
+            <td>
+              {{
+                ttDangKy.ngaydangkytiem | formatDate(ttDangKy.ngaydangkytiem)
+              }}
+            </td>
+            <td>{{ ttDangKy.tentrungtam }}</td>
+            <td>{{ ttDangKy.danhsachvacxin }}</td>
+            <td>
+              {{ ttDangKy.trangthai | formatStatus(ttDangKy.trangthai) }}
+            </td>
+          </tr>
+        </tbody>
+        <BaseLoading ref="loadingTTDKT_reft" />
+
+        <div v-show="getEmty" class="loading-emty">Không có dữ liệu</div>
+      </table>
+      <div class="ctx-menu" id="ctxMenu">
+        <div class="ctx-menu-item" @click="showDetail('insert', 0)">Thêm</div>
+        <div
+          class="ctx-menu-item"
+          @click="showDetail('update', listSelectRow[0])"
+        >
+          Sửa
+        </div>
+        <div
+          id="preventLeftClick"
+          class="ctx-menu-item"
+          @click="UpdateTTDangKy(listSelectRow[0])"
+        >
+          Đã tiêm
         </div>
       </div>
-
-      <div class="table-summary">
-        <div class="summary">
-          <div class="asset-number">Tổng số bản ghi: {{ amountTTDangKy }}</div>
-
-          <div class="paging-toolbar">
-            <div class="leftchild">
-              <div
-                title="Trang đầu"
-                class="p-button first-page"
-                @click="firstPage()"
-              ></div>
-              <div
-                title="Trang trước"
-                class="p-button prev-page"
-                @click="backPage()"
-              ></div>
-              <div>Trang</div>
-              <input
-                type="number"
-                class="text-pagebumber"
-                v-model="paging.pageNumber"
-                @change="reloadPage()"
-              />
-              <div>Trên {{ paging.amountPage }}</div>
-
-              <div
-                title="Trang sau"
-                class="p-button next-page"
-                @click="nextPage()"
-              ></div>
-              <div
-                title="Trang cuối"
-                class="p-button last-page"
-                @click="lastPage()"
-              ></div>
-              <div
-                title="Tải lại"
-                class="p-button refresh"
-                @click="getInjectionRegister()"
-              ></div>
-              <select
-                title="Số bản ghi trên 1 trang"
-                name=""
-                id=""
-                class="select-quantitypage"
-                v-model="paging.recordNumber"
-                @change="getInjectionRegister('filter')"
-              >
-                <option value="25">25</option>
-                <option value="50">50</option>
-                <option value="100">100</option>
-              </select>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div id="assetPopup"></div>
     </div>
+
+    <div class="table-summary">
+      <div class="summary">
+        <div class="asset-number">Tổng số bản ghi: {{ amountDangKy }}</div>
+
+        <div class="paging-toolbar">
+          <div class="leftchild">
+            <div
+              title="Trang đầu"
+              class="p-button first-page"
+              @click="firstPage()"
+            ></div>
+            <div
+              title="Trang trước"
+              class="p-button prev-page"
+              @click="backPage()"
+            ></div>
+            <div>Trang</div>
+            <input
+              type="number"
+              class="text-pagebumber"
+              v-model="paging.pageNumber"
+              @change="reloadPage()"
+            />
+            <div>Trên {{ paging.amountPage }}</div>
+
+            <div
+              title="Trang sau"
+              class="p-button next-page"
+              @click="nextPage()"
+            ></div>
+            <div
+              title="Trang cuối"
+              class="p-button last-page"
+              @click="lastPage()"
+            ></div>
+            <div
+              title="Tải lại"
+              class="p-button refresh"
+              @click="getDSDangKy()"
+            ></div>
+            <select
+              title="Số bản ghi trên 1 trang"
+              name=""
+              id=""
+              class="select-quantitypage"
+              v-model="paging.recordNumber"
+              @change="getDSDangKy('filter')"
+            >
+              <option value="25">25</option>
+              <option value="50">50</option>
+              <option value="100">100</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="assetPopup"></div>
     <BaseConfirm ref="baseConfirm" />
   </div>
 </template>
 <script>
-import axios from "axios";
 import BaseLoading from "../../components/common/BaseLoading.vue";
-import InjectionRegisterDetail from "./InjectionRegisterDetail.vue";
-import { trangthai, gioitinh } from "../../enumeration/enumaration";
+import axios from "axios";
 import BaseConfirm from "@/components/common/baseControlAcounting/BaseConfirm";
-
+import { trangthai, gioitinh } from "../../enumeration/enumaration";
 export default {
-  name: "InjectionRegister",
   components: {
     BaseLoading,
-    InjectionRegisterDetail,
     BaseConfirm,
+  },
+  props: {
+    maSoTiem: String,
   },
   data() {
     return {
-      listTTDangKy: [],
+      lstDangKyTiem: [],
       thongtinDK: {
         iddangky: "",
         hoten: "",
@@ -298,20 +238,22 @@ export default {
         sodienthoai: "",
         tentrungtam: "",
         ngaydangkytiem: "",
-        danhsachvacxin: {},
+        danhsachvacxin: "",
+        ngaytao: new Date().toISOString(),
+        nguoitao: "nctu2",
+        ngaychinhsua: new Date().toISOString(),
+        nguoichinhsua: "nctu2",
       },
-      thongtinUpdate: {},
       formMode: "",
       alerMsg: "",
       idDangKyUpdate: null,
       listSelectRow: [],
       listIdDangKy: [],
-      inputSearch: "",
       showSuccess: false,
       isError: false,
       getSuccess: true,
       getEmty: false,
-      amountTTDangKy: 0,
+      amountDangKy: 0,
       showWarning: false,
       paging: {
         amountPage: 1,
@@ -327,35 +269,6 @@ export default {
       allowEdit: false,
     };
   },
-
-  computed: {
-    formTitle() {
-      return this.editedIndex === -1 ? "New Item" : "Edit Item";
-    },
-  },
-
-  watch: {
-    idDangKyUpdate() {
-      if (
-        !this.idDangKyUpdate ||
-        this.idDangKyUpdate === "00000000-0000-0000-0000-000000000000"
-      ) {
-        this.allowEdit = false;
-        console.log(this.allowEdit + "w");
-      } else {
-        this.allowEdit = true;
-      }
-    },
-  },
-
-  created() {
-    this.processkey();
-  },
-  mounted() {
-    this.getInjectionRegister();
-    this.hideContextMenu();
-  },
-
   methods: {
     msgAlert(text, value) {
       this.showWarning = value;
@@ -366,141 +279,62 @@ export default {
         res.showWarning = false;
       }, 3000);
     },
-
-    async getInjectionRegister(text) {
+    /**
+     * Gửi request GET tới API
+     */
+    async getDSDangKy(text) {
       if (text == "filter") {
         this.paging.pageNumber = 1;
       }
-      var me = this;
-      me.amountTTDangKy = 0;
-      this.$refs.loadingTTDKT_reft.show();
+
+      var res = this;
+      this.listSelectRow = [];
+
+      res.$refs.loadingTTDKT_reft.show();
+      this.getEmty = false;
+      this.amountDangKy = 0;
+      console.log(this.idDangKyUpdate);
       await axios
-        .get("http://localhost:64016/api/ThongTinDangKyTiem")
+        .get(`http://localhost:64016/api/ThongTinDangKyTiem/bycode/${this.maSoTiem}`)
         .then((response) => {
           if (response.data) {
-            me.listTTDangKy = response.data.data;
+            this.lstDangKyTiem = response.data.data;
 
-            if (me.listTTDangKy.length == 0) {
-              me.getEmty = true;
+            if (this.lstDangKyTiem.length == 0) {
+              this.getEmty = true;
             }
 
-            me.$refs.loadingTTDKT_reft.hide();
-            me.listIdDangKy = [];
-            me.paging.amountPage = response.data.totalPage;
+            this.$refs.loadingTTDKT_reft.hide();
+            this.listIdDangKy = [];
+            this.paging.amountPage = response.data.totalPage;
 
-            me.listTTDangKy.forEach((element) => {
+            this.lstDangKyTiem.forEach((element) => {
               // duyệt qua tất cả các bản ghi
-              me.listIdDangKy.push(element.iddangky); // push tất cả id tài sản vào mảng
-              me.amountTTDangKy++; // đếm tổng số bản ghi
+              this.listIdDangKy.push(element.iddangky); // push tất cả id vào mảng
+              this.amountDangKy++; // đếm tổng số bản ghi
             });
           }
         })
         .catch((error) => {
-          this.errorMessage = error.message;
-          console.error("GET ThongTinDangKy Failed: ", error.message);
           setTimeout(() => {
-            me.$refs.loadingTTDKT_reft.hide(); // tắt dialog loading
-            me.getEmty = true;
+            this.$refs.loadingTTDKT_reft.hide(); // tắt dialog loading
+            this.getEmty = true;
           }, 300);
         });
-    },
-    /// todo hiển thị dialog thêm
-    showDetail(text, Id) {
-      this.allowEdit = false;
-      this.formMode = "insert";
 
-      if (text == "insert") {
-        this.formMode = "insert";
-        this.alerMsg = "Thêm mới thành công";
-      } else {
-        this.formMode = "update";
-        this.alerMsg = "Cập nhật thành công";
-        if (Id) {
-          this.idDangKyUpdate = Id;
-        }
-        if (
-          this.idDangKyUpdate &&
-          this.idDangKyUpdate !== "00000000-0000-0000-0000-000000000000"
-        ) {
-          this.allowEdit = true;
-        } else {
-          this.allowEdit = false;
-        }
-      }
       setTimeout(() => {
-        if (this.allowEdit && text == "update") {
-          this.$router.push({
-            name: "injection-register-detail",
-            params: {
-              formMode: this.formMode,
-              idDangKyUpdate: this.idDangKyUpdate,
-            },
-          });
-        } else if (text == "insert") {
-          this.$router.push({
-            name: "injection-register-detail",
-          });
-        } else {
-          this.$refs.baseConfirm.showForm(
-            "warning",
-            1,
-            "Vui lòng chọn 1 bản ghi!"
-          );
-          return;
-        }
-      }, 300);
+        this.listSelectRow.push(this.listIdDangKy[0]);
+      }, 0);
     },
 
     // todo tải lại dữ liệu
     reload(value) {
       if (value == true) {
-        this.getInjectionRegister("");
+        this.getDSDangKy("");
         this.showSuccess = true;
         setTimeout(() => {
           this.showSuccess = false;
         }, 3000);
-      }
-    },
-    Cancel() {
-      // var res = this
-      this.alerMsg = "Hủy thành công!";
-      if (this.listSelectRow.length == 0) {
-        this.showWarning = true;
-        this.alerMsg = "Vui lòng chọn bản ghi";
-        this.$refs.baseConfirm.showForm("warning", 1, this.alertMsg);
-      } else {
-        var status = 0;
-        // gọi hàm cập nhật trạng thái thông tin đăng ký
-        this.updateStatusTTDangKy(status);
-      }
-      setTimeout(() => {
-        this.showWarning = false;
-      }, 3000);
-    },
-    async updateStatusTTDangKy(status) {
-      if (this.idDangKyUpdate && status != null) {
-        this.getTTDangKyById(this.idDangKyUpdate);
-        if (this.thongtinUpdate) {
-          this.thongtinUpdate.trangthai = status;
-          // await axios
-          //   .put(
-          //     `http://localhost:64016/api/ThongTinDangKyTiem/${idUpdateStatus}`,
-          //     this.thongtinDK
-          //   )
-          //   .then((response) => {
-          //     console.log(response);
-          //     this.showWarning = false;
-          //     this.showSuccess = true;
-          //   })
-          //   .catch((error) => {
-          //     this.errorMessage = error.message;
-          //     console.error("GET ThongTinDangKy Failed: ", error.message);
-          //     setTimeout(() => {
-          //       me.showWarning = true;
-          //       me.alerMsg = "Hủy không thành công";
-          //     }, 300);
-          //   });
-        }
       }
     },
 
@@ -513,7 +347,7 @@ export default {
         var idFirst = this.listSelectRow[0];
         this.listSelectRow = [];
         this.listSelectRow.push(idFirst);
-         console.log(this.listSelectRow)
+
         // vị trí đầu tiên trong mảng listSelectRow
         var idStart = this.listSelectRow[0];
         var indexStart = this.listIdDangKy.indexOf(idStart);
@@ -541,9 +375,10 @@ export default {
     },
 
     // kiểm tra hàng đã được select hay chưa
-    selectedRow(id) {
+    selectedRow(id, ma) {
       if (this.listSelectRow.indexOf(id) > -1) {
         this.idDangKyUpdate = id;
+        this.maSoTiem = ma;
         return true;
       } else return false;
     },
@@ -612,10 +447,9 @@ export default {
     },
 
     // todo hiện và thao tác với context menu
-    showContexMenu(thongtinDK, e) {
+    showContexMenu(id, e) {
       this.listSelectRow = [];
-      this.listSelectRow.push(thongtinDK.iddangky);
-      this.thongtinUpdate = thongtinDK
+      this.listSelectRow.push(id);
       var ctx = document.getElementById("ctxMenu");
       ctx.style.display = "block";
       ctx.style.top = (e.screenY - 70).toFixed() + "px";
@@ -626,14 +460,14 @@ export default {
     nextPage() {
       if (this.paging.pageNumber < this.paging.amountPage) {
         this.paging.pageNumber++;
-        this.getInjectionRegister();
+        this.getDSDangKy();
       }
     },
     // todo chuyển đến trang trước
     backPage() {
       if (this.paging.pageNumber > 1) {
         this.paging.pageNumber--;
-        this.getInjectionRegister();
+        this.getDSDangKy();
       }
     },
     hideContextMenu() {
@@ -644,27 +478,33 @@ export default {
     },
     lastPage() {
       this.paging.pageNumber = this.paging.amountPage;
-      this.getInjectionRegister();
+      this.getDSDangKy();
     },
     firstPage() {
       this.paging.pageNumber = 1;
-      this.getInjectionRegister();
+      this.getDSDangKy();
     },
     reloadPage() {
       if (
         parseInt(this.paging.pageNumber) <= this.paging.amountPage &&
         parseInt(this.paging.pageNumber) > 0
       ) {
-        this.getInjectionRegister();
+        this.getDSDangKy();
       } else alert("Trang không hợp lệ");
     },
   },
-
   filters: {
+    // todo định dạng kiểu tiền tệ cho nguyên giá
+    formatMoney: function(money) {
+      if (money != null)
+        var num = money.toFixed(0).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
+      else return "0";
+      return num;
+    },
     // định dạng ngày
     formatDate(inputDate) {
       var a = new Date(inputDate);
-      var month = a.getMonth()+1;
+      var month = a.getMonth() + 1;
       var day = a.getDate();
       if (month < 10) month = "0" + month.toString();
       if (day < 10) day = "0" + day.toString();
@@ -686,15 +526,20 @@ export default {
       return gtDisplay;
     },
   },
+  watch: {},
+  created() {
+    this.processkey();
+  },
+  mounted() {
+    this.getDSDangKy();
+    this.hideContextMenu();
+  },
 };
 </script>
 
 <style lang="scss" scoped>
 @import url(../../style/scss/icon.scss);
 @import url(../../style/scss/button.scss);
-.disable {
-  pointer-events: none;
-}
 #assetPopup {
   padding: 0 40px;
   height: 80px;
@@ -723,10 +568,12 @@ export default {
   display: none;
 
   .ctx-menu-item {
-    padding: 8px 34px 8px 18px;
+    padding: 8px 14px 8px 18px;
 
     &:hover {
-      background-color: #5973b3;
+      background-color: #1565c0;
+      box-shadow: 2px 2px 4px grey;
+      color: white;
       cursor: pointer;
     }
   }
@@ -743,14 +590,6 @@ export default {
   margin-top: 8px;
   display: none;
   position: absolute;
-}
-
-.content {
-  height: calc(100vh - 60px);
-  width: calc(100% - 200px);
-  transition: all 0.25s;
-  background-color: white;
-  user-select: none;
 }
 
 .content-nav {
@@ -822,7 +661,9 @@ export default {
         width: 40px;
         height: 40px;
         padding: 6px;
+        // background: url(/img/qlts-icon.d656886f.svg) no-repeat -454px -104px;
       }
+      // background-color:lightsalmon;
       display: flex;
       .features-pane-item {
         margin: 0px 5px;
@@ -876,9 +717,7 @@ export default {
   font-family: GoogleSans-Medium;
   display: flex;
   position: relative;
-  margin: 18px 16px 0 16px;
   height: 45px;
-
   .price-number {
     position: absolute;
     //TODO sẽ phải sửa lại cái này cho chuẩn với cột nguyên giá
@@ -908,9 +747,7 @@ export default {
 }
 
 .content-grid {
-  // margin: 16px 16px 16px 16px;
   height: calc(100% - 165px);
-  /* height: 100%; */
   position: relative;
   overflow: auto;
   box-sizing: border-box;
@@ -919,14 +756,10 @@ export default {
   font-size: 14px;
   font-family: GoogleSans-Medium;
   display: flex;
-  /* position: relative; */
   width: 100%;
   position: absolute;
   bottom: 0px;
-  /* align-items: center; */
-  /* margin: 18px 16px 0 16px; */
   height: 63px;
-  padding: 18px 16px;
   box-sizing: border-box;
 }
 .table-summary .summary {
@@ -934,6 +767,7 @@ export default {
   width: 100%;
   display: flex;
   align-items: center;
+  margin-left: 16px;
 }
 
 .content .div-container {
@@ -945,6 +779,12 @@ export default {
   box-sizing: border-box;
   width: 100%;
   height: 100%;
+  width: 100%;
+  height: 100%;
+  // padding: 6px 6px 6px 6px;
+  box-sizing: border-box;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 table tr th {
@@ -990,7 +830,7 @@ table tbody tr {
 
 #ctxMenu {
   position: relative;
-  width: 152px;
+  width: fit-content;
   position: fixed !important;
 }
 #required-choose {
@@ -1035,7 +875,7 @@ table tbody tr {
 .paging-toolbar {
   height: 100%;
   display: flex;
-  margin-left: calc((100% - 752px) / 2);
+  margin-left: calc((100% - 470px) / 2);
   .leftchild {
     height: 100%;
     min-width: 330px;

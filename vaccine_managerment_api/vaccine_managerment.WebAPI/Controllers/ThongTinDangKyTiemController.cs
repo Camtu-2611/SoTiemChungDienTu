@@ -42,5 +42,30 @@ namespace vaccine_managerment.WebAPI.Controllers
 
             return StatusCode(StatusCodes.Status200OK, responseResult);
         }
+
+        /// <summary>
+        /// API lấy thông tin đăng ký theo mã sổ tiêm
+        /// </summary>
+        /// <param name="masotiem">mã sổ tiêm </param>
+        /// <returns></returns>
+        /// CreatedBy: nctu 30.04.2022
+        [HttpGet("bycode/{masotiem}")]
+        public IActionResult GetThongTinDangKyTiemByCode(string masotiem)
+        {
+            var responseResult = new ServiceResult();
+            try
+            {
+                responseResult = _thongtindangkytiemBL.GetThongTinDangKyTiemByCode(masotiem);
+
+            }
+            catch (Exception)
+            {
+                responseResult.OnBadRequest(responseResult);
+                return StatusCode(StatusCodes.Status400BadRequest, responseResult);
+                throw;
+            }
+
+            return StatusCode(StatusCodes.Status200OK, responseResult);
+        }
     }
 }

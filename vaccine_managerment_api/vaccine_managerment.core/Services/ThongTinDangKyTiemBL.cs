@@ -43,5 +43,33 @@ namespace vaccine_managerment.core
 
             return result;
         }
+
+        /// <summary>
+        /// Lấy thông tin đăng ký theo mã sổ tiêm
+        /// </summary>
+        /// <param name="masotiem">mã sổ tiêm</param>
+        /// <returns></returns>
+        /// CreatedBy: nctu 1.05.2022
+        public ServiceResult GetThongTinDangKyTiemByCode(string masotiem)
+        {
+            var entity = _thongtindangkytiemDL.GetThongTinDangKyTiemByCode(masotiem);
+
+            var result = new ServiceResult();
+            if (entity != null)
+            {
+                result.Data = entity;
+                result.ErrorCode = ErrorCode.NONE;
+                result.UserMsg = common.Resources.Messages.Success;
+            }
+            else
+            {
+                result.IsSuccess = false;
+                result.UserMsg = common.Resources.Messages.NoContent;
+                result.DevMsg = common.Resources.Messages.NoContent;
+                result.ErrorCode = ErrorCode.NOCONTENT;
+            }
+
+            return result;
+        }
     }
 }
