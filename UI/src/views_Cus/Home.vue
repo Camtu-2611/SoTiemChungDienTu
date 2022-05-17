@@ -10,7 +10,7 @@
          style="height : 45px"
              @click="$router.push({ name: 'tu-van' })"
             >
-           Tư vấn ngay
+           Đăng ký tiêm ngay
             </div>
            
       </div>
@@ -27,7 +27,7 @@
               <div class="circle-shape bg-secondary text-white">
                 <span class="mai-chatbubbles-outline"></span>
               </div>
-              <p><span>Tư vấn ngay</span> </p>
+              <p><span>Cẩm nang</span> </p>
             </div>
           </div>
           <div class="col-md-4 py-3 py-md-0">
@@ -82,216 +82,9 @@
     </div> <!-- .bg-light -->
   </div> <!-- .bg-light -->
 
-  <div class="page-section">
-    <div class="container">
-      <h1 class="text-center mb-5 wow fadeInUp">Dịch vụ tiêm chủng</h1>
 
-        <div class="owl-carousel wow fadeInUp" id="doctorSlideshow">
-        <div class="item">
-          <div class="card-doctor">
-            <div class="header">
-              <img src="../../public/assets/img/doctors/doctor_1.jpg" alt="">
-              <div class="meta">
-                <a href="#"><span class="mai-call"></span></a>
-                <a href="#"><span class="mai-logo-whatsapp"></span></a>
-              </div>
-            </div>
-            <div class="body">
-              <p class="text-xl mb-0">Dr. Stein Albert</p>
-              <span class="text-sm text-grey">Cardiology</span>
-            </div>
-          </div>
-        </div>
-        <div class="item">
-          <div class="card-doctor">
-            <div class="header">
-              <img src="../../public/assets/img/doctors/doctor_2.jpg" alt="">
-              <div class="meta">
-                <a href="#"><span class="mai-call"></span></a>
-                <a href="#"><span class="mai-logo-whatsapp"></span></a>
-              </div>
-            </div>
-            <div class="body">
-              <p class="text-xl mb-0">Dr. Alexa Melvin</p>
-              <span class="text-sm text-grey">Dental</span>
-            </div>
-          </div>
-        </div>
-        <div class="item">
-          <div class="card-doctor">
-            <div class="header">
-              <img src="../../public/assets/img/doctors/doctor_3.jpg" alt="">
-              <div class="meta">
-                <a href="#"><span class="mai-call"></span></a>
-                <a href="#"><span class="mai-logo-whatsapp"></span></a>
-              </div>
-            </div>
-            <div class="body">
-              <p class="text-xl mb-0">Dr. Rebecca Steffany</p>
-              <span class="text-sm text-grey">General Health</span>
-            </div>
-          </div>
-        </div>
-        <div class="item">
-          <div class="card-doctor">
-            <div class="header">
-              <img src="../../public/assets/img/doctors/doctor_3.jpg" alt="">
-              <div class="meta">
-                <a href="#"><span class="mai-call"></span></a>
-                <a href="#"><span class="mai-logo-whatsapp"></span></a>
-              </div>
-            </div>
-            <div class="body">
-              <p class="text-xl mb-0">Dr. Rebecca Steffany</p>
-              <span class="text-sm text-grey">General Health</span>
-            </div>
-          </div>
-        </div>
-        <div class="item">
-          <div class="card-doctor">
-            <div class="header">
-              <img src="../../public/assets/img/doctors/doctor_3.jpg" alt="">
-              <div class="meta">
-                <a href="#"><span class="mai-call"></span></a>
-                <a href="#"><span class="mai-logo-whatsapp"></span></a>
-              </div>
-            </div>
-            <div class="body">
-              <p class="text-xl mb-0">Dr. Rebecca Steffany</p>
-              <span class="text-sm text-grey">General Health</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
 
-  <div class="page-section bg-light">
-    <div class="container">
-      <h1 class="text-center wow fadeInUp">Cẩm nang tiêm chủng</h1>
-      <div class="row mt-5">
-        <div class="col-lg-4 py-2 wow zoomIn">
-          <div class="card-blog">
-            <div class="header">
-              <div class="post-category">
-                <a href="#">Covid19</a>
-              </div>
-              <a href="blog-details.html" class="post-thumb">
-                <img src="../../public/assets/img/blog/blog_1.jpg" alt="">
-              </a>
-            </div>
-            <div class="body">
-              <h5 class="post-title"><a href="blog-details.html">List of Countries without Coronavirus case</a></h5>
-              <div class="site-info">
-                <div class="avatar mr-2">
-                  <div class="avatar-img">
-                    <img src="/public/assets/img/person/person_1.jpg" alt="">
-                  </div>
-                  <span>Roger Adams</span>
-                </div>
-                <span class="mai-time"></span> 1 week ago
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-4 py-2 wow zoomIn">
-          <div class="card-blog">
-            <div class="header">
-              <div class="post-category">
-                <a href="#">Covid19</a>
-              </div>
-              <a href="blog-details.html" class="post-thumb">
-                <img src="../../public/assets/img/blog/blog_2.jpg" alt="">
-              </a>
-            </div>
-            <div class="body">
-              <h5 class="post-title"><a href="blog-details.html">Recovery Room: News beyond the pandemic</a></h5>
-              <div class="site-info">
-                <div class="avatar mr-2">
-                  <div class="avatar-img">
-                    <img src="../../public/assets/img/person/person_1.jpg" alt="">
-                  </div>
-                  <span>Roger Adams</span>
-                </div>
-                <span class="mai-time"></span> 4 weeks ago
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-4 py-2 wow zoomIn">
-          <div class="card-blog">
-            <div class="header">
-              <div class="post-category">
-                <a href="#">Covid19</a>
-              </div>
-              <a href="blog-details.html" class="post-thumb">
-                <img src="../../public/assets/img/blog/blog_3.jpg" alt="">
-              </a>
-            </div>
-            <div class="body">
-              <h5 class="post-title"><a href="blog-details.html">What is the impact of eating too much sugar?</a></h5>
-              <div class="site-info">
-                <div class="avatar mr-2">
-                  <div class="avatar-img">
-                    <img src="../../public/assets/img/person/person_2.jpg" alt="">
-                  </div>
-                  <span>Diego Simmons</span>
-                </div>
-                <span class="mai-time"></span> 2 months ago
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-12 text-center mt-4 wow zoomIn"
-            
-             @click="$router.push({ name: 'cam-nang' })"
-            >
-           Tư vấn ngay
-         
-           
-        </div>
-
-      </div>
-    </div>
-  </div> <!-- .page-section -->
-
-  <div class="page-section">
-    <div class="container">
-      <h1 class="text-center wow fadeInUp">Tư vấn ngay</h1>
-
-      <form class="main-form">
-        <div class="row mt-5 ">
-          <div class="col-12 col-sm-6 py-2 wow fadeInLeft">
-            <input type="text" class="form-control" placeholder="Họ tên">
-          </div>
-          <div class="col-12 col-sm-6 py-2 wow fadeInRight">
-            <input type="text" class="form-control" placeholder="Email ..">
-          </div>
-          <div class="col-12 col-sm-6 py-2 wow fadeInLeft" data-wow-delay="300ms">
-            <input type="date" class="form-control">
-          </div>
-          <div class="col-12 col-sm-6 py-2 wow fadeInRight" data-wow-delay="300ms">
-            <select name="departement" id="departement" class="custom-select">
-              <option value="general">Tư vấn chung</option>
-              <option value="cardiology">Tiêm chủng cho trẻ em</option>
-              <option value="dental">Tiêm chủng cho người lớn</option>
-              <option value="neurology">Neurology</option>
-              <option value="orthopaedics">Orthopaedics</option>
-            </select>
-          </div>
-          <div class="col-12 py-2 wow fadeInUp" data-wow-delay="300ms">
-            <input type="text" class="form-control" placeholder="Số điện thoại..">
-          </div>
-          <div class="col-12 py-2 wow fadeInUp" data-wow-delay="300ms">
-            <textarea name="message" id="message" class="form-control" rows="6" placeholder="Lời nhắn.."></textarea>
-          </div>
-        </div>
-
-        <button type="submit" class="btn btn-primary mt-3 wow zoomIn">Gửi ngay</button>
-      </form>
-    </div>
-  </div> <!-- .page-section -->
+ 
 <script type="application/javascript" defer src="../public/assets/js/theme.js"></script>
 <script type="application/javascript" defer src="../public/assets/js/jquery-3.5.1.min.js"></script>
 <script type="application/javascript" defer src="../public/assets/js/bootstrap.bundle.min.js"></script>

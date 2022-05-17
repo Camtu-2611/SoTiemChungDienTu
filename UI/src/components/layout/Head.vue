@@ -7,8 +7,7 @@
             
             <div class="site-info">
               <a href="#"
-                ><span class="mai-call text-primary"></span> +00 123 4455
-                6666</a
+                ><span class="mai-call text-primary"></span> 0869668106</a
               >
               <span class="divider">|</span>
               <a href="#"
@@ -98,13 +97,7 @@
             >
               <a class="nav-link">Cẩm nang tiêm chủng</a>
             </li>
-             <li 
-            class="nav-item"
-             @click="$router.push({ name: 'tu-van' })"
-             :class="{ 'option-focus': currentRouteName == '/tu-van' }"
-            >
-              <a class="nav-link">Tư vấn</a>
-            </li>
+            
            
           </ul>
            

@@ -15,14 +15,14 @@
           </ul>
         </div>
         <div class="col-sm-6 col-lg-3 py-3">
-          <h5>Tư vấn tiêm chủng</h5>
+          <h5>Cẩm nang tiêm chủng</h5>
           <ul class="footer-menu">
-            <li><a @click="$router.push({ name: 'dang-ky-tiem' })">Tư vấn ngay</a></li>
+            <li><a @click="$router.push({ name: 'cam-nang' })">Xem cẩm nang</a></li>
           </ul>
         </div>
         <div class="col-sm-6 col-lg-3 py-3">
           <h5>Liên hệ hỗ trợ</h5>
-          <a href="#" class="footer-link">+00 123 44556666</a>
+          <a href="#" class="footer-link">0869668106</a>
           <a href="#" class="footer-link">SoTiemChung@gmail.com</a>
         </div>
       </div>

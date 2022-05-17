@@ -517,7 +517,7 @@
                         </v-expansion-panel-content>
                       </v-expansion-panel>
                     </v-expansion-panels>
-                  </div>hide
+                  </div>
                 </div>
               </form>
             </div>
