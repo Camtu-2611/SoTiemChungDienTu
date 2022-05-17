@@ -638,6 +638,7 @@ export default {
           let dsdangky = this.thongtinDK.danhsachvacxin.toString();
           // console.log(dsdangky);
           this.thongtinDK.danhsachvacxin = dsdangky;
+          this.thongtinDK.trangthai = 1;
           await axios
             .post(
               "http://localhost:64016/api/ThongTinDangKyTiem",
