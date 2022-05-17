@@ -315,7 +315,7 @@ export default {
               .post("http://localhost:64016/api/Vacxin", this.ttVacxin)
               .then(() => {
                 this.$refs.baseConfirm.showForm(
-                  "sucess",
+                  "success",
                   1,
                   "Thêm mới vắc xin thành công !"
                 );
@@ -349,7 +349,7 @@ export default {
               )
               .then(() => {
                 this.$refs.baseConfirm.showForm(
-                  "sucess",
+                  "success",
                   1,
                   "Cập nhật thành công !"
                 );

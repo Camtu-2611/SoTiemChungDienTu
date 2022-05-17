@@ -408,7 +408,6 @@ export default {
     showDetail(text, Id) {
       this.allowEdit = false;
       this.formMode = "insert";
-
       if (text == "insert") {
         this.formMode = "insert";
         this.alerMsg = "Thêm mới thành công";
@@ -427,6 +426,7 @@ export default {
           this.allowEdit = false;
         }
       }
+      console.log(this.formMode);
       setTimeout(() => {
         if (this.allowEdit && text == "update") {
           this.$router.push({
@@ -439,6 +439,10 @@ export default {
         } else if (text == "insert") {
           this.$router.push({
             name: "injection-register-detail",
+            params: {
+              formMode: this.formMode,
+              idDangKyUpdate: this.idDangKyUpdate,
+            },
           });
         } else {
           this.$refs.baseConfirm.showForm(
@@ -513,7 +517,7 @@ export default {
         var idFirst = this.listSelectRow[0];
         this.listSelectRow = [];
         this.listSelectRow.push(idFirst);
-         console.log(this.listSelectRow)
+        console.log(this.listSelectRow);
         // vị trí đầu tiên trong mảng listSelectRow
         var idStart = this.listSelectRow[0];
         var indexStart = this.listIdDangKy.indexOf(idStart);
@@ -615,7 +619,7 @@ export default {
     showContexMenu(thongtinDK, e) {
       this.listSelectRow = [];
       this.listSelectRow.push(thongtinDK.iddangky);
-      this.thongtinUpdate = thongtinDK
+      this.thongtinUpdate = thongtinDK;
       var ctx = document.getElementById("ctxMenu");
       ctx.style.display = "block";
       ctx.style.top = (e.screenY - 70).toFixed() + "px";
@@ -664,7 +668,7 @@ export default {
     // định dạng ngày
     formatDate(inputDate) {
       var a = new Date(inputDate);
-      var month = a.getMonth()+1;
+      var month = a.getMonth() + 1;
       var day = a.getDate();
       if (month < 10) month = "0" + month.toString();
       if (day < 10) day = "0" + day.toString();

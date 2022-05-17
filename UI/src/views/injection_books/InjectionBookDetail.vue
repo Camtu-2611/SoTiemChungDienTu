@@ -21,7 +21,7 @@
             <v-tabs-slider></v-tabs-slider>
 
             <v-tab href="#tab-1">
-              Thông tin sổ tiêm
+              Thông tin cá nhân
               <v-icon>mdi-account-box</v-icon>
             </v-tab>
 
@@ -260,6 +260,7 @@ export default {
     formMode: String,
     idSoTiemUpdate: String,
     maSoTiem: String,
+    tab: String,
   },
   data() {
     return {
@@ -345,7 +346,7 @@ export default {
               .post("http://localhost:64016/api/SoTiem", this.ttSoTiem)
               .then(() => {
                 this.$refs.baseConfirm.showForm(
-                  "sucess",
+                  "success",
                   1,
                   "Thêm mới sổ tiêm thành công !"
                 );
@@ -379,7 +380,7 @@ export default {
               )
               .then(() => {
                 this.$refs.baseConfirm.showForm(
-                  "sucess",
+                  "success",
                   1,
                   "Cập nhật thành công !"
                 );

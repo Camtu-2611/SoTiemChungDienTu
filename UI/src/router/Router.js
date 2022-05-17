@@ -22,6 +22,7 @@ import InjectionRegister from "@/views/injection-register/InjectionRegister";
 import InjectionRegisterDetail from "@/views/injection-register/InjectionRegisterDetail";
 import InjectionBooks from "@/views/injection_books/InjectionBooks";
 import InjectionBookDetail from "@/views/injection_books/InjectionBookDetail";
+import CTSoTiem from "@/views/injection_books/CTSoTiem";
 import InjectionSchedules from "@/views/injection_schedules/InjectionSchedules";
 import InjectionScheduleDetail from "@/views/injection_schedules/InjectionScheduleDetail";
 import ManageVaccines from "@/views/manage_vaccine/ManageVaccines";
@@ -46,6 +47,7 @@ export const router = new VueRouter({
        { path: '/admin/injection-register-detail', component: InjectionRegisterDetail, name: "injection-register-detail", props: true},      
        { path: '/admin/injection-books', component: InjectionBooks, name: "injection-books" },
        { path: '/admin/injection-book-detail', component: InjectionBookDetail, name: "injection-book-detail",  props: true},
+       { path: '/admin/injection-book-history', component: CTSoTiem, name: "injection-book-history",  props: true},
        { path: '/admin/injection-schedules', component: InjectionSchedules, name: "injection-schedules" },
        { path: '/admin/injection-schedule-detail', component: InjectionScheduleDetail, name: "injection-schedule-detail",  props: true},
        { path: '/admin/manage-vaccines', component: ManageVaccines, name: "manage-vaccines" },

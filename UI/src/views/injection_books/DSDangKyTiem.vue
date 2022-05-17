@@ -106,7 +106,7 @@
             :key="ttDangKy.iddangky"
             v-bind:class="selectedRow(ttDangKy.iddangky) ? 'selected-row' : ''"
             @click="selectRow(ttDangKy.iddangky, $event)"
-            @click.right="showContexMenu(ttDangKy.iddangky, $event)"
+            @click.right="showContexMenu(ttDangKy, $event)"
             @dblclick="showDetail('update', ttDangKy.iddangky)"
           >
             <td class="no-border-left">{{ index + 1 }}</td>
@@ -130,7 +130,6 @@
           </tr>
         </tbody>
         <BaseLoading ref="loadingTTDKT_reft" />
-
         <div v-show="getEmty" class="loading-emty">Không có dữ liệu</div>
       </table>
       <div class="ctx-menu" id="ctxMenu">
@@ -144,9 +143,10 @@
         <div
           id="preventLeftClick"
           class="ctx-menu-item"
-          @click="UpdateTTDangKy(listSelectRow[0])"
+          @click="updateTTDangKy(listSelectRow[0])"
+          :class="{'display-none': hidebtnUpdateTTDangKy}"
         >
-          Đã tiêm
+          Cập nhật mũi tiêm
         </div>
       </div>
     </div>
@@ -216,11 +216,13 @@
 import BaseLoading from "../../components/common/BaseLoading.vue";
 import axios from "axios";
 import BaseConfirm from "@/components/common/baseControlAcounting/BaseConfirm";
+import CTSoTiem from "./CTSoTiem.vue";
 import { trangthai, gioitinh } from "../../enumeration/enumaration";
 export default {
   components: {
     BaseLoading,
     BaseConfirm,
+    CTSoTiem,
   },
   props: {
     maSoTiem: String,
@@ -263,10 +265,14 @@ export default {
         startRecord: 0,
         endRecord: 0,
       },
+      thongtinUpdate: {},
       showMenuFilter: true,
       showMenuType: false,
       showMenuDepartment: true,
       allowEdit: false,
+      thongtinCTSoTiem: {},
+      formModeCTSoTiem: "",
+      hidebtnUpdateTTDangKy: false
     };
   },
   methods: {
@@ -286,16 +292,18 @@ export default {
       if (text == "filter") {
         this.paging.pageNumber = 1;
       }
-
+    
       var res = this;
       this.listSelectRow = [];
 
       res.$refs.loadingTTDKT_reft.show();
       this.getEmty = false;
       this.amountDangKy = 0;
-      console.log(this.idDangKyUpdate);
+       console.log(this.maSoTiem);
       await axios
-        .get(`http://localhost:64016/api/ThongTinDangKyTiem/bycode/${this.maSoTiem}`)
+        .get(
+          `http://localhost:64016/api/ThongTinDangKyTiem/bycode/${this.maSoTiem}`
+        )
         .then((response) => {
           if (response.data) {
             this.lstDangKyTiem = response.data.data;
@@ -327,6 +335,96 @@ export default {
       }, 0);
     },
 
+    async updateTTDangKy(id) {
+      try {
+        console.log(this.thongtinUpdate);
+        console.log(id);
+        if (this.thongtinUpdate && id === this.thongtinUpdate.iddangky ) {
+          if (this.thongtinUpdate.trangthai != 4) {
+            this.hidebtnUpdateTTDangKy = false
+            this.thongtinUpdate.trangthai = 4;
+            this.thongtinCTSoTiem = this.thongtinUpdate;
+            this.formModeCTSoTiem = "insert";
+            console.log(this.thongtinCTSoTiem + '1')
+            setTimeout(() => {
+              this.$router.push({
+                name: "injection-book-history",
+                params: {
+                  formMode: this.formModeCTSoTiem,
+                  CTDangKy: this.thongtinCTSoTiem,
+                },
+              });
+            }, 300);
+
+            await axios
+              .put(
+                `http://localhost:64016/api/ThongTinDangKyTiem/${this.thongtinUpdate.iddangky}`,
+                this.thongtinUpdate
+              )
+              .then(() => {
+                // gọi hàm thêm thông tin chi tiết sổ tiêm
+              })
+              .catch(() => {});
+          }
+          else{
+            this.hidebtnUpdateTTDangKy = true
+          }
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    },
+
+    showDetail(text, Id) {
+      this.allowEdit = false;
+      this.formMode = "insert";
+      if (text == "insert") {
+        this.formMode = "insert";
+        this.alerMsg = "Thêm mới thành công";
+      } else {
+        this.formMode = "update";
+        this.alerMsg = "Cập nhật thành công";
+        if (Id) {
+          this.idDangKyUpdate = Id;
+        }
+        if (
+          this.idDangKyUpdate &&
+          this.idDangKyUpdate !== "00000000-0000-0000-0000-000000000000"
+        ) {
+          this.allowEdit = true;
+        } else {
+          this.allowEdit = false;
+        }
+      }
+      console.log(this.formMode);
+      setTimeout(() => {
+        if (this.allowEdit && text == "update") {
+          this.$router.push({
+            name: "injection-register-detail",
+            params: {
+              formMode: this.formMode,
+              idDangKyUpdate: this.idDangKyUpdate,
+            },
+          });
+        } else if (text == "insert") {
+          this.$router.push({
+            name: "injection-register-detail",
+            params: {
+              formMode: this.formMode,
+              idDangKyUpdate: this.idDangKyUpdate,
+            },
+          });
+        } else {
+          this.$refs.baseConfirm.showForm(
+            "warning",
+            1,
+            "Vui lòng chọn 1 bản ghi!"
+          );
+          return;
+        }
+      }, 300);
+    },
+
     // todo tải lại dữ liệu
     reload(value) {
       if (value == true) {
@@ -340,6 +438,7 @@ export default {
 
     //  select hàng, nếu hàng đã được select thì xóa khỏi mẩng listSelectRow, và ngược lại
     selectRow(id, event) {
+      console.log(id);
       if (event.ctrlKey == false && event.shiftKey == false) {
         this.listSelectRow = [];
         this.listSelectRow.push(id);
@@ -447,9 +546,10 @@ export default {
     },
 
     // todo hiện và thao tác với context menu
-    showContexMenu(id, e) {
+    showContexMenu(thongtin, e) {
       this.listSelectRow = [];
-      this.listSelectRow.push(id);
+      this.listSelectRow.push(thongtin.iddangky);
+      this.thongtinUpdate = thongtin;
       var ctx = document.getElementById("ctxMenu");
       ctx.style.display = "block";
       ctx.style.top = (e.screenY - 70).toFixed() + "px";
@@ -540,6 +640,9 @@ export default {
 <style lang="scss" scoped>
 @import url(../../style/scss/icon.scss);
 @import url(../../style/scss/button.scss);
+.display-none{
+  display: none;
+}
 #assetPopup {
   padding: 0 40px;
   height: 80px;
@@ -591,7 +694,11 @@ export default {
   display: none;
   position: absolute;
 }
-
+.ctsotiem {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
 .content-nav {
   height: 80px;
   margin: 8px;

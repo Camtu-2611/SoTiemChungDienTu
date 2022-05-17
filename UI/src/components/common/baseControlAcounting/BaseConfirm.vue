@@ -158,6 +158,9 @@ export default {
 .questionCustom {
   background-position: -826px -456px;
 }
+.successCustom {
+  background-position: -984px -456px;
+}
 .content-mess {
   width: calc(100% - 42px);
   height: 100%;

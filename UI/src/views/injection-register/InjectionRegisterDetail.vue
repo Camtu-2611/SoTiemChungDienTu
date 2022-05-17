@@ -381,7 +381,7 @@
                                                 thongtinDK.danhsachvacxin
                                               "
                                               :label="record.tenvacxin"
-                                              :value="record.mavacxin"
+                                              :value="record.tenvacxin"
                                             ></v-checkbox>
                                           </div>
                                           <v-list-item-title
@@ -462,9 +462,24 @@
               </v-card>
 
               <div class="footer">
-                <v-btn color="primary" @click="insertRecord()"> Đăng ký </v-btn>
+                <v-button
+                  class="btn btn-primary align-center"
+                  color="primary"
+                  @click="insertRecord()"
+                  v-if="formMode == 'insert'"
+                >
+                  Lưu</v-button
+                >
+                <v-button
+                  class="btn btn-primary align-center"
+                  color="primary"
+                  @click="insertRecord()"
+                  v-else
+                  >Cập nhật</v-button
+                >
 
                 <v-btn text class="ml-2" @click="e1 = 1"> Quay lại </v-btn>
+                <v-btn text class="ml-2" @click="hide()"> Hủy </v-btn>
               </div>
             </v-stepper-content>
           </v-stepper-items>
@@ -480,7 +495,6 @@
 <script>
 import axios from "axios";
 import DatePicker from "vue2-datepicker";
-//  import 'vue2-datepicker/locale/vi';
 import BaseConfirm from "@/components/common/baseControlAcounting/BaseConfirm";
 
 export default {
@@ -489,8 +503,6 @@ export default {
     BaseConfirm,
   },
   props: {
-    // listAssetType: Array,
-    // listDepartment: Array,
     formMode: String,
     idDangKyUpdate: String,
   },
@@ -520,6 +532,9 @@ export default {
     this.getAllSoTiem(); // lấy danh sách sổ tiêm
     this.show();
   },
+  // mounted() {
+  //   //this.show();
+  // },
   methods: {
     /**
      * Thực hiện validate input bị trống
@@ -534,26 +549,62 @@ export default {
         }
       }
     },
-
     /**
-     * Thực hiện validate email không được bỏ trống
+     * Thực hiện validate SĐT không được bỏ trống
      * CreatedBy: nctu
      * */
-    validateEmail() {
-      if (!this.thongtinDK.email) {
+    validateSoDienThoai() {
+      if (!this.ttSoTiem.sodienthoai) {
         this.$refs.baseConfirm.showForm(
           "error",
           1,
-          "Email không được để trống"
+          "Số điện thoại không được để trống"
         );
-        this.stateValidate = false;
         return false;
       } else {
-        this.stateValidate = true;
+        return true;
+      }
+    },
+    /**
+     * Thực hiện validate ngày sinh không được bỏ trống
+     * CreatedBy: nctu
+     * */
+    validateNgaySinh() {
+      if (!this.ttSoTiem.ngaysinh) {
+        this.$refs.baseConfirm.showForm(
+          "error",
+          1,
+          "Ngày sinh không được để trống"
+        );
+        return false;
+      } else {
+        return true;
+      }
+    },
+
+    /**
+     * Thực hiện validate email không đúng định dạng
+     * CreatedBy: nctu
+     * */
+    validateEmail() {
+      var emailval = String(this.thongtinDK.email)
+        .toLowerCase()
+        .match(
+          /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+        );
+      if (!emailval) {
+        this.$refs.baseConfirm.showForm(
+          "error",
+          1,
+          "Email không đúng định dạng"
+        );
+        return false;
+      } else {
         return true;
       }
     },
     validateData() {
+      console.log(this.validateEmail());
       if (this.validateEmail()) {
         return true;
       } else return false;
@@ -562,6 +613,7 @@ export default {
     // todo reset lại các input
     resetInput() {
       (this.thongtinDK.hoten = ""),
+        //  (this.thongtinDK.masotiem = ""),
         (this.thongtinDK.ngaysinh = ""),
         (this.thongtinDK.gioitinh = ""),
         (this.thongtinDK.sodienthoai = ""),
@@ -586,13 +638,13 @@ export default {
         (this.thongtinDK.ngaytao = new Date().toISOString()),
         (this.thongtinDK.nguoichinhsua = ""),
         (this.thongtinDK.ngaychinhsua = new Date().toISOString());
-      console.log(this.thongtinDK.hoten + "1");
+      // this.selectMaSoTiem();
     },
     // todo hiện dialog
     async show() {
+      // this.resetInput();
       var me = this;
       this.isActive = true;
-      this.dup = false;
       if (this.formMode == "update") {
         await axios
           .get(
@@ -655,7 +707,7 @@ export default {
     // định dạng ngày
     formatDate(inputDate) {
       var a = new Date(inputDate);
-      console.log(inputDate)
+      console.log(inputDate);
       var month = a.getMonth() + 1;
       var day = a.getDate();
       if (month < 10) month = "0" + month.toString();
@@ -697,117 +749,6 @@ export default {
       else this.asset.originalPrice = this.removeFormatMoney(e.target.value);
     },
 
-    // validate trống trường dữ liệu mã tài sản
-    async validateAssetCode() {
-      this.dup = false;
-      var warning = document.getElementById("assetInput1");
-      if (this.asset.assetCode == null || this.asset.assetCode == "") {
-        // warning.style.border = "1px solid red";
-        warning.classList.add("borderRed");
-        warning.classList.add("hover-validate");
-      } else {
-        warning.style.border = "#e4e4e4 1px solid";
-        warning.classList.remove("hover-validate");
-        warning.classList.remove("borderRed");
-      }
-    },
-
-    // todo validate trường dữ liệu tên tài sản
-    validateAssetName() {
-      var warning = document.getElementById("assetInput2");
-      if (this.asset.assetName == null || this.asset.assetName == "") {
-        warning.classList.add("borderRed");
-        warning.classList.add("hover-validate");
-      } else {
-        warning.style.border = "#e4e4e4 1px solid";
-        warning.classList.remove("hover-validate");
-        warning.classList.remove("borderRed");
-      }
-    },
-
-    // todo lưu dữ liệu
-    async save() {
-      this.validateAssetName();
-      this.validateAssetCode();
-      if (
-        parseInt(this.asset.originalPrice) <= parseInt(this.asset.wearValue)
-      ) {
-        document.getElementById("assetInput8").classList.add("borderRed");
-        return;
-      } else {
-        document.getElementById("assetInput8").classList.remove("borderRed");
-      }
-      var res = this;
-      if (res.asset.originalPrice == "") res.asset.originalPrice = null;
-      if (res.asset.wearValue == "") res.asset.wearValue = null;
-
-      if (
-        this.asset.assetCode == null ||
-        this.asset.assetName == null ||
-        this.asset.assetCode == "" ||
-        this.asset.assetName == ""
-      ) {
-        return;
-      } else {
-        if (this.formMode == "insert") {
-          //nếu là form thêm dữ liệu
-          await axios
-            .post("https://localhost:44382/api/v1/assets/", this.asset)
-            .then((respone) => {
-              // nếu không gặp lỗi badrequest
-              if (respone.data.errorCode == 400) {
-                var warning = document.getElementById("assetInput1");
-                res.dup = true;
-                warning.classList.add("borderRed");
-
-                res.$emit("reload", false);
-                return;
-              } else if (
-                respone.data.errorCode != 400 &&
-                parseInt(res.asset.originalPrice) <=
-                  parseInt(res.asset.wearValue)
-              ) {
-                res.dup = false;
-                return;
-              } else {
-                res.dup = false;
-                res.hide();
-                res.$emit("reload", true);
-              }
-            })
-            .catch((error) => {
-              res.$emit("reload", false);
-              console.log(error);
-              alert("Có lỗi xảy ra, vui lòng liên hệ MISA để được trợ giúp");
-            });
-        } else {
-          // nếu là form sửa dữ liệu
-
-          await axios
-            .put("https://localhost:44382/api/v1/assets/", this.asset)
-            .then((respone) => {
-              if (respone.data.errorCode != 400) {
-                res.hide();
-                res.$emit("reload", true);
-              } else {
-                res.dup = true;
-                document
-                  .getElementById("assetInput1")
-                  .classList.add("borderRed");
-
-                res.$emit("reload", false);
-                return;
-              }
-            })
-            .catch((error) => {
-              console.log(error);
-              res.$emit("reload", false);
-              alert("Có lỗi xảy ra, vui lòng liên hệ MISA để được trợ giúp!");
-            });
-        }
-      }
-    },
-
     showWarning(text) {
       this.$emit("msgAlert", text, true);
     },
@@ -820,18 +761,23 @@ export default {
     async insertRecord() {
       try {
         let me = this;
+        console.log(this.thongtinDK.email);
         if (this.validateData()) {
           let dsdangky = this.thongtinDK.danhsachvacxin.toString();
           this.thongtinDK.danhsachvacxin = dsdangky;
+          console.log(this.formMode);
+
           if (this.formMode == "insert") {
             await axios
               .post(
                 "http://localhost:64016/api/ThongTinDangKyTiem",
                 this.thongtinDK
               )
-              .then(() => {
+              .then((response) => {
+                console.log(response);
+
                 this.$refs.baseConfirm.showForm(
-                  "sucess",
+                  "success",
                   1,
                   "Đăng ký tiêm thành công !"
                 );
@@ -847,7 +793,7 @@ export default {
               .then(() => {
                 // alert("Đăng ký tiêm thành công !");
                 this.$refs.baseConfirm.showForm(
-                  "sucess",
+                  "success",
                   1,
                   "Sửa thông tin thành công !"
                 );
@@ -923,24 +869,56 @@ export default {
      * */
     getSoTiemByCode() {
       try {
-        axios
+        if (this.thongtinDK.masotiem) {
+          axios
+            .get(
+              `http://localhost:64016/api/SoTiem/bycode/${this.thongtinDK.masotiem}`
+            )
+            .then((response) => {
+              if (response.data) {
+                var res = response.data.data;
+                if (res) {
+                  this.thongtinDK.hoten = res.hoten;
+                  this.thongtinDK.ngaysinh = res.ngaysinh;
+                  this.thongtinDK.ngaysinh = this.formatDate(
+                    this.thongtinDK.ngaysinh
+                  );
+                  this.thongtinDK.gioitinh = res.gioitinh;
+                  this.thongtinDK.email = res.email;
+                  this.thongtinDK.sodienthoai = res.sodienthoai;
+                  this.thongtinDK.diachi = res.diachi;
+                }
+              }
+            })
+            .catch(() => {});
+        } else {
+          this.$refs.baseConfirm.showForm("error", 1, "Vui lòng chọn sổ tiêm");
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    selectMaSoTiem() {
+      console.log(this.thongtinDK.masotiem);
+      var me = this;
+      try {
+         axios
           .get(
-            `http://localhost:64016/api/SoTiem/bycode/${this.thongtinDK.masotiem}`
+            `http://localhost:64016/api/SoTiem/bycode/${me.thongtinDK.masotiem}`
           )
           .then((response) => {
             if (response.data) {
               var res = response.data.data;
               if (res) {
-                this.thongtinDK.hoten = res.hoten;
-                this.thongtinDK.ngaysinh = res.ngaysinh;
-                this.thongtinDK.ngaysinh = this.formatDate(
-                  this.thongtinDK.ngaysinh
+                me.thongtinDK.hoten = res.hoten;
+                me.thongtinDK.ngaysinh = res.ngaysinh;
+                me.thongtinDK.ngaysinh = me.formatDate(
+                  me.thongtinDK.ngaysinh
                 );
-                this.thongtinDK.gioitinh = res.gioitinh;
-                this.thongtinDK.email = res.email;
-                this.thongtinDK.sodienthoai = res.sodienthoai;
-                this.thongtinDK.diachi = res.diachi;
-                console.log(this.thongtinDK.hoten + "3");
+                me.thongtinDK.gioitinh = res.gioitinh;
+                me.thongtinDK.email = res.email;
+                me.thongtinDK.sodienthoai = res.sodienthoai;
+                me.thongtinDK.diachi = res.diachi;
               }
             }
           })
@@ -949,11 +927,6 @@ export default {
         console.log(error);
       }
     },
-    selectMaSoTiem(){
-      console.log(this.thongtinDK.masotiem);
-      this.getSoTiemByCode();
-      console.log(this.thongtinDK.hoten + "2");
-    }
   },
   watch: {
     // todo theo dõi id phòng ban để lấy ra tên phòng ban tương ứng
@@ -967,8 +940,8 @@ export default {
       if (this.asset.assetTypeId == null) this.asset.assetTypeId = null;
       else this.getAssetTypeName();
     },
-    // "thongtinDK.masotiem": async function() {
-      
+    // "thongtinDK.masotiem": function() {
+    //   this.selectMaSoTiem();
     // },
   },
   computed: {
@@ -984,9 +957,9 @@ export default {
     // định dạng ngày
     formatDate(inputDate) {
       var a = new Date(inputDate);
-      var month = a.getMonth()+1;
+      var month = a.getMonth() + 1;
       var day = a.getDate();
-      console.log(day)
+      console.log(day);
       if (month < 10) month = "0" + month.toString();
       if (day < 10) day = "0" + day.toString();
       var date = day + "-" + month + "-" + a.getFullYear().toString();

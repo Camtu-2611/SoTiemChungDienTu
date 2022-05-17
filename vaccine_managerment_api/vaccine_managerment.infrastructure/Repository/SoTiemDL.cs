@@ -61,6 +61,12 @@ namespace vaccine_managerment.infrastructure
             {
                 mamoi = GenerateMa(masotiem, paramValue);
             }
+            else
+            {
+                int start = 1;
+                var padString = start.ToString().PadLeft(4, '0');
+                mamoi = paramValue + padString;
+            }
             return mamoi;
         }
 

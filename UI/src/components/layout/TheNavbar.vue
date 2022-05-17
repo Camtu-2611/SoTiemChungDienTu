@@ -135,10 +135,10 @@
       <div class="icon-nav icon-setting"></div>
       <div class="nav-item-text">Hệ thống</div>
     </div>
-    <div id="navItem7" class="nav-item option nav-item-icon">
+    <!-- <div id="navItem7" class="nav-item option nav-item-icon">
       <div class="icon-nav icon-pie-chart-line"></div>
       <div class="nav-item-text">Báo cáo</div>
-    </div>
+    </div> -->
   </div>
 </template>
 

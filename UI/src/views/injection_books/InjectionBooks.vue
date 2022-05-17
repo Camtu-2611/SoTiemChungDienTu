@@ -322,6 +322,7 @@ export default {
       showMenuType: false,
       showMenuDepartment: true,
       allowEdit: false,
+      detailTab: "tab-1",
     };
   },
   methods: {
@@ -412,7 +413,8 @@ export default {
             params: {
               formMode: this.formMode,
               idSoTiemUpdate: this.idSoTiemUpdate,
-              maSoTiemUpdate: this.maSoTiemUpdate,
+              maSoTiem: this.maSoTiemUpdate,
+              tab: this.detailTab,
             },
           });
         } else if (text == "insert") {
@@ -420,7 +422,8 @@ export default {
             name: "injection-book-detail",
             params: {
               formMode: this.formMode,
-              idSoTiemUpdate: this.idSoTiemUpdate}
+              idSoTiemUpdate: this.idSoTiemUpdate,
+            },
           });
         } else {
           this.$refs.baseConfirm.showForm(
@@ -434,15 +437,21 @@ export default {
     },
     // hiển thị danh sách đã đăng ký tiêm của sổ tiêm
     showDanhSachDK(id) {
-      alert("hiển thị danh sách đăng ký của sổ tiêm này" + id);
+      // alert("hiển thị danh sách đăng ký của sổ tiêm này" + id);
+      this.detailTab = "tab-2";
+      this.showDetail("update", id);
     },
     // hiển thị thông tin cá nhân
     showThongTinCaNhan(id) {
-      alert("hiển thị thông tin cá nhân của sổ tiêm" + id);
+      this.detailTab = "tab-1";
+      this.showDetail("update", id);
+
+      // alert("hiển thị thông tin cá nhân của sổ tiêm" + id);
     },
     // hiển thị lịch sử tiêm chủng
     showLichSuTiemChung(id) {
-      alert("hiển thị lịch sử tiêm chủng của sổ tiêm" + id);
+      this.detailTab = "tab-3";
+      this.showDetail("update", id);
     },
 
     // todo tải lại dữ liệu
@@ -622,7 +631,7 @@ export default {
     // định dạng ngày
     formatDate(inputDate) {
       var a = new Date(inputDate);
-      var month = a.getMonth()+1;
+      var month = a.getMonth() + 1;
       var day = a.getDate();
       if (month < 10) month = "0" + month.toString();
       if (day < 10) day = "0" + day.toString();
@@ -691,7 +700,7 @@ export default {
     padding: 8px 14px 8px 18px;
 
     &:hover {
-      background-color: #1565C0 ;
+      background-color: #1565c0;
       box-shadow: 2px 2px 4px grey;
       color: white;
       cursor: pointer;
@@ -757,7 +766,7 @@ export default {
     .btn-add-asset {
       padding: 0 36px;
       color: white;
-      background-color: #1565C0;
+      background-color: #1565c0;
       border: none;
     }
 
