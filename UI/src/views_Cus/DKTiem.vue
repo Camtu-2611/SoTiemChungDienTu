@@ -649,7 +649,7 @@ export default {
               console.log("106");
               // alert("Đăng ký tiêm thành công !");
               this.$refs.baseConfirm.showForm(
-                  "sucess",
+                  "success",
                   1,
                   "Đăng ký tiêm thành công !"
                 );

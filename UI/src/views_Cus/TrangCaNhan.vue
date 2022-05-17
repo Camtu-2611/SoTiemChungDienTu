@@ -591,7 +591,7 @@ export default {
           .then(() => {
             // alert("Cập nhật thông tin thành công !");
             this.$refs.baseConfirm.showForm(
-              "sucess",
+              "success",
               1,
               "Cập nhật thông tin thành công !"
             );
@@ -618,7 +618,7 @@ export default {
             )
             .then(() => {
               this.$refs.baseConfirm.showForm(
-                "sucess",
+                "success",
                 1,
                 "Hủy đăng ký tiêm thành công !"
               );
