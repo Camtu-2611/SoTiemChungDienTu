@@ -10,7 +10,13 @@
         />
         <!-- {{isShowAdmin}}
         {{isShowCustomer}} -->
-        <Customer v-if="redirectString === 'customer'" :tentaikhoan="tenTK"/>
+        <Customer
+          v-if="redirectString === 'customer'"
+          :tentaikhoan="tenTK"
+          :redirectString="redirectString"
+          @redirect="redirect"
+        />
+          <!-- :isShow="isShowCustomer" -->
         <Admin v-else-if="redirectString === 'admin'" />
         <SigninAdmin
           :redirectString="redirectString"
@@ -18,14 +24,13 @@
           @redirect="redirect"
           v-show="isShowSigninAdmin"
         />
-
       </div>
     </v-main>
   </v-app>
 </template>
 
 <script>
- import Admin from "./views/Admin.vue";
+import Admin from "./views/Admin.vue";
 import Customer from "./views_Cus/Customer.vue";
 import Header from "./components/layout/TheHeader.vue";
 import Navbar from "./components/layout/TheNavbar.vue";
@@ -48,7 +53,7 @@ export default {
     Footer,
     Signin,
     SigninAdmin,
-     Admin,
+    Admin,
     Customer,
   },
   methods: {
@@ -69,7 +74,10 @@ export default {
         this.$router.push({ name: "STC-dien-tu" });
       } else if (this.redirectString === "signinAdmin") {
         this.$router.push({ name: "signinAdmin" });
-        this.isShowSigninAdmin = true
+        this.isShowSigninAdmin = true;
+      } else if (this.redirectString === "signin") {
+        this.$router.push({ name: "dang-nhap" });
+        this.isShow = true
       }
     },
   },
@@ -83,13 +91,13 @@ export default {
       isShow: true,
       isShowSigninAdmin: false,
       redirectString: "",
-      tenTK : "",
+      tenTK: "",
     };
   },
 };
 </script>
 
-<style lang="scss" >
+<style lang="scss">
 @import "../public/assets/css/maicons.css";
 @import "../public/assets/css/bootstrap.css";
 @import "../public/assets/vendor/owl-carousel/css/owl.carousel.css";

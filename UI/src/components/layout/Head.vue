@@ -4,7 +4,6 @@
       <div class="container">
         <div class="row">
           <div class="col-sm-8 text-sm">
-            
             <div class="site-info">
               <a href="#"
                 ><span class="mai-call text-primary"></span> 0869668106</a
@@ -18,9 +17,16 @@
           </div>
           <div class="col-sm-4 text-right text-sm">
             <div class="social-mini-button py-2 wow">
-              <a class="btn"  @click="$router.push({ name: 'trang-ca-nhan' })">Trang cá nhân</a>
-              <div class="py-2 wow btn btn-primary" style="height : 45px" @click="$router.push({ name: 'dang-nhap' })">Đăng xuất</div>
-             
+              <a class="btn" @click="redirect('trang-ca-nhan')"
+                >Trang cá nhân</a
+              >
+              <div
+                class="py-2 wow btn btn-primary"
+                style="height : 45px"
+                @click="logout()"
+              >
+                Đăng xuất
+              </div>
             </div>
           </div>
         </div>
@@ -32,12 +38,13 @@
 
     <nav class="navbar navbar-expand-lg navbar-light shadow-sm">
       <div class="container">
-         <div
-              class="nav-item active"
-              @click="$router.push({ name: 'STC-dien-tu' })"
-            >
-        <a class="navbar-brand" href="#" 
-          ><span class="text-primary">One</span>-Health</a>
+        <div
+          class="nav-item active"
+          @click="redirect('STC-dien-tu')"
+        >
+          <a class="navbar-brand" href="#"
+            ><span class="text-primary">One</span>-Health</a
+          >
         </div>
         <!-- <form action="#">
           <div class="input-group input-navbar">
@@ -72,35 +79,32 @@
           <ul class="navbar-nav ml-auto">
             <li
               class="nav-item active"
-              @click="$router.push({ name: 'STC-dien-tu' })"
+              @click="redirect('STC-dien-tu')"
             >
               <a class="nav-link">Trang chủ</a>
             </li>
-            <li 
-            class="nav-item"
-             @click="$router.push({ name: 'dang-ky-tiem' })"
-             :class="{ 'option-focus': currentRouteName == '/dang-ky-tiem' }"
+            <li
+              class="nav-item"
+              @click="redirect('dang-ky-tiem')"
+              :class="{ 'option-focus': currentRouteName == '/dang-ky-tiem' }"
             >
               <a class="nav-link">Đăng ký tiêm</a>
             </li>
-             <li 
-            class="nav-item"
-             @click="$router.push({ name: 'vac-xin' })"
-             :class="{ 'option-focus': currentRouteName == '/vac-xin' }"
+            <li
+              class="nav-item"
+              @click="redirect('vac-xin')"
+              :class="{ 'option-focus': currentRouteName == '/vac-xin' }"
             >
               <a class="nav-link">Vắc xin</a>
             </li>
-             <li 
-            class="nav-item"
-             @click="$router.push({ name: 'cam-nang' })"
-             :class="{ 'option-focus': currentRouteName == '/cam-nang' }"
+            <li
+              class="nav-item"
+              @click="redirect('cam-nang')"
+              :class="{ 'option-focus': currentRouteName == '/cam-nang' }"
             >
               <a class="nav-link">Cẩm nang tiêm chủng</a>
             </li>
-            
-           
           </ul>
-           
         </div>
         <!-- .navbar-collapse -->
       </div>
@@ -110,8 +114,10 @@
 </template>
 
 <script>
-
 export default {
+  props: {
+    redirectString: String,
+  },
   data() {
     return {
       collapseNavbar: true,
@@ -130,9 +136,21 @@ export default {
     //   this.show = false;
     // },
   },
-  methods: {},
+  methods: {
+    logout() {
+      console.log(this.redirectString);
+      this.redirectString = "signin";
+      // this.isShow = false;
+      this.$emit("logout", this.redirectString);
+    },
+
+    redirect(routername) {
+      if (this.currentRouteName !== routername) {
+        this.$router.push({ name: routername });
+      }
+    },
+  },
 };
 </script>
 
-<style >
-</style>
+<style></style>

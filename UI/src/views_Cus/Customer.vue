@@ -1,6 +1,6 @@
 <template>
   <div class="customer">
-    <Head />
+    <Head :redirectString="redirectString" @logout="logout" />
     <div>
       <!-- <Home/> -->
       <router-view
@@ -26,12 +26,22 @@ export default {
     Footer,
     },
     props:{
-        tentaikhoan : String
+        tentaikhoan : String,
+        redirectString: String,
+        // isShowCustomer: Boolean
     },
     data() {
         return {
             
         }
+    },
+    methods: {
+      logout(redirectString){
+        this.redirectString = redirectString
+        // this.isShowCustomer = false
+        console.log(this.redirectString)
+        this.$emit('redirect', this.redirectString)
+      }
     }
 }
 </script>
