@@ -32,79 +32,71 @@
     </div>
     
              <div class="container">
-              <form action="#">
-          <div class="input-group input-navbar">
-            <div class="input-group-prepend">
-              <span class="input-group-text" id="icon-addon1"
-                ><span class="mai-search"></span
-              ></span>
+               <div class="row">
+             <div class="col-lg-6 wow fadeInRight" data-wow-delay="400ms">
+               <a class="navbar-brand" 
+          ><span class="text-primary">NHỮNG ĐIỀU CẦN BIẾT TRƯỚC KHI TIÊM CHỦNG</span></a><br><br>
+               <h6>KHÁM SÀNG LỌC TRƯỚC KHI TIÊM CHỦNG</h6>  
+               <h7>1. Tại sao cần khám sàng lọc trước khi tiêm chủng</h7>
+          <p>Khám sàng lọc trước khi tiêm chủng là việc rất cần thiết nhằm phát hiện những bất thường cần lưu ý để quyết định cho trẻ (người được tiêm) tiêm chủng, tạm hoãn việc tiêm chủng hay không được tiêm một loại vắc xin nào đó.</p>
+          <p>Kết quả khám sàng lọc trước tiêm chủng được căn cứ trên những thông tin người nhà hay người đi tiêm chủng cung cấp cho bác sĩ và những thông tin bác sĩ phát hiện sau khi thăm khám.</p>
+           <h6>2. Những thông tin cần thông báo cho bác sĩ là gì?</h6>
+          <p>Với trẻ nhỏ, bố mẹ cần thông báo cho bác sĩ các vấn đề về sức khỏe và lịch sử tiêm chủng như:</p>
+          <ul>-  Trẻ đã đủ cân nặng 2.5kg chưa? (Nếu là trẻ sơ sinh)</ul>
+          <ul>-  Trẻ có bú (ăn), uống, ngủ, chơi bình thường không?</ul>
+          <ul>-  Trẻ có đang sốt hay mắc bệnh gì không? Trẻ có bệnh lý bẩm sinh hoặc bệnh lý mắc phải khiến trẻ phải nhập viện điều trị từ khi sinh đến nay.</ul>
+          <ul>-  Trẻ có đang dùng thuốc hoặc sử dụng phương pháp điều trị nào không?</ul>
+           <ul>-  Trẻ có đang dùng thuốc hoặc sử dụng phương pháp điều trị nào không?</ul>
+            <ul>-  Trẻ có đang dùng thuốc hoặc sử dụng phương pháp điều trị nào không?</ul>
+          <p>Trẻ có tiền sử dị ứng với vắc xin hoặc có phản ứng nặng ở các lần tiêm trước hay không?</p>
+         
+  </div>
+   <div class="col-lg-6 wow fadeInRight" data-wow-delay="400ms">
+            <div class="img-place custom-img-1">
+              <img src="../../public/assets/img/quytrinh-tiem.png" alt="">
             </div>
-            <input
-              type="text"
-              class="form-control"
-              placeholder="Nhập để tìm kiếm.."
-              aria-label="Username"
-              aria-describedby="icon-addon1"
-            />
           </div>
-        </form>
-
-                <form class="contact-form mt-5">
-                  <div class="row mb-3">
-                  
-                 
-                    <div
-                      class="col-12 py-2 wow fadeInUp"
-                      data-wow-delay="300ms"
-                    > 
-                      
-                        <v-row>
-                          <v-col 
-                          cols="12" sm="4" md="4"
-                          v-for="(record, index) in listRecord"
-                          :key="index"
-                          >
-                            <v-card
-                            class="mx-auto"
-                            width="400"
-                            height="250"
-                            outlined
-                            color="rgb(211 224 238)"
-                            
-                          >
-                            <v-list-item three-line>
-                              <v-list-item-content >
-                                 <div class=" text-h6 mb-3" >
-                                  {{record.tenvacxin}}
-                                </div>
-                                
-                               
-                                <v-list-item-subtitle> {{record.mota}}</v-list-item-subtitle><br> <br> <br>
-                                 <v-list-item-title class="text-h6 mb-1">
-                                  106.000 VNĐ
-                                </v-list-item-title> 
-                              </v-list-item-content>
-                            </v-list-item>
-                            <v-card-actions>
-                              <v-btn
-                                outlined
-                                rounded
-                                text
-                                color="#003a78"
-                              
-                              >
-                               Xem chi tiết
-                              </v-btn>
-                            </v-card-actions>
-                          </v-card>
-                          </v-col>
-                          
-                        </v-row>
-      
-                    </div>
-                
-                  </div>
-                </form>
+          </div>
+           <v-row justify="center">
+    <v-expansion-panels accordion>
+      <v-expansion-panel
+   
+      >
+        <v-expansion-panel-header><a class="navbar-brand" 
+          ><span class="text-primary">Bác sĩ sẽ khám như thế nào</span></a></v-expansion-panel-header>
+        <v-expansion-panel-content>
+          
+          <p>Việc khám sàng lọc trước tiêm chủng được thực hiện theo đúng quy định nghiêm ngặt của Bộ Y Tế (Quyết định số 2470/QĐ-BYT ban hành ngày 14/6/2019), tập trung vào việc đánh giá tình trạng sức khỏe chung của cơ thể bao gồm:</p>
+         
+          <ul>-  Đo thân nhiệt</ul>
+          <ul>-  Đánh giá tri giác</ul>
+          <ul>-  Quan sát nhịp thở, nghe phổi</ul>
+          <ul>-  Nghe tim</ul>
+           <ul>- Phát hiện các bất thường khác</ul>
+          
+        </v-expansion-panel-content>
+       
+      </v-expansion-panel>
+    </v-expansion-panels>
+  </v-row>
+  <br><br>
+  <a class="navbar-brand" 
+          ><span class="text-primary">Hướng dẫn trước khi tiêm chủng</span></a><br><br>
+               <h7>1. VỚI TRẺ NHỎ</h7>
+         
+          <ul>-  Bố mẹ cần theo dõi tình trạng sức khỏe của bé để thông báo cho bác sĩ trong quá trình khám sàng lọc trước khi tiêm.</ul>
+          <ul>-  Nếu trẻ chưa đạt tiêu chuẩn về cân nặng hoặc có một trong các biểu hiện bệnh lý thì phải trì hoãn lịch tiêm cho đến khi trẻ đủ cân nặng, hết sốt hoặc khỏi bệnh.</ul>
+          <ul>-  Nếu trẻ có các phản ứng nặng sau tiêm ở các lần tiêm trước thì sẽ ngưng tiêm các mũi tiếp theo (nếu có).</ul>
+         
+             <h7>2. VỚI NGƯỜI LỚN</h7>
+         
+          <ul>-  Người lớn đi tiêm chủng cũng cần thông báo cho bác sĩ các vấn đề sức khỏe của mình bao gồm các bệnh đã mắc, các loại thuốc – liệu pháp điều trị đang dùng, loại vắc xin đã tiêm gần đây (trong vòng 4 tuần) và phản ứng của cơ thể ở những lần tiêm chủng trước.</ul>
+         
+         <div class="col-lg-12 wow fadeInRight" data-wow-delay="400ms">
+            <div class="img-place custom-img-1">
+              <img src="../../public/assets/img/tiemchung-down.png" alt="">
+            </div>
+          </div>
               </div>
         
   </div>
